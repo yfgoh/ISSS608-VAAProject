@@ -30,9 +30,9 @@ This project aims to build interactive visualisation tools that allow journalist
 
 # Data
 
-This project explores the data provided by [VAST Challenge 2025 Mini-Challenge 1](https://vast-challenge.github.io/2025/MC1.html). It is a comprehensive knowledge graph mapping the music industry's landscape which 17,412 nodes and 37,857 edges with 17 connected components.
+This project explores the dataset provided by [VAST Challenge 2025 Mini-Challenge 1](https://vast-challenge.github.io/2025/MC1.html). It is a comprehensive knowledge graph capturing the landscape of the the music industry. The graph consist of 17,412 nodes and 37,857 edges, organised into 17 connected components.
 
-Each node represents a person, song, record label, album or musical group. The edges represent the relationship between each pair of connected nodes as defined below.
+Each node represents a person, song, record label, album, or musical group. The edges represent the relationships between connected nodes, as defined below.
 
 | Edge Type | Source Node(s) | Destination Node(s) | Description |
 |-----------------|-----------------|-----------------|----------------------|

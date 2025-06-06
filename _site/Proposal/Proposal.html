@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2025-06-06">
 
-<title>Proposal – ISSS608-VAAProject</title>
+<title>Project Proposal – ISSS608-VAAProject</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,15 +104,27 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
+  <li><a href="#prototype-sketches" id="toc-prototype-sketches" class="nav-link" data-scroll-target="#prototype-sketches">Prototype Sketches</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a></li>
+  <li><a href="#project-schedule" id="toc-project-schedule" class="nav-link" data-scroll-target="#project-schedule">Project Schedule</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Proposal</h1>
+<h1 class="title">Project Proposal</h1>
 </div>
 
 
@@ -135,8 +147,133 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="motivation" class="level1">
+<h1>Motivation</h1>
+<p>The story of Sailor Shift is more than a tale of individual stardom — it is a reflection of how local culture, through music, can resonate on a global scale. Her rise from a small island nation to the forefront of the international music scene not only brought worldwide recognition to Oceanus Folk but also reshaped the genre itself. Sailor’s rising popularity led to greater interest in the genre’s roots, its collaborators, and its influence across musical styles.</p>
+<p>This project is motivated by the opportunity to explore that transformation through data. By visualising the rich network of artistic relationships, genre influences, and temporal trends captured in a comprehensive knowledge graph, we aim to illustrate the pivotal role Sailor Shift has played as a prominent ambassador of Oceanus Folk. In collaboration with journalist Silas Reed, we seek to create meaningful visualisations that reveal the deeper story behind Sailor’s success, trace the evolution of Oceanus Folk, and uncover new and compelling insights along the way.</p>
+</section>
+<section id="objectives" class="level1">
+<h1>Objectives</h1>
+<p>This project aims to build interactive visualisation tools that allow journalist Silas Reed and his readers to explore and uncover meaningful insights into Sailor Shift’s career and the influence of Oceanus Folk on the global music scene. The key objectives are as follows.</p>
+<ol type="1">
+<li><p><strong>Understand the Profile of Sailor Shift’s Career</strong></p>
+<p>Visualisations will trace Sailor’s artistic journey, highlighting who has influenced her over time, her key collaborators, and the individuals she has directly or indirectly influenced. It will also explore how she has impacted members of the broader Oceanus Folk community.</p></li>
+<li><p><strong>Examine the Spread and Evolution of Oceanus Folk</strong></p>
+<p>The tools will map how Oceanus Folk has spread through the musical world by identifying whether its influence has been intermittent or gradual, pinpointing the most influenced genres and artists, and showing how the genre itself has evolved, especially through Sailor’s influence and cross-genre inspiration.</p></li>
+<li><p><strong>Develop a Profile of a Rising Star in the Music Industry</strong></p>
+<p>By visualising and comparing the career trajectories of three artists, the project will uncover key patterns in how an artist’s influence evolve as he/she gains popularity. These patterns will then guide data-driven predictions about the next generation of Oceanus Folk artists expected to rise in the coming five years.</p></li>
+</ol>
+</section>
+<section id="data" class="level1">
+<h1>Data</h1>
+<p>This project explores the data provided by <a href="https://vast-challenge.github.io/2025/MC1.html">VAST Challenge 2025 Mini-Challenge 1</a>. It is a comprehensive knowledge graph mapping the music industry’s landscape which 17,412 nodes and 37,857 edges with 17 connected components.</p>
+<p>Each node represents a person, song, record label, album or musical group. The edges represent the relationship between each pair of connected nodes as defined below.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Edge Type</th>
+<th>Source Node(s)</th>
+<th>Destination Node(s)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PerformerOf</td>
+<td>Person, MusicalGroup</td>
+<td>Song, Album</td>
+<td>Source performed the destination.</td>
+</tr>
+<tr class="even">
+<td>ComposerOf</td>
+<td>Person</td>
+<td>Song, Album</td>
+<td>Source composed the destination.</td>
+</tr>
+<tr class="odd">
+<td>ProducerOf</td>
+<td>Person, RecordLabel</td>
+<td>Song, Album, Person, MusicalGroup</td>
+<td>Source participated in the production of the destination’s work.</td>
+</tr>
+<tr class="even">
+<td>LyricistOf</td>
+<td>Person</td>
+<td>Song, Album</td>
+<td>Source wrote lyrics for the destination.</td>
+</tr>
+<tr class="odd">
+<td>RecordedBy</td>
+<td>Song, Album</td>
+<td>RecordLabel</td>
+<td>Destination aided in the recording process for the source.</td>
+</tr>
+<tr class="even">
+<td>DistributedBy</td>
+<td>Song, Album</td>
+<td>RecordLabel</td>
+<td>Destination aided in the distribution process for the source.</td>
+</tr>
+<tr class="odd">
+<td>InStyleOf</td>
+<td>Song, Album</td>
+<td>Song, Album, Person, MusicalGroup</td>
+<td>Source was performed at least partly in the style of the destination.</td>
+</tr>
+<tr class="even">
+<td>InterpolatesFrom</td>
+<td>Song, Album</td>
+<td>Song, Album</td>
+<td>Source interpolated a melody from the destination.</td>
+</tr>
+<tr class="odd">
+<td>CoverOf</td>
+<td>Song, Album</td>
+<td>Song, Album</td>
+<td>Source is a cover of the destination.</td>
+</tr>
+<tr class="even">
+<td>LyricalReferenceTo</td>
+<td>Song, Album</td>
+<td>Song, Album</td>
+<td>Source makes a lyrical reference to the destination.</td>
+</tr>
+<tr class="odd">
+<td>DirectlySamples</td>
+<td>Song, Album</td>
+<td>Song, Album</td>
+<td>Source directly reuses a portion of the destination’s audio via sampling.</td>
+</tr>
+<tr class="even">
+<td>MemberOf</td>
+<td>Person</td>
+<td>MusicalGroup</td>
+<td>Source is (or was) a member of the destination.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="methodology" class="level1">
+<h1>Methodology</h1>
+<p>WIP</p>
+</section>
+<section id="prototype-sketches" class="level1">
+<h1>Prototype Sketches</h1>
+</section>
+<section id="r-packages" class="level1">
+<h1>R Packages</h1>
+</section>
+<section id="project-schedule" class="level1">
+<h1>Project Schedule</h1>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
