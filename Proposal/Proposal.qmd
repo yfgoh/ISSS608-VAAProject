@@ -35,7 +35,7 @@ This project explores the dataset provided by [VAST Challenge 2025 Mini-Challeng
 Each node represents a person, song, record label, album, or musical group. The edges represent the relationships between connected nodes, as defined below.
 
 | Edge Type | Source Node(s) | Destination Node(s) | Description |
-|-----------------|-----------------|-----------------|----------------------|
+|------------------|------------------|------------------|-------------------|
 | PerformerOf | Person, MusicalGroup | Song, Album | Source performed the destination. |
 | ComposerOf | Person | Song, Album | Source composed the destination. |
 | ProducerOf | Person, RecordLabel | Song, Album, Person, MusicalGroup | Source participated in the production of the destination's work. |
@@ -51,7 +51,140 @@ Each node represents a person, song, record label, album, or musical group. The 
 
 # Methodology
 
-WIP
+```{r}
+#| echo: FALSE
+pacman::p_load(DiagrammeR)
+```
+
+::: panel-tabset
+## Diagram
+
+```{r}
+#| code-fold: TRUE
+grViz("
+digraph flowchart {
+  graph [layout = dot, rankdir = TB, fontname = 'Helvetica', fontsize = 12]
+  
+  # Global node settings
+  node [shape = box, style = filled, fontname = 'Helvetica']
+  
+  # Input nodes
+  input [label = 'MC1_graph.json', fillcolor = '#FFE4B5', color = '#FFA500', penwidth = 1.5]
+  read [label = 'Read input', fillcolor = '#E6E6FA', color = '#9370DB']
+  clean [label = 'Clean data', fillcolor = '#E6E6FA', color = '#9370DB']
+  
+  # Visualization nodes
+  plot_net [label = 'Plot network graphs', fillcolor = '#ADD8E6', color = '#4682B4']
+  plot_bar [label = 'Plot barchart', fillcolor = '#98FB98', color = '#2E8B57']
+  plot_line [label = 'Plot line chart', fillcolor = '#98FB98', color = '#2E8B57']
+  
+  # Analysis nodes
+  bayesian [label = 'Bayesian Surprise', fillcolor = '#FFDAB9', color = '#CD853F']
+  entropy [label = 'Genre Entropy', fillcolor = '#FFDAB9', color = '#CD853F']
+  
+  # Output node
+  shiny [label = 'Shiny App', fillcolor = '#FFB6C1', color = '#FF69B4', shape = ellipse, style = 'filled,rounded']
+  
+  # Edges
+  input -> read -> clean
+  clean -> plot_net [color = '#4682B4']
+  clean -> plot_bar [color = '#2E8B57']
+  clean -> plot_line [color = '#2E8B57']
+  clean -> bayesian [color = '#CD853F']
+  clean -> entropy [color = '#CD853F']
+  bayesian -> plot_line [color = '#CD853F']
+  entropy -> plot_line [color = '#CD853F']
+  plot_net -> shiny [color = '#4682B4']
+  plot_bar -> shiny [color = '#2E8B57']
+  plot_line -> shiny [color = '#2E8B57']
+  
+  # Main subgraph for Data Exploration and Visualisation
+  subgraph cluster_explore {
+    label = <Data Exploration and Visualisation>
+    labelloc = t
+    labeljust = c
+    style = filled
+    fillcolor = '#F5F5F5'
+    color = '#696969'
+    margin = 20
+    fontname = 'Helvetica-Bold'
+    fontsize = 14
+    
+    # Statisical Analysis
+    subgraph cluster_statistics {
+      label = <Statistical Analysis>
+      labelloc = t
+      labeljust = c
+      style = filled
+      fillcolor = '#FFF8DC'
+      color = '#DAA520'
+      margin = 15
+      fontsize = 12
+      bayesian
+      entropy
+    }
+    
+    # Temporal Analysis subgroup
+    subgraph cluster_temporal {
+      label = <Temporal Analysis>
+      labelloc = t
+      labeljust = c
+      style = filled
+      fillcolor = '#F0FFF0'
+      color = '#228B22'
+      margin = 15
+      fontsize = 12
+      plot_bar
+      plot_line
+    }
+    
+    # Influence Analysis subgroup
+    subgraph cluster_influence {
+      label = <Influence Analysis>
+      labelloc = t
+      labeljust = c
+      style = filled
+      fillcolor = '#F0F8FF'
+      color = '#4169E1'
+      margin = 15
+      fontsize = 12
+      plot_net
+    }
+    
+    shiny
+  }
+}
+")
+```
+
+## Explanation
+
+1.  **Data Pre-processing**: Ensure data integrity prior to analysis.
+
+    -   Validation of Node and Edge integrity - Check and remove any missing or duplicate nodes and edges to ensure a consistent and accurate representation of the network.
+
+    -   Schema compliance: Verify all edges against the predefined schema to confirm that source and destination node types were correctly aligned with their corresponding edge types. Any incorrect edge and nodes identified will be removed.
+
+    -   Data Enhancement: Creation of additional columns to facilitate analysis.
+
+    -   Column Standardisation: Column names will be renamed and formatted to support the creation of network graph.
+
+2.  **Data Exploration and Visualisation**
+
+    -   With reference to relevant literature in musicology, network science and cultural analysis, the following statistical measures will be applied.
+
+        -   **Bayesian Surprise**: To quantify whether influence had occurred gradually over time or emerged in bursts.
+
+        -   **Genre Entropy**: To measure diversity of genres associated with each artist or production, providing insights into stylistic concentration or crossover influence.
+
+    -   Visualisations will play a central role in pattern recognition and deriving insights.
+
+        -   **Interactive Network Graphs** will be used to explore artistic relationships, genre influences, and collaboration patterns, helping to identify key players across the musical landscape.
+
+        -   **Bar and Line Charts** will illustrate influence and releases over time, highlighting pivotal moments in Sailor Shift’s career and the broader evolution of Oceanus Folk.
+
+        -   **User-Driven Exploration** will be enabled through a Shiny app, allowing Silas Reed and readers to interact with the network, adjust filters, and uncover insights based on their interests.
+:::
 
 # Prototype Sketches
 
