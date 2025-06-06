@@ -161,13 +161,13 @@ digraph flowchart {
 
 1.  **Data Pre-processing**: Ensure data integrity prior to analysis.
 
-    -   Validation of Node and Edge integrity - Check and remove any missing or duplicate nodes and edges to ensure a consistent and accurate representation of the network.
+    -   **Validation of Node and Edge integrity**: Check and remove any missing or duplicate nodes and edges to ensure a consistent and accurate representation of the network.
 
-    -   Schema compliance: Verify all edges against the predefined schema to confirm that source and destination node types were correctly aligned with their corresponding edge types. Any incorrect edge and nodes identified will be removed.
+    -   **Schema compliance**: Verify all edges against the predefined schema to confirm that source and destination node types were correctly aligned with their corresponding edge types. Any incorrect edge and nodes identified will be removed.
 
-    -   Data Enhancement: Creation of additional columns to facilitate analysis.
+    -   **Data Enhancement**: Creation of additional columns to facilitate analysis.
 
-    -   Column Standardisation: Column names will be renamed and formatted to support the creation of network graph.
+    -   **Column Standardisation**: Column names will be renamed and formatted to support the creation of network graph.
 
 2.  **Data Exploration and Visualisation**
 
