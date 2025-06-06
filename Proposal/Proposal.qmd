@@ -71,7 +71,7 @@ digraph flowchart {
   # Input nodes
   input [label = 'MC1_graph.json', fillcolor = '#FFE4B5', color = '#FFA500', penwidth = 1.5]
   read [label = 'Read input', fillcolor = '#E6E6FA', color = '#9370DB']
-  clean [label = 'Clean data', fillcolor = '#E6E6FA', color = '#9370DB']
+  clean [label = 'Data Pre-processing', fillcolor = '#E6E6FA', color = '#9370DB']
   
   # Visualization nodes
   plot_net [label = 'Plot network graphs', fillcolor = '#ADD8E6', color = '#4682B4']
