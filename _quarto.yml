@@ -5,6 +5,10 @@ website:
   title: "ISSS608-VAAProject"
   navbar:
     left:
+    - text: "Proposal"
+      href: "Proposal/Proposal.html"
+    
+    Right:
       - href: index.qmd
         text: Home
       - about.qmd
