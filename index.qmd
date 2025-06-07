@@ -1,3 +1,22 @@
 ---
-title: "ISSS608-VAAProject"
+title: "Sailing the Currents: The Rise of Sailor Shift and Oceanus Folk"
 ---
+Sailor Shift’s meteoric rise has not only defined her as a global icon but also propelled Oceanus Folk from a niche island genre to a worldwide musical force. *Sailing the Currents* is an interactive visual analytics platform designed for journalists, researchers, and fans to explore Sailor’s career, her collaborative network, and the growing influence of Oceanus Folk across the global music landscape.
+
+As the genre’s popularity spreads, understanding how influence flows through musical communities becomes increasingly important. This project uses advanced network analysis and visualization to uncover the hidden connections, key collaborations, and pivotal moments that shaped Sailor’s trajectory and the genre’s evolution.
+
+This project hopes to help users explore:
+
+-   Sailor’s influences and collaborators over time
+
+-   The spread and transformation of Oceanus Folk
+
+-   Career timelines and influence networks of prominent and emerging artists
+
+-   Comparative trajectories across multiple artists
+
+-   Predictions of the next Oceanus Folk stars
+
+The platform features interactive network graphs, timelines, and dynamic visual tools that reveal the structure and evolution of musical influence.
+
+By merging narrative with data-driven exploration, *Sailing the Currents* offers a compelling look at how one artist’s journey sparked a cultural movement—and what it takes to shape the future of music in an interconnected world.
