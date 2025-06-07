@@ -35,7 +35,7 @@ This project explores the dataset provided by [VAST Challenge 2025 Mini-Challeng
 Each node represents a person, song, record label, album, or musical group. The edges represent the relationships between connected nodes, as defined below.
 
 | Edge Type | Source Node(s) | Destination Node(s) | Description |
-|------------------|------------------|------------------|-------------------|
+|----|----|----|----|
 | PerformerOf | Person, MusicalGroup | Song, Album | Source performed the destination. |
 | ComposerOf | Person | Song, Album | Source composed the destination. |
 | ProducerOf | Person, RecordLabel | Song, Album, Person, MusicalGroup | Source participated in the production of the destination's work. |
