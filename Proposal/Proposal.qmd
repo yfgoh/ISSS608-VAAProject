@@ -188,7 +188,17 @@ digraph flowchart {
         -   **User-Driven Exploration** will be enabled through a Shiny app, allowing Silas Reed and readers to interact with the network, adjust filters, and uncover insights based on their interests.
 :::
 
-# Shiny Prototype Sketches 
+# Shiny Prototype Sketches
+
+This is what we would envisage for our Shiny App.
+
+![](images/clipboard-3684632109.png)
+
+Input variables such as Artist Name, Year and Genre will be included in the sidebar. This allows selection of different artists for analysis and filtering by Year and Genre to understand the evolution over time and influence impact on different Genre. It will be set to default variables based on the scope of the Mini Case 1, but will allow users to customise their selections where required for further analysis.
+
+The output will include the plots and insights which we have obtained based on the guiding questions given in Mini Case 1.
+
+We have also started on the prototyping using Shiny as follows:
 
 ```{r, echo = FALSE}
 library(shinydashboard)
@@ -422,36 +432,34 @@ shinyApp(ui, server)
 
 # R Packages
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Data Manipulation and Project Reporting
 
-- **`tidyverse`**: R packages for data science workflows.
-- **`dplyr`**: Data manipulation using grammar of data (e.g., `filter()`, `summarise()`).
-- **`stringr`**: String operations with simplified syntax.
-- **`lubridate`**: Easy handling of dates and times.
-- **`jsonlite`**: Read and write JSON data.
-- **`knitr`**: Generates documents that uses both R code and markdown.
+-   **`tidyverse`**: R packages for data science workflows.
+-   **`dplyr`**: Data manipulation using grammar of data (e.g., `filter()`, `summarise()`).
+-   **`stringr`**: String operations with simplified syntax.
+-   **`lubridate`**: Easy handling of dates and times.
+-   **`jsonlite`**: Read and write JSON data.
+-   **`knitr`**: Generates documents that uses both R code and markdown.
 
 ### Data Visualization
 
-- **`ggplot2`**: Grammar of Graphics framework for plotting.
-- **`ggtext`**: Adds markdown/HTML text support to ggplot.
-- **`patchwork`**: Combine multiple ggplots in grid layouts.
-- **`ggnewscale`**: Enables multiple `fill` or `colour` scales in the same plot.
-- **`scales`**: Control axis breaks, labels (e.g. percentages, currency).
+-   **`ggplot2`**: Grammar of Graphics framework for plotting.
+-   **`ggtext`**: Adds markdown/HTML text support to ggplot.
+-   **`patchwork`**: Combine multiple ggplots in grid layouts.
+-   **`ggnewscale`**: Enables multiple `fill` or `colour` scales in the same plot.
+-   **`scales`**: Control axis breaks, labels (e.g. percentages, currency).
 
 ### Interactive and Web
 
-- **`shiny`**: Build interactive web applications in R.
-- **`ggiraph`**: Adds interactivity (e.g. hover, tooltips) to ggplot visualisations.
+-   **`shiny`**: Build interactive web applications in R.
+-   **`ggiraph`**: Adds interactivity (e.g. hover, tooltips) to ggplot visualisations.
 
 ### Network and Graph Analysis
 
-- **`igraph`**: Graph package for network.
-- **`tidygraph`**: Tidy interface for working with graphs based on `dplyr`.
-- **`ggraph`**: ggplot2-based framework for visualising graphs and networks.
-
+-   **`igraph`**: Graph package for network.
+-   **`tidygraph`**: Tidy interface for working with graphs based on `dplyr`.
+-   **`ggraph`**: ggplot2-based framework for visualising graphs and networks.
 :::
 
 # Project Schedule
@@ -471,7 +479,7 @@ task_data <- data.frame(
               "Shiny App", 
               "Poster", 
               "Final Submission"),
-  start = as.Date(c("2025-05-10", "2025-05-18", "2025-06-01", "2025-06-01", "2025-06-08", "2025-06-15", "2025-06-27")),
+  start = as.Date(c("2025-05-10", "2025-05-18", "2025-06-01", "2025-06-01", "2025-06-07", "2025-06-15", "2025-06-27")),
   end   = as.Date(c("2025-05-17", "2025-05-31", "2025-06-08", "2025-06-10", "2025-06-14", "2025-06-26", "2025-07-06"))
 )
 
