@@ -305,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="methodology" class="level1">
 <h1>Methodology</h1>
-<p>Download the library for DiagrammeR before loading the packages.</p>
+<p>Download the libraries (if required) before loading the packages:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Diagram</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Explanation</a></li></ul>
 <div class="tab-content">
@@ -409,8 +409,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-2922c5c86ce28d9ca9ce" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-2922c5c86ce28d9ca9ce">{"x":{"diagram":"\ndigraph flowchart {\n  graph [layout = dot, rankdir = TB, fontname = \"Helvetica\", fontsize = 12]\n  \n  # Global node settings\n  node [shape = box, style = filled, fontname = \"Helvetica\"]\n  \n  # Input nodes\n  input [label = \"MC1_graph.json\", fillcolor = \"#FFE4B5\", color = \"#FFA500\", penwidth = 1.5]\n  read [label = \"Read input\", fillcolor = \"#E6E6FA\", color = \"#9370DB\"]\n  clean [label = \"Data Pre-processing\", fillcolor = \"#E6E6FA\", color = \"#9370DB\"]\n  \n  # Visualization nodes\n  plot_net [label = \"Plot network graphs\", fillcolor = \"#ADD8E6\", color = \"#4682B4\"]\n  plot_bar [label = \"Plot barchart\", fillcolor = \"#98FB98\", color = \"#2E8B57\"]\n  plot_line [label = \"Plot line chart\", fillcolor = \"#98FB98\", color = \"#2E8B57\"]\n  \n  # Analysis nodes\n  bayesian [label = \"Bayesian Surprise\", fillcolor = \"#FFDAB9\", color = \"#CD853F\"]\n  entropy [label = \"Genre Entropy\", fillcolor = \"#FFDAB9\", color = \"#CD853F\"]\n  \n  # Output node\n  shiny [label = \"Shiny App\", fillcolor = \"#FFB6C1\", color = \"#FF69B4\", shape = ellipse, style = \"filled,rounded\"]\n  \n  # Edges\n  input -> read -> clean\n  clean -> plot_net [color = \"#4682B4\"]\n  clean -> plot_bar [color = \"#2E8B57\"]\n  clean -> plot_line [color = \"#2E8B57\"]\n  clean -> bayesian [color = \"#CD853F\"]\n  clean -> entropy [color = \"#CD853F\"]\n  bayesian -> plot_line [color = \"#CD853F\"]\n  entropy -> plot_line [color = \"#CD853F\"]\n  plot_net -> shiny [color = \"#4682B4\"]\n  plot_bar -> shiny [color = \"#2E8B57\"]\n  plot_line -> shiny [color = \"#2E8B57\"]\n  \n  # Main subgraph for Data Exploration and Visualisation\n  subgraph cluster_explore {\n    label = <Data Exploration and Visualisation>\n    labelloc = t\n    labeljust = c\n    style = filled\n    fillcolor = \"#F5F5F5\"\n    color = \"#696969\"\n    margin = 20\n    fontname = \"Helvetica-Bold\"\n    fontsize = 14\n    \n    # Statisical Analysis\n    subgraph cluster_statistics {\n      label = <Statistical Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#FFF8DC\"\n      color = \"#DAA520\"\n      margin = 15\n      fontsize = 12\n      bayesian\n      entropy\n    }\n    \n    # Temporal Analysis subgroup\n    subgraph cluster_temporal {\n      label = <Temporal Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#F0FFF0\"\n      color = \"#228B22\"\n      margin = 15\n      fontsize = 12\n      plot_bar\n      plot_line\n    }\n    \n    # Influence Analysis subgroup\n    subgraph cluster_influence {\n      label = <Influence Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#F0F8FF\"\n      color = \"#4169E1\"\n      margin = 15\n      fontsize = 12\n      plot_net\n    }\n    \n    shiny\n  }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-bd064030506ab5b50a0d" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-bd064030506ab5b50a0d">{"x":{"diagram":"\ndigraph flowchart {\n  graph [layout = dot, rankdir = TB, fontname = \"Helvetica\", fontsize = 12]\n  \n  # Global node settings\n  node [shape = box, style = filled, fontname = \"Helvetica\"]\n  \n  # Input nodes\n  input [label = \"MC1_graph.json\", fillcolor = \"#FFE4B5\", color = \"#FFA500\", penwidth = 1.5]\n  read [label = \"Read input\", fillcolor = \"#E6E6FA\", color = \"#9370DB\"]\n  clean [label = \"Data Pre-processing\", fillcolor = \"#E6E6FA\", color = \"#9370DB\"]\n  \n  # Visualization nodes\n  plot_net [label = \"Plot network graphs\", fillcolor = \"#ADD8E6\", color = \"#4682B4\"]\n  plot_bar [label = \"Plot barchart\", fillcolor = \"#98FB98\", color = \"#2E8B57\"]\n  plot_line [label = \"Plot line chart\", fillcolor = \"#98FB98\", color = \"#2E8B57\"]\n  \n  # Analysis nodes\n  bayesian [label = \"Bayesian Surprise\", fillcolor = \"#FFDAB9\", color = \"#CD853F\"]\n  entropy [label = \"Genre Entropy\", fillcolor = \"#FFDAB9\", color = \"#CD853F\"]\n  \n  # Output node\n  shiny [label = \"Shiny App\", fillcolor = \"#FFB6C1\", color = \"#FF69B4\", shape = ellipse, style = \"filled,rounded\"]\n  \n  # Edges\n  input -> read -> clean\n  clean -> plot_net [color = \"#4682B4\"]\n  clean -> plot_bar [color = \"#2E8B57\"]\n  clean -> plot_line [color = \"#2E8B57\"]\n  clean -> bayesian [color = \"#CD853F\"]\n  clean -> entropy [color = \"#CD853F\"]\n  bayesian -> plot_line [color = \"#CD853F\"]\n  entropy -> plot_line [color = \"#CD853F\"]\n  plot_net -> shiny [color = \"#4682B4\"]\n  plot_bar -> shiny [color = \"#2E8B57\"]\n  plot_line -> shiny [color = \"#2E8B57\"]\n  \n  # Main subgraph for Data Exploration and Visualisation\n  subgraph cluster_explore {\n    label = <Data Exploration and Visualisation>\n    labelloc = t\n    labeljust = c\n    style = filled\n    fillcolor = \"#F5F5F5\"\n    color = \"#696969\"\n    margin = 20\n    fontname = \"Helvetica-Bold\"\n    fontsize = 14\n    \n    # Statisical Analysis\n    subgraph cluster_statistics {\n      label = <Statistical Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#FFF8DC\"\n      color = \"#DAA520\"\n      margin = 15\n      fontsize = 12\n      bayesian\n      entropy\n    }\n    \n    # Temporal Analysis subgroup\n    subgraph cluster_temporal {\n      label = <Temporal Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#F0FFF0\"\n      color = \"#228B22\"\n      margin = 15\n      fontsize = 12\n      plot_bar\n      plot_line\n    }\n    \n    # Influence Analysis subgroup\n    subgraph cluster_influence {\n      label = <Influence Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#F0F8FF\"\n      color = \"#4169E1\"\n      margin = 15\n      fontsize = 12\n      plot_net\n    }\n    \n    shiny\n  }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -446,18 +446,247 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Shiny Prototype Sketches</h1>
 <p>This is what we would envisage for our Shiny App.</p>
 <p><img src="images/clipboard-3684632109.png" class="img-fluid"></p>
+<p><img src="images/clipboard-3324770575.png" class="img-fluid"></p>
+<p><u><strong>Input</strong></u></p>
 <p>Input variables such as Artist Name, Year and Genre will be included in the sidebar. This allows selection of different artists for analysis and filtering by Year and Genre to understand the evolution over time and influence impact on different Genre. It will be set to default variables based on the scope of the Mini Case 1, but will allow users to customise their selections where required for further analysis.</p>
+<p><u><strong>Output</strong></u></p>
 <p>The output will include the plots and insights which we have obtained based on the guiding questions given in Mini Case 1.</p>
 <p>We have also started on the prototyping using Shiny as follows:</p>
 <div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Proposal_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<details class="code-fold">
+<summary>Show plot code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shinydashboard)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(collapsibleTree)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visNetwork)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shinycssloaders)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bslib)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>website_theme <span class="ot">&lt;-</span> <span class="fu">bs_theme</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">bootswatch =</span> <span class="st">"minty"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">primary =</span> <span class="st">"#2C3E50"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">secondary =</span> <span class="st">"#E67E22"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">success =</span> <span class="st">"#1ABC9C"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_font =</span> <span class="fu">font_google</span>(<span class="st">"Quicksand"</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">navbar_dark =</span> <span class="cn">TRUE</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">navbarPage</span>(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="at">title =</span> <span class="fu">div</span>(</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div style='display: flex; flex-direction: column; justify-content: flex-end; margin-top: 8px; line-height: 1.2; color: #0077B6; font-weight: bold; font-size: 16px;'&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;span&gt;Oceanus Folk:&lt;/span&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;span&gt;Then-and-Now&lt;/span&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="st">  "</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> website_theme,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"main_tabs"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  tags<span class="sc">$</span><span class="fu">head</span>(</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    tags<span class="sc">$</span><span class="fu">style</span>(<span class="fu">HTML</span>(<span class="st">"</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="st">      .navbar-nav &gt; .active &gt; a,</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="st">      .navbar-nav &gt; .active &gt; a:hover,</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="st">      .navbar-nav &gt; .active &gt; a:focus {</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="st">        color: #2C3E50 !important;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="st">        background-color: transparent !important;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="st">        border-bottom: 2px solid #2C3E50 !important;</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="st">        font-weight: 600;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="st">      }</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="st">      .navbar-nav &gt; li &gt; a:hover {</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="st">        background-color: transparent !important;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="st">        border-bottom: 2px solid #aaa !important;</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="st">        color: #2C3E50 !important;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="st">      }</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="st">      .navbar-nav &gt; li &gt; a {</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="st">        padding-top: 15px !important;</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="st">        padding-bottom: 10px !important;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="st">      }</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="st">    "</span>))</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">tabPanel</span>(<span class="st">"Profile of Sailor's Career"</span>,</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"artist"</span>, <span class="st">"Enter Artist"</span>, <span class="at">value =</span> <span class="st">""</span>),</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"year_range"</span>, <span class="st">"Filter by Year:"</span>, <span class="at">min =</span> <span class="dv">1980</span>, <span class="at">max =</span> <span class="dv">2040</span>,</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>                  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">1980</span>, <span class="dv">2040</span>), <span class="at">step =</span> <span class="dv">1</span>, <span class="at">sep =</span> <span class="st">""</span>, <span class="at">animate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>      <span class="fu">checkboxGroupInput</span>(<span class="st">"filter_genres"</span>, <span class="st">"Filter by Genre:"</span>, </span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>                         <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">"Oceanus Folk"</span>, <span class="st">"Indie Pop"</span>, <span class="st">"Indie Folk"</span>))</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tabsetPanel</span>(</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"Overview"</span>, </span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>          <span class="fu">withSpinner</span>(<span class="fu">collapsibleTreeOutput</span>(<span class="st">"influenceTree"</span>, <span class="at">width =</span> <span class="st">"100%"</span>, <span class="at">height =</span> <span class="st">"400px"</span>)),</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>          tags<span class="sc">$</span><span class="fu">hr</span>(),</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>          <span class="fu">htmlOutput</span>(<span class="st">"sailorBio"</span>)</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"1a: Influenced By Sailor"</span>,</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>          <span class="fu">plotOutput</span>(<span class="st">"influencedByPlot"</span>, <span class="at">height =</span> <span class="st">"400px"</span>),</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>          <span class="fu">htmlOutput</span>(<span class="st">"insight_1a"</span>)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"1b: Collaborations"</span>,</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>          <span class="fu">visNetworkOutput</span>(<span class="st">"collabInfluenceNetwork"</span>, <span class="at">height =</span> <span class="st">"500px"</span>),</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>          <span class="fu">htmlOutput</span>(<span class="st">"insight_1b"</span>)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"1c: Impact on Oceanus Folk"</span>,</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>          <span class="fu">plotOutput</span>(<span class="st">"broadInfluencePlot"</span>, <span class="at">height =</span> <span class="st">"400px"</span>),</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>          <span class="fu">htmlOutput</span>(<span class="st">"insight_1c"</span>)</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="fu">tabPanel</span>(<span class="st">"Influence of Oceanus Folk"</span>,</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textInput</span>(<span class="st">"artist"</span>, <span class="st">"Enter Artist"</span>, <span class="at">value =</span> <span class="st">""</span>),</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"year_range"</span>, <span class="st">"Filter by Year:"</span>, <span class="at">min =</span> <span class="dv">1980</span>, <span class="at">max =</span> <span class="dv">2040</span>,</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>                  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">1980</span>, <span class="dv">2040</span>), <span class="at">step =</span> <span class="dv">1</span>, <span class="at">sep =</span> <span class="st">""</span>, <span class="at">animate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>      <span class="fu">checkboxGroupInput</span>(<span class="st">"filter_genres"</span>, <span class="st">"Filter by Genre:"</span>, </span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>                         <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">"Oceanus Folk"</span>, <span class="st">"Indie Pop"</span>, <span class="st">"Indie Folk"</span>))</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tabsetPanel</span>(</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"2a: Rise of Oceanus Folk's Influence"</span>, </span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">plotOutput</span>(<span class="st">"genreTrendPlot"</span>, <span class="at">height =</span> <span class="st">"400px"</span>),</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">htmlOutput</span>(<span class="st">"insight_2a"</span>)</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"2b: Influenced Genres &amp; Top Artists"</span>, </span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">plotOutput</span>(<span class="st">"influencedGenresPlot"</span>, <span class="at">height =</span> <span class="st">"400px"</span>),</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">tableOutput</span>(<span class="st">"topInfluencedArtists"</span>),</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">htmlOutput</span>(<span class="st">"insight_2b"</span>)</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabPanel</span>(<span class="st">"2c: Evolution of Oceanus Folk"</span>, </span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">plotOutput</span>(<span class="st">"evolvingOceanusPlot"</span>, <span class="at">height =</span> <span class="st">"400px"</span>),</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">htmlOutput</span>(<span class="st">"insight_2c"</span>)</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="fu">tabPanel</span>(<span class="st">"Oceanus Folk Rising Star"</span>,</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>      <span class="fu">selectInput</span>(<span class="st">"selected_artists"</span>, <span class="st">"Select Artists to Compare:"</span>,</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>                  <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">"Sailor Shift"</span>, <span class="st">"Maya Blue"</span>, <span class="st">"Juno Rivers"</span>),</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>                  <span class="at">selected =</span> <span class="fu">c</span>(<span class="st">"Sailor Shift"</span>, <span class="st">"Maya Blue"</span>, <span class="st">"Juno Rivers"</span>),</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>                  <span class="at">multiple =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"year_range"</span>, <span class="st">"Filter by Year:"</span>, <span class="at">min =</span> <span class="dv">2000</span>, <span class="at">max =</span> <span class="dv">2040</span>,</span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>                  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2040</span>), <span class="at">step =</span> <span class="dv">1</span>, <span class="at">sep =</span> <span class="st">""</span>, <span class="at">animate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>      <span class="fu">checkboxGroupInput</span>(<span class="st">"filter_genres"</span>, <span class="st">"Filter by Genre:"</span>, </span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>                         <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">"Oceanus Folk"</span>, <span class="st">"Indie Pop"</span>, <span class="st">"Indie Folk"</span>))</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mainPanel</span>(</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tabsetPanel</span>(</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tabPanel</span>(<span class="st">"3a: Career Trajectories of 3 Artists"</span>, </span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">plotOutput</span>(<span class="st">"careerComparePlot"</span>, <span class="at">height =</span> <span class="st">"400px"</span>),</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">htmlOutput</span>(<span class="st">"insight_3a"</span>)</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tabPanel</span>(<span class="st">"3b: Prediction of Future Rising Stars"</span>, </span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">tableOutput</span>(<span class="st">"predictedStars"</span>),</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">htmlOutput</span>(<span class="st">"insight_3b"</span>),</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>influenceTree <span class="ot">&lt;-</span> <span class="fu">renderCollapsibleTree</span>({</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>    <span class="fu">collapsibleTree</span>(</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>      <span class="at">df =</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>        <span class="at">Genre =</span> <span class="st">"Oceanus Folk"</span>, </span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>        <span class="at">Mentor =</span> <span class="st">"Ivy Echoes"</span>, </span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>        <span class="at">Artist =</span> <span class="st">"Sailor Shift"</span></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>      <span class="at">hierarchy =</span> <span class="fu">c</span>(<span class="st">"Genre"</span>, <span class="st">"Mentor"</span>, <span class="st">"Artist"</span>),</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>      <span class="at">root =</span> <span class="st">"Oceanus Folk"</span></span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>collabInfluenceNetwork <span class="ot">&lt;-</span> <span class="fu">renderVisNetwork</span>({</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>  nodes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Sailor"</span>, <span class="st">"Ivy Echos"</span>, <span class="st">"Node1"</span>, <span class="st">"Node2"</span>))</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>  edges <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visNetwork</span>(nodes, edges)</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>yourPlotName <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="st">"To be added"</span>, <span class="at">cex =</span> <span class="fl">1.5</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>insight_1a <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"&lt;p&gt;&lt;strong&gt;Insight:&lt;/strong&gt; &lt;To be Added&gt;.&lt;/p&gt;"</span>)</span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>insight_1b <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"&lt;p&gt;&lt;strong&gt;Insight:&lt;/strong&gt; &lt;To be Added&gt;. &lt;/p&gt;"</span>)</span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>insight_1c <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"&lt;p&gt;&lt;strong&gt;Insight:&lt;/strong&gt; &lt;To be Added&gt;.&lt;/p&gt;"</span>)</span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a><span class="co"># 2a: Rise of Oceanus Folk Influence</span></span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>insight_2a <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"&lt;p&gt;&lt;strong&gt;Insight:&lt;/strong&gt; &lt; To be added&gt;.&lt;/p&gt;"</span>)</span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a><span class="co"># 2b: Genres &amp; Artists Influenced</span></span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>insight_2b <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"&lt;p&gt;&lt;strong&gt;Insight:&lt;/strong&gt; &lt;To be Added&gt;.&lt;/p&gt;"</span>)</span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a><span class="co"># 2c: Evolution of Oceanus Folk</span></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>insight_2c <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"&lt;p&gt;&lt;strong&gt;Insight:&lt;/strong&gt; &lt;To be Added&gt;.&lt;/p&gt;"</span>)</span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a><span class="co"># 3a: Career trajectories of selected artists</span></span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>careerComparePlot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a>  years <span class="ot">&lt;-</span> <span class="dv">2020</span><span class="sc">:</span><span class="dv">2030</span></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(years, <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">85</span>, <span class="dv">90</span>, <span class="dv">92</span>), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"#0073B7"</span>,</span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">xlab =</span> <span class="st">"Year"</span>, <span class="at">ylab =</span> <span class="st">"No. of Notable Songs"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"No. of Notable Songs Over Time"</span>)</span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(years, <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">18</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">55</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">75</span>), <span class="at">col =</span> <span class="st">"#E67E22"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(years, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">20</span>, <span class="dv">28</span>, <span class="dv">35</span>, <span class="dv">45</span>, <span class="dv">55</span>, <span class="dv">60</span>), <span class="at">col =</span> <span class="st">"#1ABC9C"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Sailor Shift"</span>, <span class="st">"Maya Blue"</span>, <span class="st">"Juno Rivers"</span>),</span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#0073B7"</span>, <span class="st">"#E67E22"</span>, <span class="st">"#1ABC9C"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>insight_3a <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"&lt;p&gt;&lt;strong&gt;Insight:&lt;/strong&gt; &lt;To be Added&gt;.&lt;/p&gt;"</span>)</span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a><span class="co"># 3b: Predicted rising stars</span></span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>insight_3b <span class="ot">&lt;-</span> <span class="fu">renderUI</span>({</span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HTML</span>(<span class="st">"&lt;p&gt;&lt;strong&gt;Prediction:&lt;/strong&gt; &lt;To be Added&gt;.&lt;/p&gt;"</span>)</span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">shiny.launch.browser =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</div>
-</div>
+<p><img src="images/clipboard-3948183170.png" class="img-fluid"></p>
+<p><img src="images/clipboard-3193380152.png" class="img-fluid"></p>
+<p><img src="images/clipboard-3921027426.png" class="img-fluid"></p>
 </section>
 <section id="r-packages" class="level1">
 <h1>R Packages</h1>
@@ -502,45 +731,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="project-schedule" class="level1">
 <h1>Project Schedule</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>task_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">content =</span> <span class="fu">c</span>(<span class="st">"Initial Project Discussion"</span>, </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Data Pre-processing and Exploratory Data Analysis"</span>, </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Project Proposal"</span>, </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Data Visualisations and Findings"</span>, </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Shiny App"</span>, </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Poster"</span>, </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Final Submission"</span>),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">start =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2025-05-10"</span>, <span class="st">"2025-05-18"</span>, <span class="st">"2025-06-01"</span>, <span class="st">"2025-06-01"</span>, <span class="st">"2025-06-07"</span>, <span class="st">"2025-06-15"</span>, <span class="st">"2025-06-27"</span>)),</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">end   =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2025-05-17"</span>, <span class="st">"2025-05-31"</span>, <span class="st">"2025-06-08"</span>, <span class="st">"2025-06-10"</span>, <span class="st">"2025-06-14"</span>, <span class="st">"2025-06-26"</span>, <span class="st">"2025-07-06"</span>))</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>task_data <span class="ot">&lt;-</span> task_data <span class="sc">%&gt;%</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(start) <span class="sc">%&gt;%</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">content =</span> <span class="fu">factor</span>(content, <span class="at">levels =</span> content))</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(task_data, <span class="fu">aes</span>(<span class="at">x =</span> start, <span class="at">xend =</span> end, <span class="at">y =</span> content, <span class="at">yend =</span> content)) <span class="sc">+</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_breaks =</span> <span class="st">"1 week"</span>,</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_labels =</span> <span class="st">"%b %d"</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Project Schedule (Gantt Chart)"</span>,</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Task"</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Proposal_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Proposal_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="1344"></p>
 </figure>
 </div>
 </div>

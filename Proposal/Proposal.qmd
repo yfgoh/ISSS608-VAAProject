@@ -51,7 +51,7 @@ Each node represents a person, song, record label, album, or musical group. The 
 
 # Methodology
 
-Download the library for DiagrammeR before loading the packages.
+Download the libraries (if required) before loading the packages:
 
 ```{r}
 #| echo: FALSE
@@ -194,13 +194,23 @@ This is what we would envisage for our Shiny App.
 
 ![](images/clipboard-3684632109.png)
 
+![](images/clipboard-3324770575.png)
+
+[**Input**]{.underline}
+
 Input variables such as Artist Name, Year and Genre will be included in the sidebar. This allows selection of different artists for analysis and filtering by Year and Genre to understand the evolution over time and influence impact on different Genre. It will be set to default variables based on the scope of the Mini Case 1, but will allow users to customise their selections where required for further analysis.
+
+[**Output**]{.underline}
 
 The output will include the plots and insights which we have obtained based on the guiding questions given in Mini Case 1.
 
 We have also started on the prototyping using Shiny as follows:
 
-```{r, echo = FALSE}
+```{r}
+#| code-fold: true
+#| code-summary: "Show plot code"
+#| eval: false
+
 library(shinydashboard)
 library(collapsibleTree)
 library(visNetwork)
@@ -430,6 +440,12 @@ options(shiny.launch.browser = TRUE)
 shinyApp(ui, server)
 ```
 
+![](images/clipboard-3948183170.png)
+
+![](images/clipboard-3193380152.png)
+
+![](images/clipboard-3921027426.png)
+
 # R Packages
 
 ::: panel-tabset
@@ -464,7 +480,7 @@ shinyApp(ui, server)
 
 # Project Schedule
 
-```{r}
+```{r, echo=FALSE, fig.width=14, fig.height=6}
 library(dplyr)
 library(forcats)
 library(ggplot2)
@@ -480,7 +496,7 @@ task_data <- data.frame(
               "Poster", 
               "Final Submission"),
   start = as.Date(c("2025-05-10", "2025-05-18", "2025-06-01", "2025-06-01", "2025-06-07", "2025-06-15", "2025-06-27")),
-  end   = as.Date(c("2025-05-17", "2025-05-31", "2025-06-08", "2025-06-10", "2025-06-14", "2025-06-26", "2025-07-06"))
+  end   = as.Date(c("2025-05-17", "2025-05-31", "2025-06-08", "2025-06-11", "2025-06-14", "2025-06-26", "2025-07-06"))
 )
 
 task_data <- task_data %>%
@@ -489,15 +505,37 @@ task_data <- task_data %>%
 
 # Plot
 ggplot(task_data, aes(x = start, xend = end, y = content, yend = content)) +
+
   geom_segment(size = 8, color = "steelblue") +
+  
+  # Red dotted lines
+  geom_segment(
+    aes(x = end, xend = end, y = as.numeric(content), yend = 0),
+    linetype = "dotted", color = "red"
+  ) +
+
+ geom_text(
+  aes(x = end, y = -0.1, label = format(end, "%b %d")),
+  color = "red", size = 3, vjust = 0.5, hjust = 0.5
+) +
+  
+  coord_cartesian(clip = "off") +
+
   scale_x_date(
     date_breaks = "1 week",
     date_labels = "%b %d"
   ) +
+  
   labs(
     title = "Project Schedule (Gantt Chart)",
     x = "Date", y = "Task"
   ) +
-  theme_minimal(base_size = 12) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid = element_blank()
+  ) +
+  
+  theme_minimal(base_size = 12)
 ```
