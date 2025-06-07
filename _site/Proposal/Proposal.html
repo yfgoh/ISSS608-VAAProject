@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,10 +70,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-ddd961a2510921635943dfbbd19534c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
-  <li><a href="#prototype-sketches" id="toc-prototype-sketches" class="nav-link" data-scroll-target="#prototype-sketches">Prototype Sketches</a></li>
+  <li><a href="#shiny-prototype-sketches" id="toc-shiny-prototype-sketches" class="nav-link" data-scroll-target="#shiny-prototype-sketches">Shiny Prototype Sketches</a></li>
   <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a></li>
   <li><a href="#project-schedule" id="toc-project-schedule" class="nav-link" data-scroll-target="#project-schedule">Project Schedule</a></li>
   </ul>
@@ -305,6 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="methodology" class="level1">
 <h1>Methodology</h1>
+<p>Download the library for DiagrammeR before loading the packages.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Diagram</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Explanation</a></li></ul>
 <div class="tab-content">
@@ -408,8 +409,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-e286f8ccf18eb6599094" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-e286f8ccf18eb6599094">{"x":{"diagram":"\ndigraph flowchart {\n  graph [layout = dot, rankdir = TB, fontname = \"Helvetica\", fontsize = 12]\n  \n  # Global node settings\n  node [shape = box, style = filled, fontname = \"Helvetica\"]\n  \n  # Input nodes\n  input [label = \"MC1_graph.json\", fillcolor = \"#FFE4B5\", color = \"#FFA500\", penwidth = 1.5]\n  read [label = \"Read input\", fillcolor = \"#E6E6FA\", color = \"#9370DB\"]\n  clean [label = \"Data Pre-processing\", fillcolor = \"#E6E6FA\", color = \"#9370DB\"]\n  \n  # Visualization nodes\n  plot_net [label = \"Plot network graphs\", fillcolor = \"#ADD8E6\", color = \"#4682B4\"]\n  plot_bar [label = \"Plot barchart\", fillcolor = \"#98FB98\", color = \"#2E8B57\"]\n  plot_line [label = \"Plot line chart\", fillcolor = \"#98FB98\", color = \"#2E8B57\"]\n  \n  # Analysis nodes\n  bayesian [label = \"Bayesian Surprise\", fillcolor = \"#FFDAB9\", color = \"#CD853F\"]\n  entropy [label = \"Genre Entropy\", fillcolor = \"#FFDAB9\", color = \"#CD853F\"]\n  \n  # Output node\n  shiny [label = \"Shiny App\", fillcolor = \"#FFB6C1\", color = \"#FF69B4\", shape = ellipse, style = \"filled,rounded\"]\n  \n  # Edges\n  input -> read -> clean\n  clean -> plot_net [color = \"#4682B4\"]\n  clean -> plot_bar [color = \"#2E8B57\"]\n  clean -> plot_line [color = \"#2E8B57\"]\n  clean -> bayesian [color = \"#CD853F\"]\n  clean -> entropy [color = \"#CD853F\"]\n  bayesian -> plot_line [color = \"#CD853F\"]\n  entropy -> plot_line [color = \"#CD853F\"]\n  plot_net -> shiny [color = \"#4682B4\"]\n  plot_bar -> shiny [color = \"#2E8B57\"]\n  plot_line -> shiny [color = \"#2E8B57\"]\n  \n  # Main subgraph for Data Exploration and Visualisation\n  subgraph cluster_explore {\n    label = <Data Exploration and Visualisation>\n    labelloc = t\n    labeljust = c\n    style = filled\n    fillcolor = \"#F5F5F5\"\n    color = \"#696969\"\n    margin = 20\n    fontname = \"Helvetica-Bold\"\n    fontsize = 14\n    \n    # Statisical Analysis\n    subgraph cluster_statistics {\n      label = <Statistical Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#FFF8DC\"\n      color = \"#DAA520\"\n      margin = 15\n      fontsize = 12\n      bayesian\n      entropy\n    }\n    \n    # Temporal Analysis subgroup\n    subgraph cluster_temporal {\n      label = <Temporal Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#F0FFF0\"\n      color = \"#228B22\"\n      margin = 15\n      fontsize = 12\n      plot_bar\n      plot_line\n    }\n    \n    # Influence Analysis subgroup\n    subgraph cluster_influence {\n      label = <Influence Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#F0F8FF\"\n      color = \"#4169E1\"\n      margin = 15\n      fontsize = 12\n      plot_net\n    }\n    \n    shiny\n  }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-0e5e9e7ae4406713ebb3" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-0e5e9e7ae4406713ebb3">{"x":{"diagram":"\ndigraph flowchart {\n  graph [layout = dot, rankdir = TB, fontname = \"Helvetica\", fontsize = 12]\n  \n  # Global node settings\n  node [shape = box, style = filled, fontname = \"Helvetica\"]\n  \n  # Input nodes\n  input [label = \"MC1_graph.json\", fillcolor = \"#FFE4B5\", color = \"#FFA500\", penwidth = 1.5]\n  read [label = \"Read input\", fillcolor = \"#E6E6FA\", color = \"#9370DB\"]\n  clean [label = \"Data Pre-processing\", fillcolor = \"#E6E6FA\", color = \"#9370DB\"]\n  \n  # Visualization nodes\n  plot_net [label = \"Plot network graphs\", fillcolor = \"#ADD8E6\", color = \"#4682B4\"]\n  plot_bar [label = \"Plot barchart\", fillcolor = \"#98FB98\", color = \"#2E8B57\"]\n  plot_line [label = \"Plot line chart\", fillcolor = \"#98FB98\", color = \"#2E8B57\"]\n  \n  # Analysis nodes\n  bayesian [label = \"Bayesian Surprise\", fillcolor = \"#FFDAB9\", color = \"#CD853F\"]\n  entropy [label = \"Genre Entropy\", fillcolor = \"#FFDAB9\", color = \"#CD853F\"]\n  \n  # Output node\n  shiny [label = \"Shiny App\", fillcolor = \"#FFB6C1\", color = \"#FF69B4\", shape = ellipse, style = \"filled,rounded\"]\n  \n  # Edges\n  input -> read -> clean\n  clean -> plot_net [color = \"#4682B4\"]\n  clean -> plot_bar [color = \"#2E8B57\"]\n  clean -> plot_line [color = \"#2E8B57\"]\n  clean -> bayesian [color = \"#CD853F\"]\n  clean -> entropy [color = \"#CD853F\"]\n  bayesian -> plot_line [color = \"#CD853F\"]\n  entropy -> plot_line [color = \"#CD853F\"]\n  plot_net -> shiny [color = \"#4682B4\"]\n  plot_bar -> shiny [color = \"#2E8B57\"]\n  plot_line -> shiny [color = \"#2E8B57\"]\n  \n  # Main subgraph for Data Exploration and Visualisation\n  subgraph cluster_explore {\n    label = <Data Exploration and Visualisation>\n    labelloc = t\n    labeljust = c\n    style = filled\n    fillcolor = \"#F5F5F5\"\n    color = \"#696969\"\n    margin = 20\n    fontname = \"Helvetica-Bold\"\n    fontsize = 14\n    \n    # Statisical Analysis\n    subgraph cluster_statistics {\n      label = <Statistical Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#FFF8DC\"\n      color = \"#DAA520\"\n      margin = 15\n      fontsize = 12\n      bayesian\n      entropy\n    }\n    \n    # Temporal Analysis subgroup\n    subgraph cluster_temporal {\n      label = <Temporal Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#F0FFF0\"\n      color = \"#228B22\"\n      margin = 15\n      fontsize = 12\n      plot_bar\n      plot_line\n    }\n    \n    # Influence Analysis subgroup\n    subgraph cluster_influence {\n      label = <Influence Analysis>\n      labelloc = t\n      labeljust = c\n      style = filled\n      fillcolor = \"#F0F8FF\"\n      color = \"#4169E1\"\n      margin = 15\n      fontsize = 12\n      plot_net\n    }\n    \n    shiny\n  }\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -441,14 +442,104 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="prototype-sketches" class="level1">
-<h1>Prototype Sketches</h1>
+<section id="shiny-prototype-sketches" class="level1">
+<h1>Shiny Prototype Sketches</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Proposal_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="r-packages" class="level1">
 <h1>R Packages</h1>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Data Manipulation and Project Reporting</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Data Visualization</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Interactive and Web</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">Network and Graph Analysis</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<ul>
+<li><strong><code>tidyverse</code></strong>: R packages for data science workflows.</li>
+<li><strong><code>dplyr</code></strong>: Data manipulation using grammar of data (e.g., <code>filter()</code>, <code>summarise()</code>).</li>
+<li><strong><code>stringr</code></strong>: String operations with simplified syntax.</li>
+<li><strong><code>lubridate</code></strong>: Easy handling of dates and times.</li>
+<li><strong><code>jsonlite</code></strong>: Read and write JSON data.</li>
+<li><strong><code>knitr</code></strong>: Generates documents that uses both R code and markdown.</li>
+</ul>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<ul>
+<li><strong><code>ggplot2</code></strong>: Grammar of Graphics framework for plotting.</li>
+<li><strong><code>ggtext</code></strong>: Adds markdown/HTML text support to ggplot.</li>
+<li><strong><code>patchwork</code></strong>: Combine multiple ggplots in grid layouts.</li>
+<li><strong><code>ggnewscale</code></strong>: Enables multiple <code>fill</code> or <code>colour</code> scales in the same plot.</li>
+<li><strong><code>scales</code></strong>: Control axis breaks, labels (e.g.&nbsp;percentages, currency).</li>
+</ul>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<ul>
+<li><strong><code>shiny</code></strong>: Build interactive web applications in R.</li>
+<li><strong><code>ggiraph</code></strong>: Adds interactivity (e.g.&nbsp;hover, tooltips) to ggplot visualisations.</li>
+</ul>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<ul>
+<li><strong><code>igraph</code></strong>: Graph package for network.</li>
+<li><strong><code>tidygraph</code></strong>: Tidy interface for working with graphs based on <code>dplyr</code>.</li>
+<li><strong><code>ggraph</code></strong>: ggplot2-based framework for visualising graphs and networks.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="project-schedule" class="level1">
 <h1>Project Schedule</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>task_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">content =</span> <span class="fu">c</span>(<span class="st">"Initial Project Discussion"</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Data Pre-processing and Exploratory Data Analysis"</span>, </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Project Proposal"</span>, </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Data Visualisations and Findings"</span>, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Shiny App"</span>, </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Poster"</span>, </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Final Submission"</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">start =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2025-05-10"</span>, <span class="st">"2025-05-18"</span>, <span class="st">"2025-06-01"</span>, <span class="st">"2025-06-01"</span>, <span class="st">"2025-06-08"</span>, <span class="st">"2025-06-15"</span>, <span class="st">"2025-06-27"</span>)),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">end   =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2025-05-17"</span>, <span class="st">"2025-05-31"</span>, <span class="st">"2025-06-08"</span>, <span class="st">"2025-06-10"</span>, <span class="st">"2025-06-14"</span>, <span class="st">"2025-06-26"</span>, <span class="st">"2025-07-06"</span>))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>task_data <span class="ot">&lt;-</span> task_data <span class="sc">%&gt;%</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(start) <span class="sc">%&gt;%</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">content =</span> <span class="fu">factor</span>(content, <span class="at">levels =</span> content))</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(task_data, <span class="fu">aes</span>(<span class="at">x =</span> start, <span class="at">xend =</span> end, <span class="at">y =</span> content, <span class="at">yend =</span> content)) <span class="sc">+</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_breaks =</span> <span class="st">"1 week"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_labels =</span> <span class="st">"%b %d"</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Project Schedule (Gantt Chart)"</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Task"</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Proposal_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -536,6 +627,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -646,6 +739,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
