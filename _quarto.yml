@@ -5,7 +5,7 @@ website:
   title: "ISSS608-VAAProject"
   navbar:
     left:
-    - text: "Proposal"
+    - text: "Project Concept"
       href: "Proposal/Proposal.html"
     
     Right:
