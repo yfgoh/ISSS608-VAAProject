@@ -2,7 +2,6 @@ project:
   type: website
 
 website:
-  title: "ISSS608-VAAProject"
   navbar:
     logo: Images/OceanusFolk.png 
     left:
