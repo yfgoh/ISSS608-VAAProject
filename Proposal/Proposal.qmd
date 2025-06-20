@@ -1,9 +1,16 @@
 ---
-title: "Project Proposal"
+title: "Project Concept"
 format: html
 freeze: true
 warning: false
 date: "June 6, 2025"
+date-modified: "last-modified"
+editor: source
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
 ---
 
 # Motivation
@@ -35,7 +42,7 @@ This project explores the dataset provided by [VAST Challenge 2025 Mini-Challeng
 Each node represents a person, song, record label, album, or musical group. The edges represent the relationships between connected nodes, as defined below.
 
 | Edge Type | Source Node(s) | Destination Node(s) | Description |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | PerformerOf | Person, MusicalGroup | Song, Album | Source performed the destination. |
 | ComposerOf | Person | Song, Album | Source composed the destination. |
 | ProducerOf | Person, RecordLabel | Song, Album, Person, MusicalGroup | Source participated in the production of the destination's work. |

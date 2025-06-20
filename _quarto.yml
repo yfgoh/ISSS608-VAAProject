@@ -4,8 +4,11 @@ project:
 website:
   title: "ISSS608-VAAProject"
   navbar:
+    logo: Images/OceanusFolk.png 
     left:
-    - text: "Project Concept"
+    - text: "Project Overview"
+      href: "Proposal/Proposal.html"
+    - text: "Prototype and Storyboard"
       href: "Proposal/Proposal.html"
     
     Right:
