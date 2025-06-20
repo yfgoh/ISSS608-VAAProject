@@ -1,0 +1,548 @@
+---
+title: "Project Concept"
+format: html
+freeze: true
+warning: false
+date: "June 6, 2025"
+date-modified: "last-modified"
+editor: source
+execute:
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+# Motivation
+
+The story of Sailor Shift is more than a tale of individual stardom — it is a reflection of how local culture, through music, can resonate on a global scale. Her rise from a small island nation to the forefront of the international music scene not only brought worldwide recognition to Oceanus Folk but also reshaped the genre itself. Sailor’s rising popularity led to greater interest in the genre’s roots, its collaborators, and its influence across musical styles.
+
+This project is motivated by the opportunity to explore that transformation through data. By visualising the rich network of artistic relationships, genre influences, and temporal trends captured in a comprehensive knowledge graph, we aim to illustrate the pivotal role Sailor Shift has played as a prominent ambassador of Oceanus Folk. In collaboration with journalist Silas Reed, we seek to create meaningful visualisations that reveal the deeper story behind Sailor’s success, trace the evolution of Oceanus Folk, and uncover new and compelling insights along the way.
+
+# Objectives
+
+This project aims to build interactive visualisation tools that allow journalist Silas Reed and his readers to explore and uncover meaningful insights into Sailor Shift’s career and the influence of Oceanus Folk on the global music scene. The key objectives are as follows.
+
+1.  **Understand the Profile of Sailor Shift’s Career**
+
+    Visualisations will trace Sailor’s artistic journey, highlighting who has influenced her over time, her key collaborators, and the individuals she has directly or indirectly influenced. It will also explore how she has impacted members of the broader Oceanus Folk community.
+
+2.  **Examine the Spread and Evolution of Oceanus Folk**
+
+    The tools will map how Oceanus Folk has spread through the musical world by identifying whether its influence has been intermittent or gradual, pinpointing the most influenced genres and artists, and showing how the genre itself has evolved, especially through Sailor’s influence and cross-genre inspiration.
+
+3.  **Develop a Profile of a Rising Star in the Music Industry**
+
+    By visualising and comparing the career trajectories of three artists, the project will uncover key patterns in how an artist's influence evolve as he/she gains popularity. These patterns will then guide data-driven predictions about the next generation of Oceanus Folk artists expected to rise in the coming five years.
+
+# Data
+
+This project explores the dataset provided by [VAST Challenge 2025 Mini-Challenge 1](https://vast-challenge.github.io/2025/MC1.html). It is a comprehensive knowledge graph capturing the landscape of the the music industry. The graph consist of 17,412 nodes and 37,857 edges, organised into 17 connected components.
+
+Each node represents a person, song, record label, album, or musical group. The edges represent the relationships between connected nodes, as defined below.
+
+| Edge Type | Source Node(s) | Destination Node(s) | Description |
+|------------------|------------------|------------------|------------------|
+| PerformerOf | Person, MusicalGroup | Song, Album | Source performed the destination. |
+| ComposerOf | Person | Song, Album | Source composed the destination. |
+| ProducerOf | Person, RecordLabel | Song, Album, Person, MusicalGroup | Source participated in the production of the destination's work. |
+| LyricistOf | Person | Song, Album | Source wrote lyrics for the destination. |
+| RecordedBy | Song, Album | RecordLabel | Destination aided in the recording process for the source. |
+| DistributedBy | Song, Album | RecordLabel | Destination aided in the distribution process for the source. |
+| InStyleOf | Song, Album | Song, Album, Person, MusicalGroup | Source was performed at least partly in the style of the destination. |
+| InterpolatesFrom | Song, Album | Song, Album | Source interpolated a melody from the destination. |
+| CoverOf | Song, Album | Song, Album | Source is a cover of the destination. |
+| LyricalReferenceTo | Song, Album | Song, Album | Source makes a lyrical reference to the destination. |
+| DirectlySamples | Song, Album | Song, Album | Source directly reuses a portion of the destination's audio via sampling. |
+| MemberOf | Person | MusicalGroup | Source is (or was) a member of the destination. |
+
+# Methodology
+
+Download the libraries (if required) before loading the packages:
+
+```{r}
+#| echo: FALSE
+pacman::p_load(DiagrammeR, dplyr, forcats, ggplot2, lubridate, shiny, visNetwork)
+```
+
+::: panel-tabset
+## Diagram
+
+```{r}
+#| code-fold: TRUE
+grViz("
+digraph flowchart {
+  graph [layout = dot, rankdir = TB, fontname = 'Helvetica', fontsize = 12]
+  
+  # Global node settings
+  node [shape = box, style = filled, fontname = 'Helvetica']
+  
+  # Input nodes
+  input [label = 'MC1_graph.json', fillcolor = '#FFE4B5', color = '#FFA500', penwidth = 1.5]
+  read [label = 'Read input', fillcolor = '#E6E6FA', color = '#9370DB']
+  clean [label = 'Data Pre-processing', fillcolor = '#E6E6FA', color = '#9370DB']
+  
+  # Visualization nodes
+  plot_net [label = 'Plot network graphs', fillcolor = '#ADD8E6', color = '#4682B4']
+  plot_bar [label = 'Plot barchart', fillcolor = '#98FB98', color = '#2E8B57']
+  plot_line [label = 'Plot line chart', fillcolor = '#98FB98', color = '#2E8B57']
+  
+  # Analysis nodes
+  bayesian [label = 'Bayesian Surprise', fillcolor = '#FFDAB9', color = '#CD853F']
+  entropy [label = 'Genre Entropy', fillcolor = '#FFDAB9', color = '#CD853F']
+  
+  # Output node
+  shiny [label = 'Shiny App', fillcolor = '#FFB6C1', color = '#FF69B4', shape = ellipse, style = 'filled,rounded']
+  
+  # Edges
+  input -> read -> clean
+  clean -> plot_net [color = '#4682B4']
+  clean -> plot_bar [color = '#2E8B57']
+  clean -> plot_line [color = '#2E8B57']
+  clean -> bayesian [color = '#CD853F']
+  clean -> entropy [color = '#CD853F']
+  bayesian -> plot_line [color = '#CD853F']
+  entropy -> plot_line [color = '#CD853F']
+  plot_net -> shiny [color = '#4682B4']
+  plot_bar -> shiny [color = '#2E8B57']
+  plot_line -> shiny [color = '#2E8B57']
+  
+  # Main subgraph for Data Exploration and Visualisation
+  subgraph cluster_explore {
+    label = <Data Exploration and Visualisation>
+    labelloc = t
+    labeljust = c
+    style = filled
+    fillcolor = '#F5F5F5'
+    color = '#696969'
+    margin = 20
+    fontname = 'Helvetica-Bold'
+    fontsize = 14
+    
+    # Statisical Analysis
+    subgraph cluster_statistics {
+      label = <Statistical Analysis>
+      labelloc = t
+      labeljust = c
+      style = filled
+      fillcolor = '#FFF8DC'
+      color = '#DAA520'
+      margin = 15
+      fontsize = 12
+      bayesian
+      entropy
+    }
+    
+    # Temporal Analysis subgroup
+    subgraph cluster_temporal {
+      label = <Temporal Analysis>
+      labelloc = t
+      labeljust = c
+      style = filled
+      fillcolor = '#F0FFF0'
+      color = '#228B22'
+      margin = 15
+      fontsize = 12
+      plot_bar
+      plot_line
+    }
+    
+    # Influence Analysis subgroup
+    subgraph cluster_influence {
+      label = <Influence Analysis>
+      labelloc = t
+      labeljust = c
+      style = filled
+      fillcolor = '#F0F8FF'
+      color = '#4169E1'
+      margin = 15
+      fontsize = 12
+      plot_net
+    }
+    
+    shiny
+  }
+}
+")
+```
+
+## Explanation
+
+1.  **Data Pre-processing**: Ensure data integrity prior to analysis.
+
+    -   **Validation of Node and Edge integrity**: Check and remove any missing or duplicate nodes and edges to ensure a consistent and accurate representation of the network.
+
+    -   **Schema compliance**: Verify all edges against the predefined schema to confirm that source and destination node types were correctly aligned with their corresponding edge types. Any incorrect edge and nodes identified will be removed.
+
+    -   **Data Enhancement**: Creation of additional columns to facilitate analysis.
+
+    -   **Column Standardisation**: Column names will be renamed and formatted to support the creation of network graph.
+
+2.  **Data Exploration and Visualisation**
+
+    -   With reference to relevant literature in musicology, network science and cultural analysis, the following statistical measures will be applied.
+
+        -   **Bayesian Surprise**: To quantify whether influence had occurred gradually over time or emerged in bursts.
+
+        -   **Genre Entropy**: To measure diversity of genres associated with each artist or production, providing insights into stylistic concentration or crossover influence.
+
+    -   Visualisations will play a central role in pattern recognition and deriving insights.
+
+        -   **Interactive Network Graphs** will be used to explore artistic relationships, genre influences, and collaboration patterns, helping to identify key players across the musical landscape.
+
+        -   **Bar and Line Charts** will illustrate influence and releases over time, highlighting pivotal moments in Sailor Shift’s career and the broader evolution of Oceanus Folk.
+
+        -   **User-Driven Exploration** will be enabled through a Shiny app, allowing Silas Reed and readers to interact with the network, adjust filters, and uncover insights based on their interests.
+:::
+
+# Shiny Prototype Sketches
+
+This is what we would envisage for our Shiny App.
+
+![](images/clipboard-3684632109.png)
+
+![](images/clipboard-3324770575.png)
+
+[**Input**]{.underline}
+
+Input variables such as Artist Name, Year and Genre will be included in the sidebar. This allows selection of different artists for analysis and filtering by Year and Genre to understand the evolution over time and influence impact on different Genre. It will be set to default variables based on the scope of the Mini Case 1, but will allow users to customise their selections where required for further analysis.
+
+[**Output**]{.underline}
+
+The output will include the plots and insights which we have obtained based on the guiding questions given in Mini Case 1.
+
+We have also started on the prototyping using Shiny as follows:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show plot code"
+#| eval: false
+
+library(shinydashboard)
+library(collapsibleTree)
+library(visNetwork)
+library(shinycssloaders)
+library(bslib)
+
+website_theme <- bs_theme(
+  bootswatch = "minty",
+  primary = "#2C3E50",
+  secondary = "#E67E22",
+  success = "#1ABC9C",
+  base_font = font_google("Quicksand"),
+  navbar_dark = TRUE
+)
+
+ui <- navbarPage(
+title = div(
+  HTML("
+    <div style='display: flex; flex-direction: column; justify-content: flex-end; margin-top: 8px; line-height: 1.2; color: #0077B6; font-weight: bold; font-size: 16px;'>
+      <span>Oceanus Folk:</span>
+      <span>Then-and-Now</span>
+    </div>
+  ")
+),
+  theme = website_theme,
+  id = "main_tabs",
+
+  tags$head(
+    tags$style(HTML("
+      .navbar-nav > .active > a,
+      .navbar-nav > .active > a:hover,
+      .navbar-nav > .active > a:focus {
+        color: #2C3E50 !important;
+        background-color: transparent !important;
+        border-bottom: 2px solid #2C3E50 !important;
+        font-weight: 600;
+      }
+
+      .navbar-nav > li > a:hover {
+        background-color: transparent !important;
+        border-bottom: 2px solid #aaa !important;
+        color: #2C3E50 !important;
+      }
+
+      .navbar-nav > li > a {
+        padding-top: 15px !important;
+        padding-bottom: 10px !important;
+      }
+    "))
+  ),
+
+tabPanel("Profile of Sailor's Career",
+  sidebarLayout(
+    sidebarPanel(
+      textInput("artist", "Enter Artist", value = ""),
+      sliderInput("year_range", "Filter by Year:", min = 1980, max = 2040,
+                  value = c(1980, 2040), step = 1, sep = "", animate = TRUE),
+      checkboxGroupInput("filter_genres", "Filter by Genre:", 
+                         choices = c("Oceanus Folk", "Indie Pop", "Indie Folk"))
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Overview", 
+          withSpinner(collapsibleTreeOutput("influenceTree", width = "100%", height = "400px")),
+          tags$hr(),
+          htmlOutput("sailorBio")
+        ),
+        tabPanel("1a: Influenced By Sailor",
+          plotOutput("influencedByPlot", height = "400px"),
+          htmlOutput("insight_1a")
+        ),
+        tabPanel("1b: Collaborations",
+          visNetworkOutput("collabInfluenceNetwork", height = "500px"),
+          htmlOutput("insight_1b")
+        ),
+        tabPanel("1c: Impact on Oceanus Folk",
+          plotOutput("broadInfluencePlot", height = "400px"),
+          htmlOutput("insight_1c")
+        )
+      )
+    )
+  )
+),
+
+tabPanel("Influence of Oceanus Folk",
+  sidebarLayout(
+    sidebarPanel(
+      textInput("artist", "Enter Artist", value = ""),
+      sliderInput("year_range", "Filter by Year:", min = 1980, max = 2040,
+                  value = c(1980, 2040), step = 1, sep = "", animate = TRUE),
+      checkboxGroupInput("filter_genres", "Filter by Genre:", 
+                         choices = c("Oceanus Folk", "Indie Pop", "Indie Folk"))
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("2a: Rise of Oceanus Folk's Influence", 
+                 plotOutput("genreTrendPlot", height = "400px"),
+                 htmlOutput("insight_2a")
+        ),
+        tabPanel("2b: Influenced Genres & Top Artists", 
+                 plotOutput("influencedGenresPlot", height = "400px"),
+                 tableOutput("topInfluencedArtists"),
+                 htmlOutput("insight_2b")
+        ),
+        tabPanel("2c: Evolution of Oceanus Folk", 
+                 plotOutput("evolvingOceanusPlot", height = "400px"),
+                 htmlOutput("insight_2c")
+        )
+      )
+    )
+  )
+),
+
+tabPanel("Oceanus Folk Rising Star",
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("selected_artists", "Select Artists to Compare:",
+                  choices = c("Sailor Shift", "Maya Blue", "Juno Rivers"),
+                  selected = c("Sailor Shift", "Maya Blue", "Juno Rivers"),
+                  multiple = TRUE),
+      sliderInput("year_range", "Filter by Year:", min = 2000, max = 2040,
+                  value = c(2020, 2040), step = 1, sep = "", animate = TRUE),
+      checkboxGroupInput("filter_genres", "Filter by Genre:", 
+                         choices = c("Oceanus Folk", "Indie Pop", "Indie Folk"))
+    ),
+      mainPanel(
+        tabsetPanel(
+          tabPanel("3a: Career Trajectories of 3 Artists", 
+                   plotOutput("careerComparePlot", height = "400px"),
+                   htmlOutput("insight_3a")
+          ),
+          tabPanel("3b: Prediction of Future Rising Stars", 
+                   tableOutput("predictedStars"),
+                   htmlOutput("insight_3b"),
+          )
+        )
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+
+  output$influenceTree <- renderCollapsibleTree({
+    collapsibleTree(
+      df = data.frame(
+        Genre = "Oceanus Folk", 
+        Mentor = "Ivy Echoes", 
+        Artist = "Sailor Shift"
+      ),
+      hierarchy = c("Genre", "Mentor", "Artist"),
+      root = "Oceanus Folk"
+    )
+  })
+
+
+output$collabInfluenceNetwork <- renderVisNetwork({
+  nodes <- data.frame(id = 1:4, label = c("Sailor", "Ivy Echos", "Node1", "Node2"))
+  edges <- data.frame(from = c(1, 1, 2), to = c(2, 3, 4))
+  visNetwork(nodes, edges)
+})
+
+output$yourPlotName <- renderPlot({
+  plot(1, 1, type = "n", xlab = "", ylab = "", axes = FALSE)
+  text(1, 1, "To be added", cex = 1.5, col = "gray50")
+})
+
+output$insight_1a <- renderUI({
+  HTML("<p><strong>Insight:</strong> <To be Added>.</p>")
+})
+
+output$insight_1b <- renderUI({
+  HTML("<p><strong>Insight:</strong> <To be Added>. </p>")
+})
+
+output$insight_1c <- renderUI({
+  HTML("<p><strong>Insight:</strong> <To be Added>.</p>")
+})
+
+# 2a: Rise of Oceanus Folk Influence
+
+output$insight_2a <- renderUI({
+  HTML("<p><strong>Insight:</strong> < To be added>.</p>")
+})
+
+# 2b: Genres & Artists Influenced
+
+
+
+output$insight_2b <- renderUI({
+  HTML("<p><strong>Insight:</strong> <To be Added>.</p>")
+})
+
+# 2c: Evolution of Oceanus Folk
+
+
+output$insight_2c <- renderUI({
+  HTML("<p><strong>Insight:</strong> <To be Added>.</p>")
+})
+
+# 3a: Career trajectories of selected artists
+output$careerComparePlot <- renderPlot({
+  years <- 2020:2030
+  plot(years, c(5, 10, 20, 30, 45, 60, 70, 80, 85, 90, 92), type = "l", col = "#0073B7",
+       ylim = c(0, 100), xlab = "Year", ylab = "No. of Notable Songs", lwd = 2,
+       main = "No. of Notable Songs Over Time")
+  lines(years, c(2, 4, 10, 18, 25, 30, 40, 55, 60, 70, 75), col = "#E67E22", lwd = 2)
+  lines(years, c(1, 2, 4, 8, 12, 20, 28, 35, 45, 55, 60), col = "#1ABC9C", lwd = 2)
+  legend("bottomright", legend = c("Sailor Shift", "Maya Blue", "Juno Rivers"),
+         col = c("#0073B7", "#E67E22", "#1ABC9C"), lty = 1, lwd = 2)
+})
+
+output$insight_3a <- renderUI({
+  HTML("<p><strong>Insight:</strong> <To be Added>.</p>")
+})
+
+# 3b: Predicted rising stars
+
+
+output$insight_3b <- renderUI({
+  HTML("<p><strong>Prediction:</strong> <To be Added>.</p>")
+})
+
+}
+
+options(shiny.launch.browser = TRUE)
+shinyApp(ui, server)
+```
+
+![](images/clipboard-3948183170.png)
+
+![](images/clipboard-3193380152.png)
+
+![](images/clipboard-3921027426.png)
+
+# R Packages
+
+::: panel-tabset
+### Data Manipulation and Project Reporting
+
+-   **`tidyverse`**: R packages for data science workflows.
+-   **`dplyr`**: Data manipulation using grammar of data (e.g., `filter()`, `summarise()`).
+-   **`stringr`**: String operations with simplified syntax.
+-   **`lubridate`**: Easy handling of dates and times.
+-   **`jsonlite`**: Read and write JSON data.
+-   **`knitr`**: Generates documents that uses both R code and markdown.
+
+### Data Visualization
+
+-   **`ggplot2`**: Grammar of Graphics framework for plotting.
+-   **`ggtext`**: Adds markdown/HTML text support to ggplot.
+-   **`patchwork`**: Combine multiple ggplots in grid layouts.
+-   **`ggnewscale`**: Enables multiple `fill` or `colour` scales in the same plot.
+-   **`scales`**: Control axis breaks, labels (e.g. percentages, currency).
+
+### Interactive and Web
+
+-   **`shiny`**: Build interactive web applications in R.
+-   **`ggiraph`**: Adds interactivity (e.g. hover, tooltips) to ggplot visualisations.
+
+### Network and Graph Analysis
+
+-   **`igraph`**: Graph package for network.
+-   **`tidygraph`**: Tidy interface for working with graphs based on `dplyr`.
+-   **`ggraph`**: ggplot2-based framework for visualising graphs and networks.
+:::
+
+# Project Schedule
+
+```{r, echo=FALSE, fig.width=14, fig.height=6}
+library(dplyr)
+library(forcats)
+library(ggplot2)
+library(lubridate)
+
+task_data <- data.frame(
+  id = 1:7,
+  content = c("Initial Project Discussion", 
+              "Data Pre-processing and Exploratory Data Analysis", 
+              "Project Proposal", 
+              "Data Visualisations and Findings", 
+              "Shiny App", 
+              "Poster", 
+              "Final Submission"),
+  start = as.Date(c("2025-05-10", "2025-05-18", "2025-06-01", "2025-06-01", "2025-06-07", "2025-06-15", "2025-06-27")),
+  end   = as.Date(c("2025-05-17", "2025-05-31", "2025-06-08", "2025-06-11", "2025-06-14", "2025-06-26", "2025-07-06"))
+)
+
+task_data <- task_data %>%
+  arrange(start) %>%
+  mutate(content = factor(content, levels = content))
+
+# Plot
+ggplot(task_data, aes(x = start, xend = end, y = content, yend = content)) +
+
+  geom_segment(size = 8, color = "steelblue") +
+  
+  # Red dotted lines
+  geom_segment(
+    aes(x = end, xend = end, y = as.numeric(content), yend = 0),
+    linetype = "dotted", color = "red"
+  ) +
+
+ geom_text(
+  aes(x = end, y = -0.1, label = format(end, "%b %d")),
+  color = "red", size = 3, vjust = 0.5, hjust = 0.5
+) +
+  
+  coord_cartesian(clip = "off") +
+
+  scale_x_date(
+    date_breaks = "1 week",
+    date_labels = "%b %d"
+  ) +
+  
+  labs(
+    title = "Project Schedule (Gantt Chart)",
+    x = "Date", y = "Task"
+  ) +
+  
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid = element_blank()
+  ) +
+  
+  theme_minimal(base_size = 12)
+```

@@ -4,19 +4,19 @@ title: "Sailing the Currents: The Rise of Sailor Shift and Oceanus Folk"
 
 <p>Sailor Shift’s meteoric rise has not only defined her as a global icon but also propelled Oceanus Folk from a niche island genre to a worldwide musical force. <em>Sailing the Currents</em> is an interactive visual analytics platform, created using Shiny, designed for journalists, researchers, and fans to explore Sailor’s career, her collaborative network, and the growing influence of Oceanus Folk across the global music landscape.<br><br> As the genre’s popularity spreads, understanding how influence flows through musical communities becomes increasingly important. This project uses advanced network analysis and visualization to uncover the hidden connections, key collaborations, and pivotal moments that shaped Sailor’s trajectory and the genre’s evolution.</p>
 
-This project hopes to help users explore
+This project hopes to help users explore: 
 
 <div style="display: flex; align-items: flex-start; gap: 20px;">
   <img src="images/SailorShift.png" style="width: 300px; height: 380px;"/>
   <ul style="margin-top: 0;">
-    <li>Sailor’s influences and collaborators over time</li>
-    <li>The spread and transformation of Oceanus Folk</li>
-    <li>Career timelines and influence networks of prominent and emerging artists</li>
-    <li>Comparative trajectories across multiple artists</li>
+    <li>Sailor’s influences and collaborators over time</li><br>
+    <li>The spread and transformation of Oceanus Folk</li><br>
+    <li>Career timelines and influence networks of prominent and emerging artists</li><br>
+    <li>Comparative trajectories across multiple artists</li><br>
     <li>Predictions of the next Oceanus Folk stars</li>
   </ul>
 </div>
-
+<br>
 The platform features interactive network graphs, timelines, and dynamic visual tools that reveal the structure and evolution of musical influence.
 
 By merging narrative with data-driven exploration, *Sailing the Currents* offers a compelling look at how one artist’s journey sparked a cultural movement—and what it takes to shape the future of music in an interconnected world.
