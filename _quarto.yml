@@ -2,14 +2,14 @@ project:
   type: website
 
 website:
-  title: "Oceanus Folk: Then & Now"
+  title: "Oceanus Folk:<br>Then & Now"
   navbar:
     left:
     - text: "Project Overview"
       href: "Project/Proposal.html"
     - text: "Prototype and Storyboard"
       href: "Project/XXX.html"
-    - text: "Methodology and Analyis"
+    - text: "Methodology and Analysis"
       href: "Project/Project.html"
     - text: "Poster"
       href: "Project/XXX.html"
@@ -29,4 +29,9 @@ format:
     toc: true
 
 editor: visual
+
+render:
+  - index.qmd
+  - Project/Proposal.qmd
+  - Project/Project.qmd
 
