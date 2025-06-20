@@ -15,7 +15,9 @@ website:
       href: "Project/XXX.html"
     - text: "User Guide"
       href: "Project/XXX.html"
-    Right:
+    right:
+    - text: "Team"
+      href: "Project/XXX.html"
       - href: index.qmd
         text: Home
       - about.qmd
