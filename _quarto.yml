@@ -7,11 +7,11 @@ website:
     left:
       - text: "Project Overview"
         href: "Project/Proposal.html"
-      - text: "Prototype and Storyboard"
+      - text: "Prototype & Storyboard"
         href: "Project/XXX.html"
-      - text: "Data Pre-processing and Methodology"
+      - text: "Data Pre-processing & Methodology"
         href: "Project/Project.html"
-      - text: "Findings and Analysis"
+      - text: "Findings & Analysis"
         href: "Project/Analysis.html"
       - text: "Shiny App"
         href: "Project/XXX.html"
@@ -20,11 +20,7 @@ website:
       - text: "User Guide"
         href: "Project/XXX.html"
     right:
-      - text: Home
-        href: index.qmd
-      - text: About
-        href: about.qmd
-      - text: Team
+      - text: Our Team
         href: "Project/XXX.html"
 
 format:
