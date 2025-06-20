@@ -1,6 +1,6 @@
 ---
-title: "Project"
-date: 2025-06-2
+title: "Methodology and Analysis"
+date: 2025-06-20
 date-modified: "last-modified"
 format: html
 editor: visual

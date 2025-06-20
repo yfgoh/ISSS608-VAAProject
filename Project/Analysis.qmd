@@ -1,0 +1,145 @@
+---
+title: "Methodology and Analysis"
+date: 2025-06-20
+date-modified: "last-modified"
+format: html
+editor: visual
+execute: 
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+```{r include=FALSE}
+source("../code/shared-setup.R")
+#| code-fold: true
+#| code-summary: "Show Code"
+# Step 0: Get name of 'Sailor Shift'
+sailor_vertex_name <- mc1_nodes_clean %>%
+  filter(is_sailor == TRUE) %>%
+  pull(name)
+
+# Step 1: Find outgoing edges from Sailor Shift
+sailor_out_edges <- mc1_edges_clean %>%
+  filter(from == sailor_vertex_name)
+
+# Step 2: Identify neighbour node names
+sailor_out_node_names <- sailor_out_edges$to
+
+# Step 4: Identify songs/albums
+sailor_music_all <- mc1_nodes_clean %>%
+  filter(name %in% sailor_out_node_names, `Node Type` %in% c("Song", "Album")) %>%
+  pull(name)
+
+# Step 5: Build subgraph using names
+sub_nodes <- unique(c(sailor_vertex_name, sailor_music_all))
+
+sub_graph <- graph %>%
+  activate(nodes) %>%
+  filter(name %in% sub_nodes)
+
+
+
+# Visualisation
+
+g <- sub_graph %>%
+  ggraph(layout = "fr") + 
+  geom_edge_fan(
+    aes(
+      edge_colour = `Edge Colour`,
+      start_cap = circle(1, 'mm'),
+      end_cap = circle(1, 'mm')
+      ),
+    arrow = arrow(length = unit(1, 'mm')),
+    alpha = 0.3
+  ) +
+  geom_point_interactive(
+    aes(
+      x = x,
+      y = y,
+      data_id = name,
+      colour = `Node Colour`,
+      shape = `Node Type`,
+      size = ifelse(node_name %in% c("Sailor Shift", "Ivy Echos", "Wei Zhao"), 3, 1),
+      tooltip = case_when(
+        `Node Type` == "Album" ~ sprintf(
+          "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
+        ),
+        `Node Type` == "Song" ~ sprintf(
+          "%s<br/>%s<br/>Notable: %s<br/>(%s)<br/>Single: %s", node_name, genre, notable, release_date, single
+        ),
+        TRUE ~ sprintf("%s", node_name)
+      )
+    ),
+    show.legend = c(size = FALSE)
+  )+ 
+  geom_node_text(
+    aes(
+      label = ifelse(node_name == "Sailor Shift", "Sailor Shift",
+              ifelse(node_name == "Ivy Echos", "Ivy Echos",
+              ifelse(node_name == "Wei Zhao", "Wei Zhao", NA)))
+    ),
+    fontface = "bold",
+    size = 2.5,
+    colour = 'red',
+    show.legend = FALSE
+  ) +
+  scale_shape_manual(
+    name = "Node Type",
+    values = c(
+      "Album" = 16,
+      "MusicalGroup" = 15,
+      "Person" = 17,
+      "Song" = 10
+    )
+  ) +
+  scale_edge_colour_manual(
+    name = "Edge Colour",
+    values = c(
+      `Creator Of` = "#47D45A",
+      `Influenced By` = "#FF5757",
+      `Member Of` = "#CF57FF"
+    )
+  ) +
+  scale_colour_manual(
+    name = "Node Colour",
+    values = c(
+      "Musician" = "grey50",
+      "Oceanus Folk" = "#0027EA",
+      "Other Genre" = "#A45200"
+    )
+  ) +
+  theme_graph() +
+  theme(legend.text = element_text(size = 6),
+        legend.title = element_text(size = 9)) +
+  scale_size_identity()
+
+girafe(ggobj = g, width_svg = 7, height_svg = 6)
+```
+
+
+::: callout-tip
+## Sailor Shift's Music Insights
+
+-   In total, Sailor Shift released 38 Songs and Albums from 2024 to 2040
+-   Details on the Songs and Albums can be found in the table below
+-   Sailor Shift released 4 Songs in 2028
+    -   Among those, only 1 is a Single
+    -   Therefore, the viral Song that spark her breakthrough is **High Tide Heartbeat**
+-   Among her Songs and Albums, 36 belong to the Oceanus Folk genre, while there is 1 Americana and 1 Synthwave Album each.
+:::
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+mc1_nodes_clean %>%
+  filter(name %in% sailor_music_all) %>%
+  arrange(release_date) %>%
+  select(`Node Type`, node_name, release_date, genre, notable, single, notoriety_date) %>%
+  kable() %>%
+  kable_styling("striped", full_width = F) %>% 
+  scroll_box(height = "300px")
+```
+

@@ -5,22 +5,27 @@ website:
   title: "Oceanus Folk:<br>Then & Now"
   navbar:
     left:
-    - text: "Project Overview"
-      href: "Project/Proposal.html"
-    - text: "Prototype and Storyboard"
-      href: "Project/XXX.html"
-    - text: "Methodology and Analysis"
-      href: "Project/Project.html"
-    - text: "Poster"
-      href: "Project/XXX.html"
-    - text: "User Guide"
-      href: "Project/XXX.html"
+      - text: "Project Overview"
+        href: "Project/Proposal.html"
+      - text: "Prototype and Storyboard"
+        href: "Project/XXX.html"
+      - text: "Data Pre-processing and Methodology"
+        href: "Project/Project.html"
+      - text: "Findings and Analysis"
+        href: "Project/Analysis.html"
+      - text: "Shiny App"
+        href: "Project/XXX.html"
+      - text: "Poster"
+        href: "Project/XXX.html"
+      - text: "User Guide"
+        href: "Project/XXX.html"
     right:
-    - text: "Team"
-      href: "Project/XXX.html"
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - text: Home
+        href: index.qmd
+      - text: About
+        href: about.qmd
+      - text: Team
+        href: "Project/XXX.html"
 
 format:
   html:
