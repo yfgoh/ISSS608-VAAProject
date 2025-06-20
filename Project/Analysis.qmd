@@ -1,5 +1,5 @@
 ---
-title: "Methodology and Analysis"
+title: "Analysis"
 date: 2025-06-20
 date-modified: "last-modified"
 format: html
@@ -12,9 +12,7 @@ execute:
 ---
 
 ```{r include=FALSE}
-source("../code/shared-setup.R")
-#| code-fold: true
-#| code-summary: "Show Code"
+source("code/shared-setup.R")
 # Step 0: Get name of 'Sailor Shift'
 sailor_vertex_name <- mc1_nodes_clean %>%
   filter(is_sailor == TRUE) %>%
@@ -38,8 +36,11 @@ sub_nodes <- unique(c(sailor_vertex_name, sailor_music_all))
 sub_graph <- graph %>%
   activate(nodes) %>%
   filter(name %in% sub_nodes)
+```
 
-
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 
 # Visualisation
 
@@ -118,7 +119,6 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
-
 ::: callout-tip
 ## Sailor Shift's Music Insights
 
@@ -142,4 +142,3 @@ mc1_nodes_clean %>%
   kable_styling("striped", full_width = F) %>% 
   scroll_box(height = "300px")
 ```
-
