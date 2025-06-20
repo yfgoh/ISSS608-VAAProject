@@ -1,1 +1,6 @@
 /* css styles */
+
+.navbar-brand img {
+  height: 300px; /* Adjust as needed */
+  width: auto;  /* Maintain aspect ratio */
+}
