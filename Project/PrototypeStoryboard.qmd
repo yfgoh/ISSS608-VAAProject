@@ -47,7 +47,7 @@ There are the R Packages which we will be using in our Shiny App.
 
 # 2 Storyboard
 
-Our Shiny app is structured and designed to guide users through a different aspect of the Oceanus Folk music genre and Sailor Shift’s career.
+Our Shiny App is structured and designed to guide users through a different aspect of the Oceanus Folk music genre and Sailor Shift’s career.
 
 It begins with a tab on the “Profile of Sailor’s Career”, which presents a detailed timeline of Sailor Shift’s rise, showcasing her key career milestones, albums, collaborations etc. This tab includes several network visualisations that enables users to explore Sailor’s connections and influence,
 
@@ -69,7 +69,7 @@ The prototypes are illustrated below:
 
 2.  A user guide is accessible at the top right corner of the dashboard to help users understand the interface and navigate the pages with ease.
 
-3.  Using sidebarLayout(), we create a side panel for feature selection and main panel for plots and explanation. The side panel will include interactive controls such as radio buttons to toggle between node and edge types, and a slider for selecting degrees of separation.
+3.  Using sidebarLayout(), we create a side panel for feature selection and main panel for plots and explanation. The side panel will include interactive controls such as radio buttons to toggle between node and edge types.
 
 4.  Each tab allows users to take a deeper dive into specific aspects of Sailor Shift’s career, offering multiple perspectives through interactive visuals.
 

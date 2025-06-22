@@ -8,7 +8,7 @@ website:
       - text: "Project Overview"
         href: "Project/Proposal.html"
       - text: "Prototype & Storyboard"
-        href: "Project/XXX.html"
+        href: "Project/PrototypeStoryboard.html"
       - text: "Data Pre-processing & Methodology"
         href: "Project/Project.html"
       - text: "Findings & Analysis"
