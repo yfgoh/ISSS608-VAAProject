@@ -1,0 +1,166 @@
+---
+title: "Prototype & Storyboard"
+date: 2025-06-22
+date-modified: "last-modified"
+format: html
+editor: visual
+execute: 
+  eval: true
+  echo: true
+  warning: false
+  freeze: true
+---
+
+# 1 R Packages
+
+There are the R Packages which we will be using in our Shiny App.
+
+::: panel-tabset
+### Data Manipulation and Project Reporting
+
+-   **`tidyverse`**: R packages for data science workflows.
+-   **`dplyr`**: Data manipulation using grammar of data (e.g., `filter()`, `summarise()`).
+-   **`stringr`**: String operations with simplified syntax.
+-   **`lubridate`**: Easy handling of dates and times.
+-   **`jsonlite`**: Read and write JSON data.
+-   **`knitr`**: Generates documents that uses both R code and markdown.
+
+### Data Visualization
+
+-   **`ggplot2`**: Grammar of Graphics framework for plotting.
+-   **`ggtext`**: Adds markdown/HTML text support to ggplot.
+-   **`patchwork`**: Combine multiple ggplots in grid layouts.
+-   **`ggnewscale`**: Enables multiple `fill` or `colour` scales in the same plot.
+-   **`scales`**: Control axis breaks, labels (e.g. percentages, currency).
+
+### Interactive and Web
+
+-   **`shiny`**: Build interactive web applications in R.
+-   **`ggiraph`**: Adds interactivity (e.g. hover, tooltips) to ggplot visualisations.
+
+### Network and Graph Analysis
+
+-   **`igraph`**: Graph package for network.
+-   **`tidygraph`**: Tidy interface for working with graphs based on `dplyr`.
+-   **`ggraph`**: ggplot2-based framework for visualising graphs and networks.
+:::
+
+# 2 Storyboard
+
+Our Shiny app is structured and designed to guide users through a different aspect of the Oceanus Folk music genre and Sailor Shift’s career.
+
+It begins with a tab on the “Profile of Sailor’s Career”, which presents a detailed timeline of Sailor Shift’s rise, showcasing her key career milestones, albums, collaborations etc. This tab includes several network visualisations that enables users to explore Sailor’s connections and influence,
+
+The second tab, “Influence of Oceanus Folk”, dives into the broader impact of the genre using temporal analyses like bar and line graphs, visualising metrics such as yearly influence spread, Bayesian Surprise and genre entropy over time.
+
+The third tab, “Oceanus Folk’s Rising Stars”, showcases existing and emerging artists using visual tools such as radar charts, career trajectory plots and data tables ranking artists by their “Star Factor” scores. A linear regression forecast until 2045 is also included to predict the rising stars.
+
+## 2.1 Prototype, Design Concept and User Interface
+
+## 2.1.1 Profile of Sailor’s Career
+
+The prototypes are illustrated below:
+
+![](/Images/Storyboard/Slide1.PNG)
+
+[Design Concept and User Interface for the page above]{.underline}
+
+1.  At the top bar, users can navigate across multiple pages to explore Sailor Shift’s career journey and the evolution of the Oceanus Folk genre from various angles.
+
+2.  A user guide is accessible at the top right corner of the dashboard to help users understand the interface and navigate the pages with ease.
+
+3.  Using sidebarLayout(), we create a side panel for feature selection and main panel for plots and explanation. The side panel will include interactive controls such as radio buttons to toggle between node and edge types, and a slider for selecting degrees of separation.
+
+4.  Each tab allows users to take a deeper dive into specific aspects of Sailor Shift’s career, offering multiple perspectives through interactive visuals.
+
+5.  All network visualization should allow interactions such as hover with tooltips to allow users to explore secondary details further.
+
+    -   As the network diagram consist of different nodes and edges which would be coloured differently in a network diagram, we used colours to determine the visual hierarchy: Group non-Oceanus Folk genre together as “Other Genre” to have a single node colour
+
+    -   Group all edges belonging to "InStyleOf", "InterpolatesFrom", "CoverOf", "LyricalReferenceTo", "DirectlySamples") as "Influenced By“ to have a single edge colour
+
+    -   "PerformerOf", "ComposerOf", "ProducerOf", "LyricistOf", "RecordedBy", "DistributedBy“ as “Creator Of” to have a single edge colour
+
+6.  A data table will be included for users to explore further details where required.
+
+![](/Images/Storyboard/Slide2.PNG)
+
+[Design Concept and User Interface for the page above]{.underline}
+
+1.  Network visualisation allows users to clearly see Sailor Shift’s activities, her interactions with other artists, and the channels through which she exerted influence.
+
+2.  Key insights are provided below the network visualisation to enhance user understanding after the user has explored the network.
+
+3.  The same design and network visualization will apply for the 3^rd^ and 4^th^ tab.
+
+## 2.1.2 Influence of Oceanus Folk
+
+![](/Images/Storyboard/Slide3.PNG)
+
+[Design Concept and User Interface for the page above]{.underline}
+
+The tabs are organised to follow natural user reading patterns (left to right, top to bottom) for optimal readability. Visualisations are arranged in a logical sequence that aligns with the user’s thought process: starting with data exploration visuals, followed by analysis-driven visualisations.
+
+1.  Feature selection is included such as for year. E.g. if the users want to analyse trends between specific periods.
+
+2.  Guided interpretations of the graph are provided, along with an explanation of Bayesian Surprise to help assess whether Oceanus Folk’s influence was intermittent or developed gradually.
+
+3.  A bar and line graph shows both the yearly count and cumulative count of Oceanus Folk releases and its influence works, helping users visualise the genre’s growth over time.
+
+4.  The line graph plots Bayesian Surprise over time, pinpointing years where shifts in the genre’s development were most unexpected, thus offering deeper insight into the dynamics of its evolution.
+
+![](/Images/Storyboard/Slide4.PNG)
+
+[Design Concept and User Interface for the page above]{.underline}
+
+1.  An explanation of the Sankey diagram is provided to help users understand its purpose and how to interpret the visual flow.
+
+2.  Separate but consistently designed tabs use Sankey diagrams (Oceanus Folk → genres/artists) to show which genres and top artists have been most influenced by Oceanus Folk.
+
+3.  A supporting data table is included for users who want to explore detailed information beyond the respective visual summary.
+
+4.  The same design concept will apply for “Outward Influence on other Artists” and “Inward Influence from other Genres”.
+
+![](/Images/Storyboard/Slide5.PNG)
+
+[Design Concept and User Interface for the page above]{.underline}
+
+1.  An explanation of Genre Entropy to explain how Oceanus Folk has been influenced by and has influenced other genres over time, particularly with the rise of Sailor Shift.
+
+2.  Genre Entropy is visualised through a bar graph, showing the yearly counts of incoming and outgoing influences to highlight how Oceanus Folk evolves and impacts other genres.
+
+## 2.1.3 Oceanus Folk's Rising Stars
+
+![](/Images/Storyboard/Slide6.PNG)
+
+[Design Concept and User Interface for the page above]{.underline}
+
+1.  A filter panel allows users to select specific genres and artists to customise the radar charts display. User can select a preferred artist to examine its works/ influence over time.
+
+2.  An explanation is provided on how the ‘Star Factor’ metric was derived
+
+3.  A data table will show the ranked artists based on star factor.
+
+4.  The radar charts displays how the selected artist perform across the selected factors, offering a clear visual comparison of their strengths and profiles.
+
+5.  The bar and line graphs as well as network diagram of the artist’s work and influence over time is shown.
+
+![](/Images/Storyboard/Slide7.PNG)
+
+[Design Concept and User Interface for the page above]{.underline}
+
+1.  The tab shows the combined radar chart, bar and line graphs of the work/influence of 3 artists.
+
+2.  As a default, the top 3 artists with highest star factor will be selected in the artist field.
+
+3.  The bar and line graphs of the works of the 3 artists will be plotted in the same chart.
+
+![](/Images/Storyboard/Slide8.PNG)
+
+[Design Concept and User Interface for the page above]{.underline}
+
+1.  The bar and line graph will show trending of the star factor between 2030 to 2045. The bar and line graphs of the works of the top 10 artists will be plotted in the same chart.
+
+2.  The data table will consist of the linear regression results until 2045.
+
+3.  The Radar Chart of the top 3 artists will be reflected.
