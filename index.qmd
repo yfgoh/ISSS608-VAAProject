@@ -7,7 +7,6 @@ title: "Sailing the Currents: The Rise of Sailor Shift and Oceanus Folk"
 This project hopes to help users explore:
 
 ::: {style="display: flex; align-items: flex-start; gap: 20px;"}
-<img src="images/SailorShift.png" style="width: 300px; height: 380px;"/>
 
 <ul style="margin-top: 0;">
 
@@ -30,6 +29,7 @@ This project hopes to help users explore:
 <li>Predictions of the next Oceanus Folk stars</li>
 
 </ul>
+<img src="images/SailorShift.png" style="width: 300px; height: 380px;"/>
 :::
 
 <br> The platform features interactive network graphs, timelines, and dynamic visual tools that reveal the structure and evolution of musical influence.

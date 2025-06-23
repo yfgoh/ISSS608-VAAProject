@@ -2,23 +2,27 @@ project:
   type: website
 
 website:
-  title: "Oceanus Folk:<br>Then & Now"
+  title: "<img src='/images/OceanusFolkIcon.png' alt='Home' style='height: 68px; width: 68px;'>"
   navbar:
     left:
-      - text: "Project Overview"
-        href: "Project/Proposal.html"
-      - text: "Prototype & Storyboard"
-        href: "Project/PrototypeStoryboard.html"
-      - text: "Data Pre-processing & Methodology"
-        href: "Project/Project.html"
-      - text: "Findings & Analysis"
-        href: "Project/Analysis.html"
-      - text: "Shiny App"
-        href: "Project/XXX.html"
-      - text: "Poster"
-        href: "Project/XXX.html"
-      - text: "User Guide"
-        href: "Project/XXX.html"
+    - text: "Overview"
+      href: "Project/Proposal.html"
+    - text: "Storyboard"
+      href: "Project/PrototypeStoryboard.html"
+    - text: "Prototype"
+      menu:
+        - text: "Data Pre-processing & Methodology"
+          href: "Project/Project.html"
+        - text: "Findings & Analysis"
+          href: "Project/Analysis.html" 
+    - text: "Shiny App"
+      menu:
+        - text: "Shiny App"
+          href: "Project/XXX.html"
+        - text: "User Guide"
+          href: "Project/XXX.html"
+    - text: "Poster"
+      href: "Project/XXX.html"
     right:
       - text: Our Team
         href: "Project/XXX.html"
@@ -35,6 +39,5 @@ editor: visual
 
 render:
   - index.qmd
-  - Project/Proposal.qmd
-  - Project/Project.qmd
+
 

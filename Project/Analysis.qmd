@@ -11,6 +11,17 @@ execute:
   freeze: true
 ---
 
+```{r setup, include=FALSE}
+library(ggiraph)
+library(systemfonts)
+
+# Register Arial Narrow font
+systemfonts::register_font(
+  name = "Arial Narrow",
+  plain = "C:/Windows/Fonts/ARIALN.TTF"  
+)
+```
+
 ```{r include=FALSE}
 source("code/shared-setup.R")
 # Step 0: Get name of 'Sailor Shift'

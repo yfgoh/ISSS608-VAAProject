@@ -63,6 +63,8 @@ Download the libraries (if required) before loading the packages:
 ```{r}
 #| echo: FALSE
 pacman::p_load(DiagrammeR, dplyr, forcats, ggplot2, lubridate, shiny, visNetwork)
+library(DiagrammeRsvg)
+library(htmltools)
 ```
 
 ::: panel-tabset
@@ -70,100 +72,77 @@ pacman::p_load(DiagrammeR, dplyr, forcats, ggplot2, lubridate, shiny, visNetwork
 
 ```{r}
 #| code-fold: TRUE
-grViz("
-digraph flowchart {
-  graph [layout = dot, rankdir = TB, fontname = 'Helvetica', fontsize = 12]
-  
-  # Global node settings
-  node [shape = box, style = filled, fontname = 'Helvetica']
-  
-  # Input nodes
-  input [label = 'MC1_graph.json', fillcolor = '#FFE4B5', color = '#FFA500', penwidth = 1.5]
-  read [label = 'Read input', fillcolor = '#E6E6FA', color = '#9370DB']
-  clean [label = 'Data Pre-processing', fillcolor = '#E6E6FA', color = '#9370DB']
-  
-  # Visualization nodes
-  plot_net [label = 'Plot network graphs', fillcolor = '#ADD8E6', color = '#4682B4']
-  plot_bar [label = 'Plot barchart', fillcolor = '#98FB98', color = '#2E8B57']
-  plot_line [label = 'Plot line chart', fillcolor = '#98FB98', color = '#2E8B57']
-  
-  # Analysis nodes
-  bayesian [label = 'Bayesian Surprise', fillcolor = '#FFDAB9', color = '#CD853F']
-  entropy [label = 'Genre Entropy', fillcolor = '#FFDAB9', color = '#CD853F']
-  
-  # Output node
-  shiny [label = 'Shiny App', fillcolor = '#FFB6C1', color = '#FF69B4', shape = ellipse, style = 'filled,rounded']
-  
-  # Edges
-  input -> read -> clean
-  clean -> plot_net [color = '#4682B4']
-  clean -> plot_bar [color = '#2E8B57']
-  clean -> plot_line [color = '#2E8B57']
-  clean -> bayesian [color = '#CD853F']
-  clean -> entropy [color = '#CD853F']
-  bayesian -> plot_line [color = '#CD853F']
-  entropy -> plot_line [color = '#CD853F']
-  plot_net -> shiny [color = '#4682B4']
-  plot_bar -> shiny [color = '#2E8B57']
-  plot_line -> shiny [color = '#2E8B57']
-  
-  # Main subgraph for Data Exploration and Visualisation
-  subgraph cluster_explore {
-    label = <Data Exploration and Visualisation>
-    labelloc = t
-    labeljust = c
-    style = filled
-    fillcolor = '#F5F5F5'
-    color = '#696969'
-    margin = 20
-    fontname = 'Helvetica-Bold'
-    fontsize = 14
+# Generate the diagram as SVG
+svg <- grViz("
+  digraph flowchart {
+    graph [layout = dot, rankdir = TB, fontname = 'Helvetica', fontsize = 12]
+    node [shape = box, style = filled, fontname = 'Helvetica']
     
-    # Statisical Analysis
-    subgraph cluster_statistics {
-      label = <Statistical Analysis>
+    input [label = 'MC1_graph.json', fillcolor = '#FFE4B5', color = '#FFA500']
+    read [label = 'Read input', fillcolor = '#E6E6FA', color = '#9370DB']
+    clean [label = 'Data Pre-processing', fillcolor = '#E6E6FA', color = '#9370DB']
+    
+    plot_net [label = 'Plot network graphs', fillcolor = '#ADD8E6', color = '#4682B4']
+    plot_bar [label = 'Plot barchart', fillcolor = '#98FB98', color = '#2E8B57']
+    plot_line [label = 'Plot line chart', fillcolor = '#98FB98', color = '#2E8B57']
+    
+    bayesian [label = 'Bayesian Surprise', fillcolor = '#FFDAB9', color = '#CD853F']
+    entropy [label = 'Genre Entropy', fillcolor = '#FFDAB9', color = '#CD853F']
+    
+    shiny [label = 'Shiny App', fillcolor = '#FFB6C1', color = '#FF69B4', shape = ellipse, style = 'filled,rounded']
+    
+    input -> read -> clean
+    clean -> plot_net [color = '#4682B4']
+    clean -> plot_bar [color = '#2E8B57']
+    clean -> plot_line [color = '#2E8B57']
+    clean -> bayesian [color = '#CD853F']
+    clean -> entropy [color = '#CD853F']
+    bayesian -> plot_line [color = '#CD853F']
+    entropy -> plot_line [color = '#CD853F']
+    plot_net -> shiny [color = '#4682B4']
+    plot_bar -> shiny [color = '#2E8B57']
+    plot_line -> shiny [color = '#2E8B57']
+    
+    subgraph cluster_explore {
+      label = <Data Exploration and Visualisation>
       labelloc = t
       labeljust = c
       style = filled
-      fillcolor = '#FFF8DC'
-      color = '#DAA520'
-      margin = 15
-      fontsize = 12
-      bayesian
-      entropy
+      fillcolor = '#F5F5F5'
+      color = '#696969'
+      margin = 20
+      
+      subgraph cluster_statistics {
+        label = <Statistical Analysis>
+        fillcolor = '#FFF8DC'
+        color = '#DAA520'
+        bayesian
+        entropy
+      }
+      
+      subgraph cluster_temporal {
+        label = <Temporal Analysis>
+        fillcolor = '#F0FFF0'
+        color = '#228B22'
+        plot_bar
+        plot_line
+      }
+      
+      subgraph cluster_influence {
+        label = <Influence Analysis>
+        fillcolor = '#F0F8FF'
+        color = '#4169E1'
+        plot_net
+      }
+      
+      shiny
     }
-    
-    # Temporal Analysis subgroup
-    subgraph cluster_temporal {
-      label = <Temporal Analysis>
-      labelloc = t
-      labeljust = c
-      style = filled
-      fillcolor = '#F0FFF0'
-      color = '#228B22'
-      margin = 15
-      fontsize = 12
-      plot_bar
-      plot_line
-    }
-    
-    # Influence Analysis subgroup
-    subgraph cluster_influence {
-      label = <Influence Analysis>
-      labelloc = t
-      labeljust = c
-      style = filled
-      fillcolor = '#F0F8FF'
-      color = '#4169E1'
-      margin = 15
-      fontsize = 12
-      plot_net
-    }
-    
-    shiny
   }
-}
-")
+") %>% 
+  export_svg()
+
+# Embed the SVG directly
+HTML(svg)
 ```
 
 ## Explanation

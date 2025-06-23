@@ -11,13 +11,13 @@ execute:
   freeze: true
 ---
 
-#  1 Overview
+# 1 Overview
 
 This exercise will target to answer one of the three challenges from [VAST 2025](https://vast-challenge.github.io/2025/index.html) which features a fictitious island nation, Oceanus, famous for fishing and quiet seaside communities.
 
 The chosen challenge is [Mini-Challenge 1](https://vast-challenge.github.io/2025/MC1.html).
 
-##  1.1 Background
+## 1.1 Background
 
 One of music’s biggest superstars is Oceanus native Sailor Shift. From humble beginnings, Sailor has grown in popularity and now enjoys fans around the world. Sailor started her career on the island nation of Oceanus which can be clearly seen in her early work, she started in the genre of “Oceanus Folk”. While Sailor has moved away from the traditional Oceanus style, the Oceanus Folk has made a name for itself in the musical world. The popularity of this music is one of the factors driving an increase in tourism to a quiet island nation that used to be known for fishing.
 
@@ -31,7 +31,7 @@ Additionally, because of Sailor’s success, more attention began to be paid ove
 
 Now, as Sailor returns to Oceanus in 2040, a local journalist – Silas Reed – is writing a piece titled Oceanus Folk: Then-and-Now that aims to trace the rise of Sailor and the influence of Oceanus Folk on the rest of the music world. He has collected a large dataset of musical artists, producers, albums, songs, and influences and organized it into a knowledge graph. Your task is to help Silas create beautiful and informative visualizations of this data and uncover new and interesting information about Sailor’s past, her rise to stardom, and her influence.
 
-##  1.2 Tasks and Questions
+## 1.2 Tasks and Questions
 
 1.  Design and develop visualizations and visual analytic tools that will allow Silas to explore and understand the profile of Sailor Shift’s career
 
@@ -50,11 +50,11 @@ Now, as Sailor returns to Oceanus in 2040, a local journalist – Silas Reed –
     -   Visualize the careers of three artists. Compare and contrast their rise in popularity and influence.
     -   Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.
 
-##  1.3 Data Source
+## 1.3 Data Source
 
 The data for this exercise is from [VAST 2025 MC1](https://github.com/vast-challenge/2025-data/blob/main/MC1_release.zip).
 
-##  1.4 Data Description
+## 1.4 Data Description
 
 **Graph Description**
 
@@ -71,7 +71,7 @@ The data for this challenge comes from two different sources:
 -   an online, crowdsourced repository of musical influence, where contributors have manually notated instances in which songs or albums have sampled, covered, or otherwise drawn inspiration from previous work.
 -   aggregate-level descriptions of song popularity, as labeled by our journalist, Silas Reed. These notations (notable and notoriety_date) are directly based on both the number of sales and streams that the song/album has achieved as well as the whether or not the work landed on a top record chart.
 
-##  1.5 Install and Load the Required Libraries
+## 1.5 Install and Load the Required Libraries
 
 The following libraries are used in this exercise and the code below loads them into the working environment.
 
@@ -102,7 +102,18 @@ pacman::p_load(jsonlite, tidyverse, ggtext,
                 ggiraph, kableExtra, plotly)
 ```
 
-##  1.6 Importing Data
+```{r setup, include=FALSE}
+library(ggiraph)
+library(systemfonts)
+
+# Register Arial Narrow font
+systemfonts::register_font(
+  name = "Arial Narrow",
+  plain = "C:/Windows/Fonts/ARIALN.TTF"  
+)
+```
+
+## 1.6 Importing Data
 
 For the purpose of this exercise, a data file called *MC1_graph* will be used. The code below imports *MC1_graph.json* into R environment by using *fromJSON()* function of *jsonlite* package.
 
@@ -113,13 +124,13 @@ mc1_data <- fromJSON("data/MC1_graph.json")
 glimpse(mc1_data)
 ```
 
-#  2 Data Pre-Processing
+# 2 Data Pre-Processing
 
-##  2.1 Split into Nodes and Edges
+## 2.1 Split into Nodes and Edges
 
 The *mc1_data.json* data file provided by VAST 2025 for Mini-Challenge 1 consists of both nodes and links. The following codes will be used to split them into individual files for easier data matriculation.
 
-###  2.1.1 Get Nodes
+### 2.1.1 Get Nodes
 
 ```{r}
 #| code-fold: true
@@ -135,7 +146,7 @@ The first 5 rows of *mc1_nodes_raw* are shown below.
 kable(head(mc1_nodes_raw, 5))
 ```
 
-###  2.1.2 Get Edges
+### 2.1.2 Get Edges
 
 ```{r}
 #| code-fold: true
@@ -151,7 +162,7 @@ The first 5 rows of *mc1_edges_raw* are shown below.
 kable(head(mc1_edges_raw, 5))
 ```
 
-##  2.2 Data Overview
+## 2.2 Data Overview
 
 Before proceeding to data pre-processing, we examine the data to gain a clearer understanding of the dataset and to verify the structural integrity of the imported graph.
 
@@ -186,7 +197,7 @@ p2 <- ggplot(
 p1 + p2
 ```
 
-##  2.3 Adding Identifying Columns
+## 2.3 Adding Identifying Columns
 
 There are 2 columns that provides information on names, the *name* and *stage_name* column. The code below shows that the *name* column is the one that contains information on our target of interest Sailor Shift.
 
@@ -220,7 +231,7 @@ mc1_nodes_raw <- mc1_nodes_raw %>%
 kable(head(mc1_nodes_raw,5))
 ```
 
-##  2.4 Convert Date Fields
+## 2.4 Convert Date Fields
 
 The columns related to date are in *char* format and will be converted to *int* using the code below.
 
@@ -234,9 +245,9 @@ mc1_nodes_raw <- mc1_nodes_raw %>%
                 ~as.integer(if_else(`Node Type` %in% c("Song", "Album"), ., NA_character_))))
 ```
 
-##  2.5 Check and Fix Duplicates
+## 2.5 Check and Fix Duplicates
 
-###  2.5.1 Duplicates in Nodes
+### 2.5.1 Duplicates in Nodes
 
 For Nodes, there are no duplicated *id*.
 
@@ -312,7 +323,7 @@ mc1_nodes_dedup %>%
   scroll_box(height = "200px")
 ```
 
-###  2.5.2 Duplicates in Edges
+### 2.5.2 Duplicates in Edges
 
 For Edges, there are duplicates but only their *key* are different. Since, information on *key* is not provided by [VAST 2025 MC1](https://github.com/vast-challenge/2025-data/blob/main/MC1_release.zip), its purpose cannot be determined. Therefore, the *key* column will be redundant and duplicated edges differing only by their *key* will be removed.
 
@@ -344,7 +355,7 @@ mc1_edges_raw %>%
   filter(n > 1)
 ```
 
-##  2.6 Check Nodes and Edges range
+## 2.6 Check Nodes and Edges range
 
 The *source* and *target* columns seems to refer to the *id* column in nodes. The code below is used to confirm this assumption since they have the same range.
 
@@ -358,7 +369,7 @@ range(mc1_edges_raw$source)
 range(mc1_edges_raw$target)
 ```
 
-##  2.7 Mapping Node name to Edges id
+## 2.7 Mapping Node name to Edges id
 
 tidygraph uses *from* and *to* columns to reference nodes. By default, tidygraph matches these edges reference against the first column in the nodes table, or against *name* column.
 
@@ -381,7 +392,7 @@ mc1_nodes_clean <- mc1_nodes_dedup %>%
 kable(head(mc1_nodes_clean,5))
 ```
 
-###  2.7.1 Create Edge Mapping from original id to kept id
+### 2.7.1 Create Edge Mapping from original id to kept id
 
 In section 3.3.2, duplicated nodes were deduplicated and removed, edges referring to the removed nodes will become invalid thus, edges will be remapped to the retained nodes. This step ensures that all edges correctly point to existing nodes in the deduplicated graph.
 
@@ -433,7 +444,7 @@ mc1_edges_mapped <- mc1_edges_mapped %>%
 kable(head(mc1_edges_mapped,5))
 ```
 
-##  2.8 Remove unmatched (invalid) edges
+## 2.8 Remove unmatched (invalid) edges
 
 The following code chunk removes edges that reference missing node id, ensuring that only valid edges are kept.
 
@@ -446,7 +457,7 @@ mc1_edges_clean <- mc1_edges_mapped %>%
 
 There are no unmatched edges.
 
-##  2.9 Check for any missing nodes
+## 2.9 Check for any missing nodes
 
 This steps looks for any unmatched nodes and edges and the result shows that all nodes have matching edges and vice versa.
 
@@ -459,7 +470,7 @@ setdiff(
 )
 ```
 
-##  2.10 Checking Edges Schema
+## 2.10 Checking Edges Schema
 
 This section aims to ensure that each edge in the graph adheres to the schema specified in the VAST Challenge 2025 MC1 Data Description document. The following code checks whether the node types connect by each edge matches the valid source and target types for that edge's type.
 
@@ -545,7 +556,7 @@ mc1_edges_clean <- mc1_edges_clean %>%
   select(from, to, `Edge Type`)  # drop helper columns
 ```
 
-##  2.11 Temporal Validation
+## 2.11 Temporal Validation
 
 The following code chunk is used to ensure any influenced songs/albums are not released before the songs/albums that influenced them. If there are any of such cases, it will be flagged out.
 
@@ -637,7 +648,7 @@ total_cleaned_influences <- consistent_influence_edges %>% nrow()
 cat("Total song/album influence relationships after cleaning:", total_cleaned_influences, "\n")
 ```
 
-##  2.12 Check for orphan nodes
+## 2.12 Check for orphan nodes
 
 ```{r}
 # Get all node IDs that appear in edges (either as source or target)
@@ -653,7 +664,7 @@ cat("Nodes with edges:", length(nodes_with_edges), "\n")
 cat("Orphan nodes (no edges):", nrow(orphan_nodes), "\n")
 ```
 
-##  2.13 Creating Consistent Visualisation Colouring
+## 2.13 Creating Consistent Visualisation Colouring
 
 The code below groups different types of edges and nodes into broader categories for consistent visualisation colouring.
 
@@ -678,7 +689,7 @@ mc1_nodes_clean <- mc1_nodes_clean %>%
   )
 ```
 
-##  2.14 Creating the Global Knowledge Graph
+## 2.14 Creating the Global Knowledge Graph
 
 The code below uses `tbl_graph()` to create a tidygraph's graph object.
 
@@ -698,7 +709,7 @@ Since several of the ggraph layouts involve randomisation, this code sets the se
 set.seed(1234)
 ```
 
-#  3 Exploratory Data Analysis (EDA) on Sailor Shift's career
+# 3 Exploratory Data Analysis (EDA) on Sailor Shift's career
 
 We will design and develop visualizations and visual analytic tools that will allow Silas to explore and understand the profile of Sailor Shift’s career.
 
@@ -710,7 +721,7 @@ This analysis examines Sailor Shift's work during her solo artist career, exclud
 Future work: What if we make everything into a function and find members that the person is part of and use a while loop to get everything so it includes all groups that the person is a part of?
 :::
 
-##  3.1 Visualising Sailor Shift's Music
+## 3.1 Visualising Sailor Shift's Music
 
 The analysis begins by extracting Sailor Shift's *name* from the node dataset. Following this, all outgoing edges originating from her node are identified. The resulting nodes from those edges are filtered to isolate only those classified as Songs and Albums, thereby displaying her musical career.
 
@@ -844,7 +855,7 @@ mc1_nodes_clean %>%
   scroll_box(height = "300px")
 ```
 
-##  4.2 Question 1a) Who has she been most influenced by over time?
+## 4.2 Question 1a) Who has she been most influenced by over time?
 
 This section is a continuation from the previous [section](https://isss608-ay2024-25t3.netlify.app/take-home_ex/take-home_ex02/take-home_ex02_mc1_main_v5#visualising-sailor-shifts-music) where all her outgoing edges were found. Music that she produced were already found and now Persons and Musical Groups that are outgoing from her are included. From these Songs, Albums, Persons and Musical Groups, only those Songs and Albums with further outgoing edges are kept. Then, the nodes connected to those are found. These are music that her music have been influenced by. Finally, the last step finds Person and Musical Groups who produced the music that have influenced her music.
 
@@ -1045,7 +1056,7 @@ node_data %>%
   scroll_box(height = "200px")
 ```
 
-##  4.3 Question 1b) Who has she collaborated with and directly or indirectly influenced?
+## 4.3 Question 1b) Who has she collaborated with and directly or indirectly influenced?
 
 The analysis begins with the sailor_music_all dataset from [Section 4.1](https://isss608-ay2024-25t3.netlify.app/take-home_ex/take-home_ex02/take-home_ex02_mc1_main_v5#visualising-sailor-shifts-music), filtering to retain only music with more than two inward edges. This step eliminates works without collaborators or external influences. Two Song/Albums ("The Current & The Chord" and "Salty Dreams") have to be manually removed since their inward edges are from Sailor herself and therefore not needed. Next, all inward neighbours (source nodes) of Sailor's music are identified, representing both influenced works (Songs/Albums) and collaborators (Persons/Musical Groups). After filtering to keep only Songs and Albums, their inward neighbours are examined. This reveals: (1) Persons/Musical Groups who have been influenced by Sailor's music (Persons/Musical Groups), and (2) secondary influenced works (Songs/Albums) that were impacted by the same sources that were influenced by Sailor's compositions.
 
@@ -1268,7 +1279,7 @@ mc1_nodes_clean %>%
   scroll_box(height = "200px")
 ```
 
-##  4.4 Question 1c) How has she influenced collaborators of the broader Oceanus Folk community?
+## 4.4 Question 1c) How has she influenced collaborators of the broader Oceanus Folk community?
 
 This question is tackled by first identifying all Songs and Albums belonging to the **Oceanus Folk** *Genre* and retriving their associated artists (Persons/Musical Groups). Then Sailor Shift's is identified and her degree of separation is calculated to examine her impact on the broader Oceanus Folk community.
 
@@ -1504,11 +1515,11 @@ girafe(ggobj = g, width_svg = 9, height_svg = 8)
     -   Evidenced by the sporadic 'Influenced By' connections in the network graph
 :::
 
-#  5 VAST 2025 MC1 Question 2
+# 5 VAST 2025 MC1 Question 2
 
 Develop visualizations that illustrate how the influence of Oceanus Folk has spread through the musical world.
 
-# **4  Exploratory Data Analysis (EDA) - Sailor's Network**
+# 4 Exploratory Data Analysis (EDA) - Sailor's Network
 
 -   In total, Sailor Shift released 38 Songs and Albums from 2024 to 2040
 -   Details on the Songs and Albums can be found in the table below
@@ -1581,7 +1592,7 @@ ggplot(sailor_release_data, aes(x = release_date, y = n, fill = genre)) +
   theme_minimal()
 ```
 
-##  5.1 Question 2a) Was this influence intermittent or did it have a gradual rise?
+## 5.1 Question 2a) Was this influence intermittent or did it have a gradual rise?
 
 We will explore these three areas to understand the influence of Oceanus Folk over time:
 
@@ -2150,9 +2161,9 @@ Thus, while the overall trend shows long-term growth, Bayesian Surprise confirms
 
 (Didnt copy over animation)
 
-##  5.2 Question 2b) What genres and top artists have been most influenced by Oceanus Folk?
+## 5.2 Question 2b) What genres and top artists have been most influenced by Oceanus Folk?
 
-###  5.2.1 What genres have been most influenced by Oceanus Folk?
+### 5.2.1 What genres have been most influenced by Oceanus Folk?
 
 To determine which genres have been most influenced by Oceanus Folk, all songs and albums were identified. Then, the music (Songs/Albums) that influenced them were obtained to calculate the frequency and percentage of Oceanus Folk's influence across different musical genre. This analysis reveals the genres that show the strongest impact from Oceanus Folk's musical style.
 
@@ -2549,11 +2560,11 @@ Figueiredo, F., Panoutsos, T., & Andrade, N. (2024, October 21). *Surprising pat
 
 Ferwerda, B., & Schedl, M. (2016). *Investigating the relationship between diversity in music consumption behavior and cultural dimensions: A cross-country analysis* (SOAP’16 workshop paper, UMAP Extended Proceedings). CEUR Workshop Proceedings, 1618. Retrieved from <https://ceur-ws.org/Vol-1618/SOAP_paper1.pdf>
 
-#  6 VAST 2025 MC1 Question 3
+# 6 VAST 2025 MC1 Question 3
 
 Use your visualizations to develop a profile of what it means to be a rising star in the music industry.
 
-##  6.1 Analysing the careers of all Artists
+## 6.1 Analysing the careers of all Artists
 
 The analysis identifies all musical artists, including both the songs/albums they produced and their influence relationships—tracking both the musical works they have influenced and the artists they have impacted throughout their careers.
 
@@ -2697,7 +2708,7 @@ creator_rankings %>%
   scroll_box(height = "300px")
 ```
 
-##  6.2 Question 3a) Visualize the careers of three artists. Compare and contrast their rise in popularity and influence?
+## 6.2 Question 3a) Visualize the careers of three artists. Compare and contrast their rise in popularity and influence?
 
 Based on the results of the analysis above, the top artists in each category will be selected.
 
@@ -2705,7 +2716,7 @@ Based on the results of the analysis above, the top artists in each category wil
 -   Most Popular Artist (Highest Number of Notable Hits): Jay Walters
 -   Most Influential Artist (Influence Artists and Collaborations), Most Music Influence & Highest Star Factor: Min Fu
 
-###  6.2.1 Visualizing the career of Sailor Shift
+### 6.2.1 Visualizing the career of Sailor Shift
 
 Sailor Shift has released the most number of music (Song/Album).
 
@@ -3119,7 +3130,7 @@ Sailor Shift has no influence on Music creation
 :::
 ::::
 
-###  6.2.2 Visualizing the career of Jay Walters
+### 6.2.2 Visualizing the career of Jay Walters
 
 Jay Walters has the highest number of notable hits.
 
@@ -3525,7 +3536,7 @@ plot_ly(
 ```
 :::
 
-###  6.2.3 Visualizing the career of Min Fu
+### 6.2.3 Visualizing the career of Min Fu
 
 Min Fu is the most influential artist.
 
@@ -3933,7 +3944,7 @@ plot_ly(
 ```
 :::
 
-###  6.2.4 Compare and contrast the three artists' rise in popularity and influence
+### 6.2.4 Compare and contrast the three artists' rise in popularity and influence
 
 The cumulative graphs of the 3 artists (Sailor Shift, Jay Walters and Min Fu) will be overlaid for comparison of their musical careers.
 
@@ -4275,11 +4286,11 @@ Sailor Shift has no influence on music creation
     -   In contrast, Jay Walters' influence period ended earlier (last connection in 2035), while Min Fu's influence dates back to 2030.
 :::
 
-##  6.3 Question 3b) Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.
+## 6.3 Question 3b) Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.
 
 This will be a continuation of Question 3a where only Oceanus Folk artists and the Oceanus Folk songs that they have produced are analysed.
 
-###  6.3.1 Analysing the careers of all Oceanus Folk Artists
+### 6.3.1 Analysing the careers of all Oceanus Folk Artists
 
 In order to predict the next Oceanus Folk stars, a grading rubric will be used where their ranking in these 4 categories (Number of Music released, Number of Notable Music, Number of New Artists Influenced / Collaborated With and Number of Music influenced). Each category will be given equal weighting with a maximum score of 4 and the Oceanus Folk artists will be ranked using this rubric.
 
@@ -4355,7 +4366,7 @@ oceanus_creator_rankings %>%
   scroll_box(height = "300px")
 ```
 
-###  6.3.2 Visualizing the career of Sailor Shift
+### 6.3.2 Visualizing the career of Sailor Shift
 
 ```{r}
 #| code-fold: true
@@ -4761,7 +4772,7 @@ plot_ly(
 ```
 :::
 
-###  6.3.3 Visualizing the career of Chao Wu
+### 6.3.3 Visualizing the career of Chao Wu
 
 ```{r}
 #| code-fold: true
@@ -5167,7 +5178,7 @@ plot_ly(
 ```
 :::
 
-###  6.3.4 Visualizing the career of Xia Jia
+### 6.3.4 Visualizing the career of Xia Jia
 
 ```{r}
 #| code-fold: true
@@ -5573,7 +5584,7 @@ plot_ly(
 ```
 :::
 
-###  6.3.5 Visualizing the career of Donna Caldwell
+### 6.3.5 Visualizing the career of Donna Caldwell
 
 ```{r}
 #| code-fold: true
@@ -5979,7 +5990,7 @@ plot_ly(
 ```
 :::
 
-###  6.3.6 Visualizing the career of Xiulan Ye
+### 6.3.6 Visualizing the career of Xiulan Ye
 
 ```{r}
 #| code-fold: true
@@ -6385,7 +6396,7 @@ plot_ly(
 ```
 :::
 
-###  6.3.7 Compare and contrast the five artists' rise in popularity and influence
+### 6.3.7 Compare and contrast the five artists' rise in popularity and influence
 
 The cumulative graphs of the 5 artists (Sailor Shift, Chao Wu, Xia Jia, Donna Caldwell, and Xiulan Ye) will be overlaid for comparison of their musical careers.
 
@@ -6900,7 +6911,7 @@ plot_ly(
 :::
 :::::::
 
-###  6.3.8 Analysing the relationships between these five artists
+### 6.3.8 Analysing the relationships between these five artists
 
 ```{r}
 #| code-fold: true
@@ -7056,7 +7067,7 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
     -   Chao Wu, Xia Jia, Donna Caldwell and Xiulan Ye produced Winds of the Basque Shore and Destiny's Call together.
 :::
 
-###  6.3.8 Predicting who the next three Oceanus Folk stars with be over the next five years
+### 6.3.8 Predicting who the next three Oceanus Folk stars with be over the next five years
 
 ::: callout-tip
 ## Sailor Shift
