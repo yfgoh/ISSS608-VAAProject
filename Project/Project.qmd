@@ -1333,7 +1333,7 @@ g <- sub_graph %>%
       data_id = name,
       colour = `Node Colour`,
       shape = `Node Type`,
-      size = ifelse(node_name %in% c("Sailor Shift", "Ivy Echos", "Wei Zhao"), 3, 1),
+      size = ifelse(node_name %in% c("Sailor Shift"), 3, 1),
       tooltip = case_when(
         `Node Type` == "Album" ~ sprintf(
           "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
@@ -1394,6 +1394,8 @@ girafe(ggobj = g, width_svg = 9, height_svg = 8)
 #| code-fold: true
 #| code-summary: "Show Code"
 
+chosen_degree = 13
+
 # Data Preparation
 
 # Convert to igraph object
@@ -1403,15 +1405,17 @@ sub_igraph <- as.igraph(sub_graph)
 artist_id <- which(V(sub_igraph)$name == chosen_node_1)
 
 # Calculate distances from Sailor Shift
-distances <- distances(sub_igraph, v = artist_id, mode = "all") # Future work: somehow there are some degree infinite when the graph shows that they are connected. How to fix?
+distances <- distances(sub_igraph, v = artist_id, mode = "all")
 
 # Convert to tidy format, calculate distances and handle infinite values
 distance_df <- tibble(
   name = V(sub_igraph)$name,
   degree = as.numeric(distances[1, ])
-)
+) %>%
+  mutate(degree = ifelse(is.infinite(degree), NA, degree))
 
 filtered_nodes <- distance_df %>%
+  filter(degree <= chosen_degree) %>%
   pull(name)
 
 filtered_nodes <- unique(c(filtered_nodes,
@@ -1443,7 +1447,7 @@ g <- filtered_graph %>%
       data_id = name,
       colour = degree,
       shape = `Node Type`,
-      size = ifelse(node_name %in% c("Sailor Shift", "Ivy Echos", "Wei Zhao"), 3, 1),
+      size = ifelse(node_name %in% c("Sailor Shift"), 3, 1),
       tooltip = case_when(
         `Node Type` == "Album" ~ sprintf(
           "%s<br/>%s<br/>Notable: %s<br/>(%s)<br/>Degree: %s", node_name, genre, notable, release_date, degree
@@ -1488,11 +1492,11 @@ g <- filtered_graph %>%
   scale_size_identity() + 
   scale_color_gradientn(
     name = "Degree",
-    colors = c("#2E3192", "#FFA757", "grey50"),
-    values = scales::rescale(c(0, 6,13)),
+    colours = c("#2E3192", "#FFA757"),
+    values = scales::rescale(c(0, 13)),
     na.value = "grey50",
     limits = c(0, 13),
-    breaks = 0:13,
+    breaks = 0:13
   )
 
 girafe(ggobj = g, width_svg = 9, height_svg = 8)
