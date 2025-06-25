@@ -102,16 +102,7 @@ pacman::p_load(jsonlite, tidyverse, ggtext,
                 ggiraph, kableExtra, plotly)
 ```
 
-```{r setup, include=FALSE}
-library(ggiraph)
-library(systemfonts)
 
-# Register Arial Narrow font
-systemfonts::register_font(
-  name = "Arial Narrow",
-  plain = "C:/Windows/Fonts/ARIALN.TTF"  
-)
-```
 
 ## 1.6 Importing Data
 
@@ -1283,15 +1274,6 @@ mc1_nodes_clean %>%
 
 This question is tackled by first identifying all Songs and Albums belonging to the **Oceanus Folk** *Genre* and retriving their associated artists (Persons/Musical Groups). Then Sailor Shift's is identified and her degree of separation is calculated to examine her impact on the broader Oceanus Folk community.
 
-#### Navigate through the tabs to explore visualizations of the Oceanus Folk community for:
-
--   All works of the Oceanus Folk community
--   The degree of separation of the Oceanus Folk community from Sailor Shift
--   Three degrees of separation from Sailor Shift
-
-::: panel-tabset
-## Oceanus Folk Community
-
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1313,86 +1295,6 @@ genre_all_nodes <- unique(c(genre_creators,
 sub_graph <- graph %>%
   filter(name %in% genre_all_nodes)
 
-# Visualisation
-
-g <- sub_graph %>%
-  ggraph(layout = "kk") + 
-  geom_edge_fan(
-    aes(
-      edge_colour = `Edge Colour`,
-      start_cap = circle(1, 'mm'),
-      end_cap = circle(1, 'mm')
-      ),
-    arrow = arrow(length = unit(1, 'mm')),
-    alpha = 0.3
-  ) +
-  geom_point_interactive(
-    aes(
-      x = x,
-      y = y,
-      data_id = name,
-      colour = `Node Colour`,
-      shape = `Node Type`,
-      size = ifelse(node_name %in% c("Sailor Shift"), 3, 1),
-      tooltip = case_when(
-        `Node Type` == "Album" ~ sprintf(
-          "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
-        ),
-        `Node Type` == "Song" ~ sprintf(
-          "%s<br/>%s<br/>Notable: %s<br/>(%s)<br/>Single: %s", node_name, genre, notable, release_date, single
-        ),
-        TRUE ~ sprintf("%s", node_name)
-      )
-    ),
-    show.legend = c(size = FALSE)
-  )+ 
-  geom_node_text(
-    aes(
-      label = ifelse(node_name == "Sailor Shift", "Sailor Shift", NA)
-    ),
-    fontface = "bold",
-    size = 3,
-    colour = 'red',
-    show.legend = FALSE
-  ) +
-  scale_shape_manual(
-    name = "Node Type",
-    values = c(
-      "Album" = 16,
-      "MusicalGroup" = 15,
-      "Person" = 17,
-      "Song" = 10
-    )
-  ) +
-  scale_edge_colour_manual(
-    name = "Edge Colour",
-    values = c(
-      `Creator Of` = "#47D45A",
-      `Influenced By` = "#FF5757",
-      `Member Of` = "#CF57FF"
-    )
-  ) +
-  scale_colour_manual(
-    name = "Node Colour",
-    values = c(
-      "Musician" = "grey50",
-      "Oceanus Folk" = "#0027EA",
-      "Other Genre" = "#A45200"
-    )
-  ) +
-  theme_graph() +
-  theme(legend.text = element_text(size = 6),
-        legend.title = element_text(size = 9)) +
-  scale_size_identity()
-
-girafe(ggobj = g, width_svg = 9, height_svg = 8)
-```
-
-## Degree of Separation from Sailor Shift
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
 
 chosen_degree = 13
 
@@ -1501,7 +1403,6 @@ g <- filtered_graph %>%
 
 girafe(ggobj = g, width_svg = 9, height_svg = 8)
 ```
-:::
 
 ::: callout-tip
 ## How has she influenced collaborators of the broader Oceanus Folk community?
