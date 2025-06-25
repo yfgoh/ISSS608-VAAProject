@@ -962,7 +962,7 @@ g <- sub_graph %>%
       data_id = name,
       colour = `Node Colour`,
       shape = `Node Type`,
-      size = ifelse(node_name %in% c("Sailor Shift", "Ivy Echos", "Wei Zhao"), 3, 1),
+      size = ifelse(node_name %in% c("Sailor Shift", "Wei Zhao"), 3, 1),
       tooltip = case_when(
         `Node Type` == "Album" ~ sprintf(
           "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
@@ -2495,62 +2495,8 @@ The Star Factor will aggregate these normalized scores (maximum: 4) to rank the 
 #| code-summary: "Show Code"
 
 # Data Preparation
-
-# Step 1: Get all creator names
-global_creators <- mc1_nodes_clean %>%
-  filter(`Node Type` %in% c("Person", "MusicalGroup"))
-
-# Step 2: Get all outgoing edges from these creators
-creator_out_edges <- mc1_edges_clean %>%
-  filter(from %in% global_creators$name, `Edge Colour` == "Creator Of")
-
-# Step 3: Get all songs made by creators
-creator_music <- mc1_nodes_clean %>%
-  filter(name %in% creator_out_edges$to)
-
-# Step 4: Get all incoming edges from songs (music and collaborators)
-creator_songs_in_edges <- mc1_edges_clean %>%
-  filter(to %in% creator_music$name)
-
-# Step 5: First join to get creator names (from)
-creators <- creator_out_edges %>%
-  left_join(mc1_nodes_clean, by = c("from" = "name")) %>%
-  select(from, to, node_name, `Node Type`) %>%
-  rename(creator_name = node_name, creator_node_type = `Node Type`)
-
-# Step 6: Second join to get song names (to)
-creator_and_songs <- creators %>%
-  left_join(mc1_nodes_clean, by = c("to" = "name")) %>%
-  select(from, creator_name, creator_node_type, to, node_name, release_date, genre, notable) %>%
-  rename(creator_from = from, song_name = node_name, creator_release_date = release_date, song_genre = genre, song_to = to) %>%
-  distinct()
-
-# Step 7: Third join to get influenced songs / collaborators
-creator_and_songs_and_influences <- creator_and_songs %>%
-  left_join(creator_songs_in_edges %>% select(from, to, `Edge Colour`), by = c("song_to" = "to"), relationship = "many-to-many") %>%
-  left_join(mc1_nodes_clean %>% select(name, genre, node_name, release_date), by = c("from" = "name")) %>%
-  rename(influence_genre = genre, infuence_music_collaborate = from, infuence_music_collaborate_name = node_name, influence_release_date = release_date) %>%
-  distinct()
-
-# Step 8: Fourth join to get influenced song's creator
-creator_and_songs_and_influences_and_creators <- creator_and_songs_and_influences %>%
-  left_join(creator_out_edges %>% select(from, to), by = c("infuence_music_collaborate" = "to"), relationship = "many-to-many") %>%
-  rename(influence_creator = from)
-
-# Step 9: Add release date for collaborators
-creator_and_songs_and_influences_and_creators_collaborate <- creator_and_songs_and_influences_and_creators %>%
-  mutate(
-    influence_release_date = case_when(
-      `Edge Colour` == "Creator Of" ~ creator_release_date,
-      TRUE ~ influence_release_date  # Keeps original value if not "Creator Of"
-    ),
-    influence_creator = case_when(   # A collaborator can also be considered influenced
-      `Edge Colour` == "Creator Of" ~ infuence_music_collaborate,
-      TRUE ~ influence_creator
-    )
-  )
   
-# Step 10: To highlight songs that the creator influence that is not produced by same creator
+# Step 1: To highlight songs that the creator influence that is not produced by same creator
 creator_influence_lists <- creator_and_songs_and_influences_and_creators_collaborate %>%
   group_by(creator_name, creator_node_type, song_to, song_name, creator_release_date, song_genre, notable) %>%
   distinct () %>%
@@ -2560,7 +2506,7 @@ creator_influence_lists <- creator_and_songs_and_influences_and_creators_collabo
     unique_influence_music = list(unique(na.omit(infuence_music_collaborate[creator_from != influence_creator & !is.na(influence_genre)])))
   )
 
-# Step 11: Aggregate unique influences per creator
+# Step 2: Aggregate unique influences per creator
 creator_stats <- creator_influence_lists %>%
   group_by(creator_name) %>%
   summarize(
@@ -2572,7 +2518,7 @@ creator_stats <- creator_influence_lists %>%
     influence_music = length(unique(unlist(unique_influence_music)))
   )
 
-# Step 12: Create Scoring Rubric
+# Step 3: Create Scoring Rubric
 creator_rankings <- creator_stats %>%
   mutate(
     # Normalize each metric (0-1 scale)
@@ -2587,7 +2533,7 @@ creator_rankings <- creator_stats %>%
   arrange(desc(composite_score)) %>%
   select(creator_name, total_songs, notable_hits, collaboration_influence_creator, influence_music, composite_score)
 
-# Step 13: Final Ranked Table
+# Step 4: Final Ranked Table
 creator_rankings %>%
   mutate(
     Rank = row_number(),
