@@ -1641,6 +1641,7 @@ influence_yearly <- creator_and_songs_and_influences_and_creators_collaborate %>
   count(influence_release_date, name = "num_influenced_nodes") %>%
   complete(influence_release_date = 1975:2040, fill = list(num_influenced_nodes = 0)) %>%
   arrange(influence_release_date) %>%  # Ensure dates are in chronological order
+  filter(cumsum(num_influenced_nodes) > 0) %>%
   mutate(cumulative_influenced = cumsum(num_influenced_nodes))
 
 
@@ -1799,7 +1800,7 @@ plot_ly(
     )
   ) %>%
   layout(
-    title = "Annual Count of New Oceanus Folk Artist Influences & Collaborations",
+    title = "Yearly Number of New Oceanus Folk Artist Influences & Collaborations",
     margin = list(b = 80, t = 80),      
     xaxis = list(
       title = NA,  
@@ -1864,6 +1865,68 @@ From the 1990s through early 2000s, Oceanus Folk had very few influenced work. F
 In 2023, there was a sharp increase in both the number of yearly influenced works and the cumulative total. The rising wave of Oceanus Folk influenced music had coincided with Sailor Shift’s rise and the influence continued to accelerate with Sailor's breakthrough until 2029.
 
 After 2030, the influence tapers off, suggesting the genre may have matured or plateaued.
+
+```{r}
+# Step 2: Select and rename columns
+df1 <- oceanus_nodes_by_date %>%
+  select(year = release_date, value = cumulative_count) %>%
+  mutate(series = "Music Releases")
+
+df2 <- influence_yearly %>%
+  select(year = influence_release_date, value = cumulative_influenced) %>%
+  mutate(series = "Influenced Songs/Albums")
+
+df3 <- creators_by_date %>%
+  select(year = influence_release_date, value = cumulative_count) %>%
+  mutate(series = "New Influenced Artists")
+
+# Step 3: Combine into one tidy data frame
+combined_df <- bind_rows(df1, df2, df3)
+
+# Step 4: Plot
+plot_ly(combined_df,
+        x = ~year,
+        y = ~value,
+        color = ~series,
+        colors = c("Music Releases" = "#ADD8E6", 
+                   "Influenced Songs/Albums" = "#F08080", 
+                   "New Influenced Artists" = "#C2E0C6"),
+        type = 'scatter',
+        mode = 'lines+markers',
+        hoverinfo = "text",
+        hovertext = ~paste0("Year: ", year, "<br>", series, ": ", value)
+) %>%
+  layout(
+    title = list(text = "Oceanus Folk Influence Over Time (Cumulative)", x = 0.5),
+    xaxis = list(title = list(text = ""), dtick = 5),
+    yaxis = list(title = "Cumulative Count"),
+    legend = list(
+      orientation = "h",
+      x = 0.5,
+      xanchor = "center",
+      y = 1.15,         # position legend above the plot
+      yanchor = "bottom"
+    ),
+    margin = list(t = 140, b = 80)  # extra top space for legend + title
+  )
+```
+
+```{r}
+# Step 2: Create faceted bar plot with horizontal layout
+p <- ggplot(combined_counts_df, aes(x = year, y = value, fill = series)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~series, nrow = 1, scales = "fixed") +  # horizontal facets
+  scale_fill_manual(values = c("Music Releases" = "#ADD8E6", 
+                               "Influenced Songs/Albums" = "#F08080", 
+                               "New Influenced Artists" = "#C2E0C6")) +
+  labs(title = "Yearly Numbers by Category",
+       x = NULL, y = "Yearly Count") +
+  theme_minimal()+
+  theme(legend.position = "none", panel.spacing = unit(1.5, "lines"), plot.title = element_text(hjust = 0.5))  # fully removes legend
+
+# Step 3: Make it interactive
+ggplotly(p)
+```
 
 #### 5.1.3.1 Genre Star Factor
 
@@ -2044,6 +2107,52 @@ plot_ly(data = plot_data, x = ~year, y = ~surprise, color = ~type, colors = "Set
     legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.2),
     margin = list(t = 60, b = 80)
   )
+```
+
+```{r}
+plot_ly(
+  data = plot_data, 
+  x = ~year, 
+  y = ~surprise, 
+  color = ~type,
+  colors = c(
+    "Music Releases"     = "#ADD8E6", 
+    "Influenced Works"   = "#F08080", 
+    "Artists"            = "#C2E0C6"
+  ),
+  type = 'scatter', 
+  mode = 'lines+markers',
+  hoverinfo = "text",
+  hovertext = ~paste0(
+    "Year: ", year,
+    "<br>Category: ", type,
+    "<br>Surprise: ", round(surprise, 2)
+  )
+) %>%
+layout(
+  # Legend ABOVE title
+  legend = list(
+    orientation = "h",
+    x = 0.5,
+    xanchor = "center",
+    y = 1.15,
+    yanchor = "bottom",
+  font = list(size = 14)
+  ),
+  
+  # Centered title
+  title = list(
+    text = "Bayesian Surprise (Oceanus Folk Influenced Songs/Albums, Music Releases, and New Influenced Artists)",
+    x = 0.5,
+    xanchor = "center"
+  ),
+  
+  xaxis = list(title = "Year", dtick = 5, range = c(1990, max(plot_data$year))),
+  yaxis = list(title = "Surprise Score (KL Divergence)"),
+  
+  # More space above to fit legend
+  margin = list(t = 160, b = 80)
+)
 ```
 
 [**Insights**]{.underline}
