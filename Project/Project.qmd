@@ -102,8 +102,6 @@ pacman::p_load(jsonlite, tidyverse, ggtext,
                 ggiraph, kableExtra, plotly)
 ```
 
-
-
 ## 1.6 Importing Data
 
 For the purpose of this exercise, a data file called *MC1_graph* will be used. The code below imports *MC1_graph.json* into R environment by using *fromJSON()* function of *jsonlite* package.
@@ -906,38 +904,36 @@ creator_and_songs_and_influenced_by_creator <- creator_and_songs_and_influenced_
 
 # Data Preparation
 
-chosen_creator_1 = "Sailor Shift"
-
-# Step 1: Get the node of the chosen creator
-chosen_node_1 <- creator_and_songs_and_influenced_by_creator %>%
-  filter(creator_name == chosen_creator_1) %>%
+# Step 1: Get the node of the sailor
+sailor_node <- creator_and_songs_and_influenced_by_creator %>%
+  filter(creator_name == "Sailor Shift") %>%
   pull(creator_from) %>%
   unique()
 
 # Step 2: Get the songs that the creator produced
-creator_songs_1 <- creator_and_songs_and_influenced_by_creator %>%
-  filter(creator_from == chosen_node_1,
+sailor_songs <- creator_and_songs_and_influenced_by_creator %>%
+  filter(creator_from == sailor_node,
          creator_from != influenced_by) %>%
   pull(song_to)
 
 # Step 3: Get the songs they have influenced by
-creators_songs_influenced_1 <- creator_and_songs_and_influenced_by_creator %>%
-  filter(creator_from == chosen_node_1,
+sailor_songs_influenced <- creator_and_songs_and_influenced_by_creator %>%
+  filter(creator_from == sailor_node,
          creator_from != influenced_by) %>%
   pull(influenced_by)
 
 # Step 5: Get the creators of the influenced by songs
-creators_songs_influenced_creators_1 <- creator_and_songs_and_influenced_by_creator %>%
-  filter(creator_from == chosen_node_1,
+sailor_songs_influenced_creators <- creator_and_songs_and_influenced_by_creator %>%
+  filter(creator_from == sailor_node,
          creator_from != influenced_by) %>%
   pull(influenced_by_creator)
 
 # Step 5: Combine all relevant node names
 all_node_names <- unique(c(
-  chosen_node_1,
-  creator_songs_1,
-  creators_songs_influenced_1,
-  creators_songs_influenced_creators_1
+  sailor_node,
+  sailor_songs,
+  sailor_songs_influenced,
+  sailor_songs_influenced_creators
 ))
 
 # Step 6: Filter graph to relevant nodes only
@@ -1123,37 +1119,37 @@ creator_and_songs_and_influences_and_creators_collaborate <- creator_and_songs_a
 
 # Data Preparation
 
-# Step 2: Get the songs that the creator produced
-creator_songs_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_1,
-         infuence_music_collaborate != chosen_node_1) %>%
+# Step 2: Get the songs that the sailor produced
+sailor_songs <- creator_and_songs_and_influences_and_creators_collaborate %>%
+  filter(creator_from == sailor_node,
+         infuence_music_collaborate != sailor_node) %>%
   pull(song_to)
 
 # Step 3: Get the songs they have influenced / artists they collaborate with
-creators_songs_collaborate_influence_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_1,
-         infuence_music_collaborate != chosen_node_1) %>%
+sailor_songs_collaborate_influence <- creator_and_songs_and_influences_and_creators_collaborate %>%
+  filter(creator_from == sailor_node,
+         infuence_music_collaborate != sailor_node) %>%
   pull(infuence_music_collaborate)
 
 # Step 4: Get the songs they have influenced
-creators_songs_influence_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_1,
-         infuence_music_collaborate != chosen_node_1,
+sailor_songs_influence <- creator_and_songs_and_influences_and_creators_collaborate %>%
+  filter(creator_from == sailor_node,
+         infuence_music_collaborate != sailor_node,
          `Edge Colour` == "Influenced By") %>%
   pull(infuence_music_collaborate)
 
 # Step 5: Get the influenced creators of the influenced songs
-creators_songs_influence_creators_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_1,
-         influence_creator != chosen_node_1,
+sailor_songs_influence_creators <- creator_and_songs_and_influences_and_creators_collaborate %>%
+  filter(creator_from == sailor_node,
+         influence_creator != sailor_node,
          !is.na(influence_creator),
-         infuence_music_collaborate %in% creators_songs_influence_1) %>%
+         infuence_music_collaborate %in% sailor_songs_influence) %>%
   pull(influence_creator)
 
-all_nodes <- unique(c(chosen_node_1, 
-                      creator_songs_1, 
-                      creators_songs_collaborate_influence_1,
-                      creators_songs_influence_creators_1))
+all_nodes <- unique(c(sailor_node, 
+                      sailor_songs, 
+                      sailor_songs_collaborate_influence,
+                      sailor_songs_influence_creators))
 
 # Create subgraph
 sub_graph <- graph %>%
@@ -1181,7 +1177,7 @@ g <- sub_graph %>%
       data_id = name,
       colour = `Node Colour`,
       shape = `Node Type`,
-      size = ifelse(node_name == chosen_creator_1, 3, 1),
+      size = ifelse(node_name == "Sailor Shift", 3, 1),
       tooltip = case_when(
         `Node Type` == "Album" ~ sprintf(
           "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
@@ -1196,7 +1192,7 @@ g <- sub_graph %>%
   )+ 
   geom_node_text(
     aes(
-      label = ifelse(node_name == chosen_creator_1, chosen_creator_1, NA)
+      label = ifelse(node_name == "Sailor Shift", "Sailor Shift", NA)
     ),
     fontface = "bold",
     size = 2.5,
@@ -1252,7 +1248,7 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 collaboration_count <- mc1_nodes_clean %>%
   filter(name %in% all_nodes, 
          `Node Type` %in% c("Person", "MusicalGroup"),
-         name != chosen_node_1) %>%
+         name != sailor_node) %>%
   distinct(name) %>%
   nrow()
 
@@ -1263,7 +1259,7 @@ cat(paste0("Sailor Shift has collaborated with ", collaboration_count,
 mc1_nodes_clean %>%
   filter(name %in% all_nodes, 
          `Node Type` %in% c("Person", "MusicalGroup"),
-         name != chosen_node_1) %>%
+         name != sailor_node) %>%
   arrange(release_date) %>%
   select(`Node Type`, node_name) %>%
   kable() %>%
@@ -1278,14 +1274,12 @@ This question is tackled by first identifying all Songs and Albums belonging to 
 #| code-fold: true
 #| code-summary: "Show Code"
 
-chosen_genre = "Oceanus Folk"
-
 genre_creators = creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(song_genre == chosen_genre) %>%
+  filter(song_genre == "Oceanus Folk") %>%
   pull(creator_from)
 
 genre_music = creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(song_genre == chosen_genre) %>%
+  filter(song_genre == "Oceanus Folk") %>%
   pull(song_to)
 
 genre_all_nodes <- unique(c(genre_creators,
@@ -1304,7 +1298,7 @@ chosen_degree = 13
 sub_igraph <- as.igraph(sub_graph)
 
 # Find Sailor Shift's vertex ID
-artist_id <- which(V(sub_igraph)$name == chosen_node_1)
+artist_id <- which(V(sub_igraph)$name == sailor_node)
 
 # Calculate distances from Sailor Shift
 distances <- distances(sub_igraph, v = artist_id, mode = "all")
@@ -1321,7 +1315,7 @@ filtered_nodes <- distance_df %>%
   pull(name)
 
 filtered_nodes <- unique(c(filtered_nodes,
-                    chosen_node_1))
+                    sailor_node))
 
 # Create subgraph
 filtered_graph <- sub_graph %>%
@@ -1519,7 +1513,7 @@ The number of Oceanus Folk Music (Songs/Albums) releases that were released each
 
 # Step 1: Get all node names in Oceanus Folk genre
 oceanus_nodes <- mc1_nodes_clean %>%
-  filter(genre == chosen_genre) %>%
+  filter(genre == "Oceanus Folk") %>%
   pull(name)
 
 # Step 2: Count number of oceanus folk nodes by release date
@@ -2084,7 +2078,7 @@ genre_influence_stats <- creator_and_songs_and_influences_and_creators_collabora
   summarize(
     total_music = n_distinct(song_to),
     total_influences = n_distinct(na.omit(infuence_music_collaborate[!is.na(influence_genre)])),
-    oceanus_influences = n_distinct(na.omit(infuence_music_collaborate[influence_genre == chosen_genre])),
+    oceanus_influences = n_distinct(na.omit(infuence_music_collaborate[influence_genre == "Oceanus Folk"])),
     other_influences = total_influences - oceanus_influences,
     perc_oceanus = round(oceanus_influences / total_influences * 100, 1),
     no_influences = sum(is.na(influence_genre)),
@@ -2163,8 +2157,8 @@ creator_influenced_by_stats <- creator_and_songs_and_influenced_by_creator %>%
   summarize(
     total_music = n_distinct(song_to),
     notable_hits = n_distinct(song_to[notable == TRUE]),
-    oceanus_music = n_distinct(song_to[song_genre == chosen_genre]),
-    oceanus_influenced_by = n_distinct(na.omit(influenced_by[influenced_by_genre == chosen_genre & creator_name != influenced_by_creator])),
+    oceanus_music = n_distinct(song_to[song_genre == "Oceanus Folk"]),
+    oceanus_influenced_by = n_distinct(na.omit(influenced_by[influenced_by_genre == "Oceanus Folk" & creator_name != influenced_by_creator])),
     total_oceanus_influence = oceanus_music + oceanus_influenced_by
   ) %>%
   arrange(desc(total_oceanus_influence)) %>%
@@ -2376,7 +2370,7 @@ This analysis examines the contemporary influences on Oceanus Folk by using the 
 
 
 genre_influenced_by_stats <- creator_and_songs_and_influenced_by_creator %>%
-  filter(song_genre == chosen_genre) %>%
+  filter(song_genre == "Oceanus Folk") %>%
   distinct(song_to, influenced_by, influenced_by_genre) %>%
   group_by(influenced_by_genre) %>%
   summarize(
@@ -2406,7 +2400,7 @@ library(htmlwidgets)
 # Step 1: Prepare data — treat Oceanus Folk as source and include self-influence
 sankey_df <- genre_influenced_by_stats %>%
   mutate(
-    source = chosen_genre,
+    source = "Oceanus Folk",
     raw_target = influenced_by_genre,
     value = influenced_by,
     target = paste0(raw_target, " (", value, ")")  # ← append the number
@@ -4203,15 +4197,13 @@ In order to predict the next Oceanus Folk stars, a grading rubric will be used w
 #| code-fold: true
 #| code-summary: "Show Code"
 
-
-
 genre_creators = creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(song_genre == chosen_genre) %>%
+  filter(song_genre == "Oceanus Folk") %>%
   pull(creator_from)
 
 # Step 1: Filter to only Oceanus Folk Artists
 oceanus_creator_and_songs_and_influences_and_creators_collaborate <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_from %in% genre_creators, song_genre == chosen_genre)
+  filter(creator_from %in% genre_creators, song_genre == "Oceanus Folk")
 
 # Step 2: To highlight songs that the creator influence that is not produced by same creator
 oceanus_creator_influence_lists <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
