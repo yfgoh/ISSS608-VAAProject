@@ -1907,11 +1907,68 @@ plot_ly(combined_df,
       y = 1.15,         # position legend above the plot
       yanchor = "bottom"
     ),
-    margin = list(t = 140, b = 80)  # extra top space for legend + title
+  margin = list(t = 160, b = 80),
+
+    # Add annotations
+    annotations = list(
+      list(
+        x = 2024, 
+        y = 800,
+        text = "<b>2024: Sailor Shift's Debut</b>",
+        xref = "x", yref = "y",
+        xanchor = "right",
+        showarrow = TRUE,
+        arrowhead = 2,
+        ax = -30, ay = -40,
+        font = list(color = "#2E3192", size = 12)
+      ),
+      list(
+        x = 2028, 
+        y = 1120,
+        text = "<b>2028: Sailor Shift's Breakthrough</b>",
+        xref = "x", yref = "y",
+        xanchor = "right",
+        showarrow = TRUE,
+        arrowhead = 2,
+        ax = -30, ay = -40,
+        font = list(color = "#2E3192", size = 12)
+      )
+    ),
+
+    # Add vertical dashed lines
+    shapes = list(
+      list(
+        type = "line",
+        x0 = 2024, x1 = 2024,
+        y0 = 0, y1 = 800,
+        line = list(dash = "dash", color = "grey")
+      ),
+      list(
+        type = "line",
+        x0 = 2028, x1 = 2028,
+        y0 = 0, y1 = 1120,
+        line = list(dash = "dash", color = "grey")
+      )
+    )
   )
 ```
 
 ```{r}
+# Step 1: Prepare tidy data frame with yearly counts (not cumulative)
+df1_counts <- oceanus_nodes_by_date %>%
+  select(year = release_date, value = oceanus_nodes_count) %>%
+  mutate(series = "Music Releases")
+
+df2_counts <- influence_yearly %>%
+  select(year = influence_release_date, value = num_influenced_nodes) %>%
+  mutate(series = "Influenced Songs/Albums")
+
+df3_counts <- creators_by_date %>%
+  select(year = influence_release_date, value = people_count) %>%
+  mutate(series = "New Influenced Artists")
+
+combined_counts_df <- bind_rows(df1_counts, df2_counts, df3_counts)
+
 # Step 2: Create faceted bar plot with horizontal layout
 p <- ggplot(combined_counts_df, aes(x = year, y = value, fill = series)) +
   geom_col(show.legend = FALSE) +
@@ -2110,15 +2167,28 @@ plot_ly(data = plot_data, x = ~year, y = ~surprise, color = ~type, colors = "Set
 ```
 
 ```{r}
+unique(plot_data$type)
+```
+
+
+```{r}
+plot_data <- plot_data %>%
+  mutate(type = case_when(
+    type == "Music Releases"    ~ "Music Releases",
+    type == "Influenced Works"  ~ "Influenced Songs/Albums",
+    type == "Artists"           ~ "New Influenced Artists",
+    TRUE                        ~ type
+  ))
+
 plot_ly(
   data = plot_data, 
   x = ~year, 
   y = ~surprise, 
   color = ~type,
   colors = c(
-    "Music Releases"     = "#ADD8E6", 
-    "Influenced Works"   = "#F08080", 
-    "Artists"            = "#C2E0C6"
+    "Music Releases"          = "#ADD8E6", 
+    "Influenced Songs/Albums" = "#F08080", 
+    "New Influenced Artists"  = "#C2E0C6"
   ),
   type = 'scatter', 
   mode = 'lines+markers',
@@ -2130,29 +2200,65 @@ plot_ly(
   )
 ) %>%
 layout(
-  # Legend ABOVE title
   legend = list(
     orientation = "h",
     x = 0.5,
     xanchor = "center",
-    y = 1.15,
+    y = 1.1,
     yanchor = "bottom",
-  font = list(size = 14)
+    font = list(size = 12)
   ),
-  
-  # Centered title
   title = list(
     text = "Bayesian Surprise (Oceanus Folk Influenced Songs/Albums, Music Releases, and New Influenced Artists)",
     x = 0.5,
     xanchor = "center"
   ),
-  
   xaxis = list(title = "Year", dtick = 5, range = c(1990, max(plot_data$year))),
   yaxis = list(title = "Surprise Score (KL Divergence)"),
+  margin = list(t = 160, b = 80),
   
-  # More space above to fit legend
-  margin = list(t = 160, b = 80)
-)
+     # Add annotations
+    annotations = list(
+      list(
+        x = 2024, 
+        y = 100,
+        text = "<b>2024: Sailor Shift's Debut</b>",
+        xref = "x", yref = "y",
+        xanchor = "right",
+        showarrow = TRUE,
+        arrowhead = 2,
+        ax = -30, ay = -40,
+        font = list(color = "#2E3192", size = 12)
+      ),
+      list(
+        x = 2028, 
+        y = 120,
+        text = "<b>2028: Sailor Shift's Breakthrough</b>",
+        xref = "x", yref = "y",
+        xanchor = "right",
+        showarrow = TRUE,
+        arrowhead = 2,
+        ax = -30, ay = -40,
+        font = list(color = "#2E3192", size = 12)
+      )
+    ),
+
+    # Add vertical dashed lines
+    shapes = list(
+      list(
+        type = "line",
+        x0 = 2024, x1 = 2024,
+        y0 = 0, y1 = 100,
+        line = list(dash = "dash", color = "grey")
+      ),
+      list(
+        type = "line",
+        x0 = 2028, x1 = 2028,
+        y0 = 0, y1 = 120,
+        line = list(dash = "dash", color = "grey")
+      )
+    )
+  )
 ```
 
 [**Insights**]{.underline}
@@ -2167,7 +2273,6 @@ Music releases (green line) generally showed lower surprise, which confirms that
 
 Thus, while the overall trend shows long-term growth, Bayesian Surprise confirms that Oceanus Folk’s rise was intermittent and driven by burst such as artist breakthrough. Such bursts also maintained the momentum of the influence for an interval of time.
 
-(Didnt copy over animation)
 
 ## 5.2 Question 2b) What genres and top artists have been most influenced by Oceanus Folk?
 
@@ -2192,7 +2297,7 @@ genre_influence_stats <- creator_and_songs_and_influences_and_creators_collabora
     perc_oceanus = round(oceanus_influences / total_influences * 100, 1),
     no_influences = sum(is.na(influence_genre)),
   ) %>%
-  arrange(desc(perc_oceanus))
+  arrange(desc(oceanus_influences))
 
 genre_influence_stats %>%
   kable(caption = "Genre Ranked by Oceanus Influence") %>%
@@ -2506,31 +2611,32 @@ genre_influenced_by_stats %>%
 library(networkD3)
 library(htmlwidgets)
 
-# Step 1: Prepare data — treat Oceanus Folk as source and include self-influence
+# Step 1: Prepare data — reverse flow direction: Genre → Oceanus Folk
 sankey_df <- genre_influenced_by_stats %>%
   mutate(
-    source = "Oceanus Folk",
-    raw_target = influenced_by_genre,
+    raw_source = influenced_by_genre,
+    target = "Oceanus Folk",
     value = influenced_by,
-    target = paste0(raw_target, " (", value, ")")  # ← append the number
+    source = paste0(raw_source, " (", value, ")")
   ) %>%
   select(source, target, value) %>%
   arrange(desc(value)) %>%
-  head(22)
+  head(22)  # Top 22 genres influencing Oceanus Folk
 
-# Step 5: Create nodes and links
+# Step 2: Create node list
 nodes <- data.frame(name = unique(c(sankey_df$source, sankey_df$target)))
 
+# Step 3: Create link list with indices
 links <- sankey_df %>%
   mutate(
     source = match(source, nodes$name) - 1,
     target = match(target, nodes$name) - 1
   )
 
-# Step 6: Add tooltip text as a JS-accessible field
+# Step 4: Add tooltip group (Genre → Oceanus Folk)
 links$group <- paste0(sankey_df$source, " → ", sankey_df$target, ": ", sankey_df$value)
 
-# Step 7: Sankey + tooltip rendering
+# Step 5: Render Sankey
 p <- sankeyNetwork(
   Links = links,
   Nodes = nodes,
@@ -2540,10 +2646,10 @@ p <- sankeyNetwork(
   NodeID = "name",
   fontSize = 13,
   nodeWidth = 30,
-  sinksRight = TRUE
+  sinksRight = FALSE  # ← Flip layout: sources on right if needed
 )
 
-# Add hover tooltip with d.group
+# Step 6: Add tooltips
 onRender(p, '
   function(el, x) {
     d3.select(el)
