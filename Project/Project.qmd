@@ -166,7 +166,7 @@ p1 <- ggplot(
   aes(y = fct_infreq(`Node Type`), fill = `Node Type`)
 ) +
   geom_bar() +
-  scale_fill_brewer(palette = "Pastel1") +
+  scale_fill_brewer(palette = "Set3") +
   labs(title = "Node Types", x = "Count", y = "Node Type") +
   theme_minimal() +
   theme(legend.position = "none")
@@ -2353,7 +2353,6 @@ sankeyNetwork(
 
 -   The table above show the top 10 genres who was most influenced by Oceanus Folk.
 -   The Oceanus Folk genre has been the most influenced by itself with about 40% of all music (Songs/Albums) drawing inspiration from Oceanus Folk music.
--   The next most influenced genre is Desert Rock with about a fifth of all music drawing inspiration from Oceanus Folk.
 :::
 
 ### 5.2.2 Which top artists have been most influenced by Oceanus Folk?
