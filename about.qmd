@@ -1,9 +1,14 @@
 ---
-title: "About"
+title: "About Our Team"
 ---
 
-About this site
+Team Composition:
 
-```{r}
-1 + 1
+Belinda Lim Kah Siew
+
+Calvin Tan Song Hao
+
+Goh Yi Fang
+
+```{}
 ```
