@@ -1489,7 +1489,6 @@ plot_ly(data = plot_data, x = ~year, y = ~surprise, color = ~type, colors = "Set
 unique(plot_data$type)
 ```
 
-
 ```{r}
 plot_data <- plot_data %>%
   mutate(type = case_when(
@@ -1591,7 +1590,6 @@ Influenced works (blue line) increased in 2017, spiked in 2023 and sustained its
 Music releases (green line) generally showed lower surprise, which confirms that number of Oceanus Folks music was not a key driver to influence.
 
 Thus, while the overall trend shows long-term growth, Bayesian Surprise confirms that Oceanus Folk’s rise was intermittent and driven by burst such as artist breakthrough. Such bursts also maintained the momentum of the influence for an interval of time.
-
 
 ## 5.2 Question 2b) What genres and top artists have been most influenced by Oceanus Folk?
 
@@ -2095,8 +2093,8 @@ Based on the results of the analysis above, the top artists in each category wil
 -   Most Influential Artist (Influence Artists and Collaborations), Most Music Influence & Highest Star Factor: Min Fu
 
 ::: panel-tabset
-
 ## Sailor Shift
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -2149,6 +2147,7 @@ radarchart(radar_matrix_1,
 ```
 
 ## Jay Walters
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -2192,6 +2191,7 @@ radarchart(radar_matrix_2,
 ```
 
 ## Min Fu
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
