@@ -796,7 +796,12 @@ The above approach is reflected in the codes below:
 
 # Data Preparation
 
-# Step 1: Count number of influenced music by release date
+# Step 1: Get all node names in Oceanus Folk genre
+oceanus_nodes <- mc1_nodes_clean %>%
+  filter(genre == "Oceanus Folk") %>%
+  pull(name)
+
+# Step 2: Count number of influenced music by release date
 influence_yearly <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(song_to %in% unique(oceanus_nodes),
          `Edge Colour` == "Influenced By",
@@ -846,7 +851,6 @@ Collectively, they are termed as "New Influenced Artists". Together, these artis
 #| code-fold: true
 #| code-summary: "Show Code"
 
-
 # Step 1: Count number of influenced artists by release date
 creators_by_date <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(song_to %in% unique(oceanus_nodes),
@@ -868,9 +872,11 @@ creators_by_date <- creator_and_songs_and_influences_and_creators_collaborate %>
 ```
 
 The plots summarise the yearly counts of the 3 metrics below: 
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
+
 # Step 1: Prepare tidy data frame with yearly counts (not cumulative)
 df1_counts <- oceanus_nodes_by_date %>%
   select(year = release_date, value = oceanus_nodes_count) %>%
@@ -907,6 +913,7 @@ The cumulative trends for the three plots are also visualised as follows:
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
+
 # Step 2: Select and rename columns
 df1 <- oceanus_nodes_by_date %>%
   select(year = release_date, value = cumulative_count) %>%
@@ -1112,7 +1119,14 @@ surprise_contributors <- compute_bayesian_surprise(
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
-#| 
+
+plot_data <- bind_rows(
+  surprise_releases %>% select(year, surprise) %>% mutate(type = "Music Releases"),
+  surprise_influence %>% select(year, surprise) %>% mutate(type = "Influenced Works"),
+  surprise_contributors %>% select(year, surprise) %>% mutate(type = "Artists")
+) %>%
+  filter(!is.na(surprise), year >= 1990)
+
 plot_data <- plot_data %>%
   mutate(type = case_when(
     type == "Music Releases"    ~ "Music Releases",
@@ -1392,7 +1406,7 @@ This analysis examines the contemporary influences on Oceanus Folk by using the 
 #| code-fold: true
 #| code-summary: "Show Code"
 
-<<Calvin, need your help. The total music should be 305 for OF, similar to first table, but i cant seem to get the number despite using total_music = n_distinct(song_to). Can help to update it? This table dont need % as the logic is how many genre influence OF.>>> 
+###### Calvin, need your help to update the table fig below. The total music should be 305 for OF, similar to first table, but i cant seem to get the number despite using total_music = n_distinct(song_to). Can help to update it? This table dont need % as the logic is how many genre influence OF.####################
   
   
 genre_influenced_by_stats <- creator_and_songs_and_influenced_by_creator %>%
