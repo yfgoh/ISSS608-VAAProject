@@ -17,6 +17,8 @@ library(ggiraph)
 library(systemfonts)
 ```
 
+
+
 # 1 Exploratory Data Analysis (EDA) on Sailor Shift's career
 
 We will design and develop visualizations and visual analytic tools that will allow Silas to explore and understand the profile of Sailor Shift’s career.
@@ -32,6 +34,8 @@ Future work: What if we make everything into a function and find members that th
 ## 1.1 Visualising Sailor Shift's Music
 
 The analysis begins by extracting Sailor Shift's *name* from the node dataset. Following this, all outgoing edges originating from her node are identified. The resulting nodes from those edges are filtered to isolate only those classified as Songs and Albums, thereby displaying her musical career.
+
+
 
 ```{r}
 #| code-fold: true
@@ -138,6 +142,7 @@ g <- sub_graph %>%
 
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -171,6 +176,8 @@ ggplot(sailor_release_data, aes(x = release_date, y = n, fill = genre)) +
   ) +
   theme_minimal()
 ```
+
+
 ::: callout-tip
 ## Sailor Shift's Music Insights
 
@@ -181,6 +188,8 @@ ggplot(sailor_release_data, aes(x = release_date, y = n, fill = genre)) +
     -   Therefore, the viral Song that spark her breakthrough is **High Tide Heartbeat**
 -   Among her Songs and Albums, 36 belong to the Oceanus Folk genre, while there is 1 Americana and 1 Synthwave Album each.
 :::
+
+
 
 ```{r}
 #| code-fold: true
@@ -194,6 +203,8 @@ mc1_nodes_clean %>%
   kable_styling("striped", full_width = F) %>% 
   scroll_box(height = "300px")
 ```
+
+
 # 2 Profile of Sailor Shift's Career
 
 ## 2.1 Part 1a) Who has Sailor Shift been most influenced by over time?
@@ -201,6 +212,8 @@ mc1_nodes_clean %>%
 This section builds on the analysis of Sailor Shift’s outgoing edges. After identifying her Songs and Albums, it expands to include associated Persons and Musical Groups she directly influenced. Among these, only the Songs and Albums with further outgoing influence are retained. The next step traces the music that Sailor's works influenced, and identifies the creators (i.e. Persons and Musical Groups) behind the influencing works.
 
 Note: The term music/works refer to either Song or Album.
+
+
 
 ```{r}
 #| code-fold: true
@@ -370,6 +383,8 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: callout-tip
 ## Who has Sailor Shift been most influenced by over time?
 
@@ -379,6 +394,8 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
     -   Wei Zhao is the producer of **Susurros de Passion** that has influenced the her album **Salty Dreams**. Wei Zhao is also the composer of **Silent Steps in the Forest's Embrance** that has influenced her song **Moon Over the Tide**.
 -   In conclusion, Ivy Echos and Wei Zhao have been the most influential on Sailor Shift's music career.
 :::
+
+
 
 ```{r}
 #| code-fold: true
@@ -395,11 +412,15 @@ node_data %>%
   scroll_box(height = "200px")
 ```
 
+
+
 ## 2.2 Part 1b) Who has Sailor Shift collaborated with and directly or indirectly influenced?
 
 <<<Bel: This part need to simplify further and not reference TOE>>>
 
 The analysis begins with the sailor_music_all dataset from [Section 4.1](https://isss608-ay2024-25t3.netlify.app/take-home_ex/take-home_ex02/take-home_ex02_mc1_main_v5#visualising-sailor-shifts-music), filtering to retain only music with more than two inward edges. This step eliminates works without collaborators or external influences. Two Song/Albums ("The Current & The Chord" and "Salty Dreams") have to be manually removed since their inward edges are from Sailor herself and therefore not needed. Next, all inward neighbours (source nodes) of Sailor's music are identified, representing both influenced works (Songs/Albums) and collaborators (Persons/Musical Groups). After filtering to keep only Songs and Albums, their inward neighbours are examined. This reveals: (1) Persons/Musical Groups who have been influenced by Sailor's music (Persons/Musical Groups), and (2) secondary influenced works (Songs/Albums) that were impacted by the same sources that were influenced by Sailor's compositions.
+
+
 
 ```{r}
 #| code-fold: true
@@ -586,6 +607,8 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: callout-tip
 ## Who has she collaborated with and directly or indirectly influenced?
 
@@ -594,6 +617,8 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 -   However, Sailor Shift has not directly or indirectly influenced anyone, since none of her music has influenced others.
     -   For example, no Songs/Albums has referenced her Songs or Albums.
 :::
+
+
 
 ```{r}
 #| code-fold: true
@@ -620,9 +645,13 @@ mc1_nodes_clean %>%
   scroll_box(height = "200px")
 ```
 
+
+
 ## 2.3 Part 1c) How has she influenced collaborators of the broader Oceanus Folk community?
 
 This part is tackled by first identifying all Songs and Albums belonging to the **Oceanus Folk** *Genre* and retriving their associated artists (Persons/Musical Groups). Then Sailor Shift's is identified and her degree of separation is calculated to examine her impact on the broader Oceanus Folk community.
+
+
 
 ```{r}
 #| code-fold: true
@@ -752,6 +781,8 @@ g <- filtered_graph %>%
 girafe(ggobj = g, width_svg = 9, height_svg = 8)
 ```
 
+
+
 ::: callout-tip
 ## How has she influenced collaborators of the broader Oceanus Folk community?
 
@@ -786,6 +817,8 @@ We will explore these three areas to understand the influence of Oceanus Folk ov
 
 The number of Oceanus Folk Music (Songs/Albums) releases that were released each year are obtained using the codes below:
 
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -805,6 +838,8 @@ oceanus_nodes_by_date <- mc1_nodes_clean %>%
   mutate(cumulative_count = cumsum(oceanus_nodes_count))
 ```
 
+
+
 ### 3.1.2 Influence based on number of works that were influenced by Oceanus Folk music
 
 To measure how Oceanus Folk influenced the broader music landscape, we tracked how often songs and albums from other genres were influenced by Oceanus Folk works. These influence relationships were drawn from edge types consisting InStyleOf, CoverOf, InterpolatesFrom, LyricalReferenceTo, and DirectlySamples.
@@ -812,6 +847,8 @@ To measure how Oceanus Folk influenced the broader music landscape, we tracked h
 We then focused on edges where an Oceanus Folk song or album is the target (to), and the source (from) is the influenced work. The release date of each influenced work and number of such works for each year were extracted. To reveal long-term trends, cumulative total of influenced works are calculated.
 
 The above approach is reflected in the codes below:
+
+
 
 ```{r}
 #| code-fold: true
@@ -832,6 +869,8 @@ influence_yearly <- creator_and_songs_and_influences_and_creators_collaborate %>
   mutate(cumulative_influenced = cumsum(num_influenced_nodes))
 ```
 
+
+
 ### 3.1.3 Influence based on number of New Oceanus Folk Artists and New Influenced Artists
 
 We examined the network of people and groups involved in Oceanus Folks music creation and influence. Our analysis begins by identifying all artists (i.e. Person and Musical Group) directly connected to Oceanus Folk music via these edges (PerformerOf, ComposerOf , ProducerOf, LyricistOf ) for Oceanus Folk songs and albums. We also added members of musical groups (i.e. collaborators) that contributed to Oceanus Folk works.
@@ -839,6 +878,8 @@ We examined the network of people and groups involved in Oceanus Folks music cre
 In parallel, we traced those influenced by Oceanus Folk: people and groups who created songs or albums influenced by Oceanus works music (i.e. with edges belonging to InStyleOf, InterpolatesFrom, CoverOf, LyricalReferenceTo and DirectlySamples). Similarly, members of musical groups (i.e. collaborators) that created works influenced by Oceanus Folk works were included.
 
 Together, these artists form a comprehensive view of Oceanus Folk’s influence on the music landscape.
+
+
 
 ```{r}
 #| code-fold: true
@@ -897,7 +938,11 @@ p <- ggplot(combined_counts_df, aes(x = year, y = value, fill = series)) +
 ggplotly(p)
 ```
 
+
+
 The cumulative trends for the above three plots are also visualised as follows:
+
+
 
 ```{r}
 # Step 2: Select and rename columns
@@ -1018,6 +1063,8 @@ p <- ggplot(combined_counts_df, aes(x = year, y = value, fill = series)) +
 ggplotly(p)
 ```
 
+
+
 [**Insights for Music Releases**]{.underline}
 
 The chart illustrates the rise of Oceanus Folk music from its origins in 1992 to 2040. The blue bars represent the number of Oceanus Folk songs or albums released each year, highlighting notable spikes especially in the mid-2020s.
@@ -1059,6 +1106,8 @@ These are the steps in generating the Surprise Score:
 
 The Surprise Computation Function is defined using the following codes:
 
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1091,7 +1140,11 @@ compute_bayesian_surprise <- function(data, year_col, count_col, window = 5) {
 }
 ```
 
+
+
 Bayesian Surprise is computed using KL Divergence between each year’s observed value and a rolling average of the previous five years, treating yearly counts as Poisson-distributed events using the following:
+
+
 
 ```{r}
 #| code-fold: true
@@ -1124,7 +1177,11 @@ surprise_contributors <- compute_bayesian_surprise(
 
 ```
 
+
+
 [**Bayesian Surprise Across Oceanus Folk Music Releases, Influenced Works, and Artists**]{.underline}
+
+
 
 ```{r}
 #| code-fold: true
@@ -1157,7 +1214,6 @@ plot_ly(data = plot_data, x = ~year, y = ~surprise, color = ~type, colors = "Set
 ```{r}
 unique(plot_data$type)
 ```
-
 
 ```{r}
 plot_data <- plot_data %>%
@@ -1249,6 +1305,8 @@ layout(
   )
 ```
 
+
+
 [**Insights**]{.underline}
 
 The Bayesian Surprise analysis showed that Oceanus Folk's influence was intermittent rather than a smooth, gradual rise. While cumulative trends in music releases, influenced works and artist numbers may suggest steady growth, Bayesian Surprise uncovers a different insight that there were indeed intermittent surges of activity.
@@ -1267,6 +1325,8 @@ Thus, while the overall trend shows long-term growth, Bayesian Surprise confirms
 ### 3.2.1 What genres have been most influenced by Oceanus Folk?
 
 To determine which genres have been most influenced by Oceanus Folk, all songs and albums were identified. Then, the music (Songs/Albums) that influenced them were obtained to calculate the frequency and percentage of Oceanus Folk's influence across different musical genre. This analysis reveals the genres that show the strongest impact from Oceanus Folk's musical style.
+
+
 
 ```{r}
 #| code-fold: true
@@ -1336,6 +1396,8 @@ sankeyNetwork(
 )
 ```
 
+
+
 ::: callout-tip
 ## What genres have been most influenced by Oceanus Folk?
 
@@ -1346,6 +1408,8 @@ sankeyNetwork(
 ### 3.2.2 Which top artists have been most influenced by Oceanus Folk?
 
 To identify the top artists most influenced by Oceanus Folk, all artists (persons or musical groups) who either (a) created Oceanus Folk music (songs/albums) or (b) were influenced by the genre were identified. Then, all music produced by these artists, along with the musical works that influenced their creations, was counted to reveal those who were most influenced.
+
+
 
 ```{r}
 #| code-fold: true
@@ -1423,6 +1487,8 @@ sankeyNetwork(
 )
 ```
 
+
+
 ::: callout-tip
 ## Which top artists have been most influenced by Oceanus Folk?
 
@@ -1445,6 +1511,8 @@ Incoming entropy = How diverse other genres were in influencing Oceanus Folk mus
 Outgoing entropy = How diverse the genres were which Oceanus Folk had influenced (i.e. what range of genres borrowed from Oceanus Folk).
 
 By plotting both directions of entropy over time using a mirrored bar chart and mapping it against Sailor's debut and breakthrough, we can visualise the change and impact clearly.
+
+
 
 ```{r}
 #| code-fold: true
@@ -1545,6 +1613,8 @@ ggplotly(entropy_plot, tooltip = "text") %>%
   layout(legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.2))
 ```
 
+
+
 [**Insights**]{.underline}
 
 **Before 2013: Limited Influence during earlier years**
@@ -1564,6 +1634,8 @@ In contrast, outgoing entropy peaked and remained elevated, reflecting that othe
 ### 3.3.2 From which genres does Oceanus Folk draw most of its contemporary inspiration?
 
 This analysis examines the contemporary influences on Oceanus Folk by using the genre influence patterns methodology similar to Section 5.2.1.
+
+
 
 ```{r}
 #| code-fold: true
@@ -1647,6 +1719,8 @@ onRender(p, '
 ')
 ```
 
+
+
 ::: callout-tip
 ## From which genres does Oceanus Folk draw most of its contemporary inspiration?
 
@@ -1678,6 +1752,8 @@ A grading rubric is added to assess artists based on four equally weighted categ
 
 Each category's score will be normalised using the formula:
 
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1690,7 +1766,11 @@ text(1, 1,
      cex = 2)
 ```
 
+
+
 The Star Factor will aggregate these normalized scores (maximum: 4) to rank the artists.
+
+
 
 ```{r}
 #| code-fold: true
@@ -1755,6 +1835,8 @@ creator_rankings %>%
   scroll_box(height = "300px")
 ```
 
+
+
 ## 4.2 Part 3a) Visualize the careers of three artists. Compare and contrast their rise in popularity and influence?
 
 Based on the results of the analysis above, the top artists in each category will be selected.
@@ -1766,6 +1848,8 @@ Based on the results of the analysis above, the top artists in each category wil
 ::: panel-tabset
 
 ## Sailor Shift
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1817,7 +1901,11 @@ radarchart(radar_matrix_1,
            centerzero = TRUE)
 ```
 
+
+
 ## Jay Walters
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1860,7 +1948,11 @@ radarchart(radar_matrix_2,
            centerzero = TRUE)
 ```
 
+
+
 ## Min Fu
+
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1902,11 +1994,15 @@ radarchart(radar_matrix_3,
            vlabels = c("Total Music", "Notable\nHits", "Artist Influ & Colab", "Music\nInfluenced"),
            centerzero = TRUE)
 ```
+
+
 :::
 
 ### 4.2.1 Visualizing the career of Sailor Shift
 
 Sailor Shift has released the most number of music (Song/Album).
+
+
 
 ```{r}
 #| code-fold: true
@@ -2034,8 +2130,12 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 :::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -2101,7 +2201,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -2167,7 +2271,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -2245,7 +2353,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -2311,6 +2423,8 @@ plot_ly(
   )
 ```
 
+
+
 ::: callout-warning
 ## Note
 
@@ -2321,6 +2435,8 @@ Sailor Shift has no influence on Music creation
 ### 4.2.2 Visualizing the career of Jay Walters
 
 Jay Walters has the highest number of notable hits.
+
+
 
 ```{r}
 #| code-fold: true
@@ -2446,8 +2562,12 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -2513,7 +2633,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -2579,7 +2703,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -2657,7 +2785,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -2722,11 +2854,15 @@ plot_ly(
     )
   )
 ```
+
+
 :::
 
 ### 4.2.3 Visualizing the career of Min Fu
 
 Min Fu is the most influential artist.
+
+
 
 ```{r}
 #| code-fold: true
@@ -2854,8 +2990,12 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -2921,7 +3061,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -2987,7 +3131,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -3065,7 +3213,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -3130,6 +3282,8 @@ plot_ly(
     )
   )
 ```
+
+
 :::
 
 ### 4.2.4 Compare and contrast the three artists' rise in popularity and influence
@@ -3138,6 +3292,8 @@ The cumulative graphs of the 3 artists (Sailor Shift, Jay Walters and Min Fu) wi
 
 ::::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -3214,7 +3370,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -3291,7 +3451,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -3368,6 +3532,8 @@ plot_ly(
   )
 ```
 
+
+
 ::: callout-warning
 ## Note
 
@@ -3375,6 +3541,8 @@ Sailor Shift has only Collaborations and no Artist Influence
 :::
 
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -3451,6 +3619,8 @@ plot_ly(
   )
 ```
 
+
+
 ::: callout-warning
 ## Note
 
@@ -3481,6 +3651,8 @@ This will be a continuation of Part 3a where only Oceanus Folk artists and the O
 ### 4.3.1 Analysing the careers of all Oceanus Folk Artists
 
 In order to predict the next Oceanus Folk stars, a grading rubric will be used where their ranking in these 4 categories (Number of Music released, Number of Notable Music, Number of New Artists Influenced / Collaborated With and Number of Music influenced). Each category will be given equal weighting with a maximum score of 4 and the Oceanus Folk artists will be ranked using this rubric.
+
+
 
 ```{r}
 #| code-fold: true
@@ -3552,7 +3724,11 @@ oceanus_creator_rankings %>%
   scroll_box(height = "300px")
 ```
 
+
+
 ### 4.3.2 Visualizing the career of Sailor Shift
+
+
 
 ```{r}
 #| code-fold: true
@@ -3680,8 +3856,12 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -3747,7 +3927,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -3813,7 +3997,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -3891,7 +4079,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -3956,9 +4148,13 @@ plot_ly(
     )
   )
 ```
+
+
 :::
 
 ### 4.3.3 Visualizing the career of Chao Wu
+
+
 
 ```{r}
 #| code-fold: true
@@ -4086,8 +4282,12 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -4153,7 +4353,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -4219,7 +4423,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -4297,7 +4505,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -4362,9 +4574,13 @@ plot_ly(
     )
   )
 ```
+
+
 :::
 
 ### 4.3.4 Visualizing the career of Xia Jia
+
+
 
 ```{r}
 #| code-fold: true
@@ -4492,8 +4708,12 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -4559,7 +4779,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -4625,7 +4849,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -4703,7 +4931,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -4768,9 +5000,13 @@ plot_ly(
     )
   )
 ```
+
+
 :::
 
 ### 4.3.5 Visualizing the career of Donna Caldwell
+
+
 
 ```{r}
 #| code-fold: true
@@ -4898,8 +5134,12 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -4965,7 +5205,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -5031,7 +5275,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -5109,7 +5357,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -5174,9 +5426,13 @@ plot_ly(
     )
   )
 ```
+
+
 :::
 
 ### 4.3.6 Visualizing the career of Xiulan Ye
+
+
 
 ```{r}
 #| code-fold: true
@@ -5304,8 +5560,12 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -5371,7 +5631,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -5437,7 +5701,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -5515,7 +5783,11 @@ plot_ly(
   )
 ```
 
+
+
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -5580,6 +5852,8 @@ plot_ly(
     )
   )
 ```
+
+
 :::
 
 ### 4.3.7 Compare and contrast the five artists' rise in popularity and influence
@@ -5588,6 +5862,8 @@ The cumulative graphs of the 5 artists (Sailor Shift, Chao Wu, Xia Jia, Donna Ca
 
 ::::::: panel-tabset
 ## Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -5708,6 +5984,8 @@ plot_ly(
   )
 ```
 
+
+
 ::: callout-warning
 ## Note
 
@@ -5715,6 +5993,8 @@ Donna Caldwell and Xiulan Ye are at 2017 with a count of 2.
 :::
 
 ## Notable Music Releases
+
+
 
 ```{r}
 #| code-fold: true
@@ -5835,6 +6115,8 @@ plot_ly(
   )
 ```
 
+
+
 ::: callout-warning
 ## Note
 
@@ -5842,6 +6124,8 @@ Donna Caldwell and Xiulan Ye are at 2017 with a count of 1.
 :::
 
 ## Artist Influ & Colab
+
+
 
 ```{r}
 #| code-fold: true
@@ -5962,6 +6246,8 @@ plot_ly(
   )
 ```
 
+
+
 ::: callout-warning
 ## Note
 
@@ -5969,6 +6255,8 @@ Donna Caldwell overlaps with Xiulan Ye
 :::
 
 ## Influenced Music
+
+
 
 ```{r}
 #| code-fold: true
@@ -6089,6 +6377,8 @@ plot_ly(
   )
 ```
 
+
+
 ::: callout-warning
 ## Note
 
@@ -6098,6 +6388,8 @@ plot_ly(
 :::::::
 
 ### 6.3.8 Analysing the relationships between these five artists
+
+
 
 ```{r}
 #| code-fold: true
@@ -6247,6 +6539,8 @@ g <- sub_graph %>%
 girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ```
 
+
+
 ::: callout-tip
 -   All five artists are solo artists and none of them are part of the same musical group
 -   Chao Wu, Xia Jia, Donna Caldwell and Xiulan Ye have some collaborative works with each other which can explain why some of their graphs overlaps.
@@ -6307,6 +6601,8 @@ Influenced Artists: The number of distinct artists who were directly or indirect
 
 These metrics were computed for every Oceanus Folk artist in the dataset.
 
+
+
 ```{r}
 library(purrr)
 
@@ -6351,7 +6647,11 @@ compute_creator_metrics <- function(creator_name) {
 }
 ```
 
+
+
 # Normalize all 4 columns to 0–1 scale
+
+
 
 ```{r}
 artist_metrics_df <- map_dfr(all_oceanus_creators, compute_creator_metrics)
@@ -6371,6 +6671,8 @@ artist_metrics_df <- artist_metrics_df %>%
   )
 ```
 
+
+
 ------------------------------------------------------------------------
 
 Filters the data to include only years 2030–2040.
@@ -6380,6 +6682,8 @@ Groups by artist and year.
 For each (artist, year) combination, computes:
 
 total_music: how many distinct songs they created that year. notable_music: how many were marked as notable. influenced_music: how many unique music works they influenced. influenced_artists: how many unique artists they influenced.
+
+
 
 ```{r}
 # Step 1: Build yearly metrics for Oceanus Folk creators (2030–2040)
@@ -6395,6 +6699,8 @@ artist_yearly_metrics <- oceanus_creator_and_songs_and_influences_and_creators_c
   )
 ```
 
+
+
 Compute the trend slope of each metric over time per artist
 
 Fit a linear regression model for each metric across years (y \~ year). Extract the slope (rate of change per year).
@@ -6402,6 +6708,8 @@ Fit a linear regression model for each metric across years (y \~ year). Extract 
 For each artist:
 
 It calculates the annual trend (i.e., slope) of each metric from 2030 to 2040. If an artist has no data for some years, NA is filled with 0.
+
+
 
 ```{r}
 library(purrr)
@@ -6430,11 +6738,15 @@ trend_df <- artist_yearly_metrics %>%
   ))
 ```
 
+
+
 Joins the trend slopes to the base dataset artist_metrics_df, which already contains each artist’s cumulative star_score (as of 2040).
 
 Calculates an average trend across the 4 metrics.
 
 Projects the star score 5 years into the future (2045) using "predicted_star_score = star_score (in 2040) + 5 × average trend per year"
+
+
 
 ```{r}
 # Merge current score (2040) with trend data
@@ -6457,3 +6769,4 @@ predicted_star_df %>%
   kable(format = "html", digits = 2, caption = "Top 10 Predicted Oceanus Folk Stars in 2045") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
 ```
+
