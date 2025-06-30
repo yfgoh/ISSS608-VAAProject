@@ -909,7 +909,7 @@ p <- ggplot(combined_counts_df, aes(x = year, y = value, fill = series)) +
 ggplotly(p)
 ```
 
-The cumulative trends for the three plots are also visualised as follows:
+The cumulative values for the three plots are also created as dataframe with the code below:
 
 ```{r}
 #| code-fold: true
@@ -930,102 +930,7 @@ df3 <- creators_by_date %>%
 
 # Step 3: Combine into one tidy data frame
 combined_df <- bind_rows(df1, df2, df3)
-
-# Step 4: Plot
-plot_ly(combined_df,
-        x = ~year,
-        y = ~value,
-        color = ~series,
-        colors = c("Music Releases" = "#ADD8E6", 
-                   "Influenced Songs/Albums" = "#F08080", 
-                   "New Influenced Artists" = "#C2E0C6"),
-        type = 'scatter',
-        mode = 'lines+markers',
-        hoverinfo = "text",
-        hovertext = ~paste0("Year: ", year, "<br>", series, ": ", value)
-) %>%
-  layout(
-    title = list(text = "Oceanus Folk Influence Over Time (Cumulative)", x = 0.5),
-    xaxis = list(title = list(text = ""), dtick = 5),
-    yaxis = list(title = "Cumulative Count"),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = 1.15,         # position legend above the plot
-      yanchor = "bottom"
-    ),
-  margin = list(t = 160, b = 80),
-
-    # Add annotations
-    annotations = list(
-      list(
-        x = 2024, 
-        y = 800,
-        text = "<b>2024: Sailor Shift's Debut</b>",
-        xref = "x", yref = "y",
-        xanchor = "right",
-        showarrow = TRUE,
-        arrowhead = 2,
-        ax = -30, ay = -40,
-        font = list(color = "#2E3192", size = 12)
-      ),
-      list(
-        x = 2028, 
-        y = 1120,
-        text = "<b>2028: Sailor Shift's Breakthrough</b>",
-        xref = "x", yref = "y",
-        xanchor = "right",
-        showarrow = TRUE,
-        arrowhead = 2,
-        ax = -30, ay = -40,
-        font = list(color = "#2E3192", size = 12)
-      )
-    ),
-
-    # Add vertical dashed lines
-    shapes = list(
-      list(
-        type = "line",
-        x0 = 2024, x1 = 2024,
-        y0 = 0, y1 = 800,
-        line = list(dash = "dash", color = "grey")
-      ),
-      list(
-        type = "line",
-        x0 = 2028, x1 = 2028,
-        y0 = 0, y1 = 1120,
-        line = list(dash = "dash", color = "grey")
-      )
-    )
-  )
 ```
-
-[**Insights for Influenced Songs/ Album**]{.underline}
-
-This chart shows the rise of Oceanus Folk music as a source of influence in the music landscape over time since it was introduced in 1992. The blue bars represent the number of influence works each year and the red line shows the cumulative total showing long-term trends.
-
-From the 1990s through early 2000s, Oceanus Folk had very few influenced work. From 2010s onwards, Oceanus Folk music became more influential, followed by several spikes between 2010 and 2022, showing growing influence of the genre before Sailor Shift's debut.
-
-In 2023, there was a sharp increase in both the number of yearly influenced works and the cumulative total. The rising wave of Oceanus Folk influenced music had coincided with Sailor Shift’s rise and the influence continued to accelerate with Sailor's breakthrough until 2031.
-
-After 2031, the influence tapers off, suggesting the genre may have matured or plateaued.
-
-[**Insights for Music Releases**]{.underline}
-
-The chart illustrates the rise of Oceanus Folk music from its origins in 1992 to 2040. The blue bars represent the number of Oceanus Folk songs or albums released each year, highlighting notable spikes especially in the mid-2020s.
-
-The red line shows the cumulative total of Oceanus Folk releases over time, which demonstrates a steady and sustained growth in Oceanus Folk music. This growth before plateauing in 2040, indicating that the genre has matured.
-
-Two key milestones in Sailor Shift’s career - her solo debut in 2024 and breakthrough in 2028 were also mapped in the chart. The significant increases in Oceanus Folk music releases occurred in 2023 and 2026, which were the years immediately before and after her key milestones. This suggests that Sailor Shift’s emergence coincided with a rising wave of Oceanus Folk music, and that her success helped to fuel the genre’s growth in the subsequent years.
-
-[**Insights for New Influenced Artists**]{.underline}
-
-The number of new influenced artists began to rise steadily from 2020s, followed by a sharp surge in 2023, followed by Sailor Shift’s debut shortly.
-
-Thereafter, the next peak occured in 2026 and 2028, aligning with Sailor Shift’s breakthrough. This suggests her success was a powerful catalyst for wider influence of Oceanus Folk, inspiring a wave of emerging new artists .
-
-After 2030, the rate of new influenced artists begins to flatten, suggesting that Oceanus Folk had reached saturation in influence.
 
 ### 3.1.4 Bayesian Surprise
 
@@ -1132,8 +1037,65 @@ plot_data <- plot_data %>%
     type == "Artists"           ~ "New Influenced Artists",
     TRUE                        ~ type
   ))
+```
 
-plot_ly(
+The two plots for cumulative values and bayesian surprise are combined as follows:
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+cumulative_plot <- plot_ly(combined_df,
+        x = ~year,
+        y = ~value,
+        color = ~series,
+        colors = c("Music Releases" = "#ADD8E6", 
+                   "Influenced Songs/Albums" = "#F08080", 
+                   "New Influenced Artists" = "#C2E0C6"),
+        type = 'scatter',
+        mode = 'lines+markers',
+        hoverinfo = "text",
+        hovertext = ~paste0("Year: ", year, "<br>", series, ": ", value)
+) %>%
+  layout(
+    title = list(text = ""),  # <-- FIXED
+    xaxis = list(title = list(text = ""), dtick = 5),
+    yaxis = list(title = "Cumulative Count"),
+    legend = list(
+      orientation = "h",
+      x = 0.5,
+      xanchor = "center",
+      y = 1.15,
+      yanchor = "bottom"
+    ),
+    margin = list(t = 160, b = 80),
+    
+    shapes = list(
+      list(
+        type = "line",
+        x0 = 2024, x1 = 2024,
+        y0 = 0, y1 = 1,
+        xref = "x",
+        yref = "y domain",
+        line = list(dash = "dash", color = "grey")
+      ),
+      list(
+        type = "line",
+        x0 = 2028, x1 = 2028,
+        y0 = 0, y1 = 1,
+        xref = "x",
+        yref = "y domain",
+        line = list(dash = "dash", color = "grey")
+      )
+    )
+  )
+```
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+surprise_plot <- plot_ly(
   data = plot_data, 
   x = ~year, 
   y = ~surprise, 
@@ -1150,71 +1112,121 @@ plot_ly(
     "Year: ", year,
     "<br>Category: ", type,
     "<br>Surprise: ", round(surprise, 2)
-  )
+  ),
+  showlegend = FALSE
 ) %>%
 layout(
+  title = list(text = ""),
+  xaxis = list(title = "", dtick = 5),
+  yaxis = list(title = "Bayesian Surprise Score"),
+  margin = list(t = 30, b = 50),
+
+  shapes = list(
+    list(
+      type = "line",
+      x0 = 2024, x1 = 2024,
+      y0 = 0,
+      y1 = max(plot_data$surprise, na.rm = TRUE) + 100,
+      xref = "x",
+      yref = "y",
+      line = list(dash = "dash", color = "grey")
+    ),
+    list(
+      type = "line",
+      x0 = 2028, x1 = 2028,
+      y0 = 0,
+      y1 = max(plot_data$surprise, na.rm = TRUE) + 100,
+      xref = "x",
+      yref = "y",
+      line = list(dash = "dash", color = "grey")
+    )
+  )
+)
+```
+
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+# Final plot
+subplot(
+  cumulative_plot,
+  surprise_plot,
+  nrows = 2,
+  shareX = TRUE,
+  titleY = TRUE,
+  heights = c(0.6, 0.4)
+) %>%
+layout(
+  title = list(
+    text = "Oceanus Folk Influence Over Time & Bayesian Surprise",
+    x = 0.5
+  ),
+  
+  annotations = list(
+    list(
+      x = 2024,
+      y = 0.96,
+      xref = "x",
+      yref = "paper",
+      text = "<b>2024: Sailor Shift's Debut</b>",
+      showarrow = TRUE,
+      arrowhead = 2,
+      ax = -20, ay = -20,
+      font = list(color = "#2E3192", size = 12)
+    ),
+    list(
+      x = 2028,
+      y = 1.00,
+      xref = "x",
+      yref = "paper",
+      text = "<b>2028: Sailor Shift's Breakthrough</b>",
+      showarrow = TRUE,
+      arrowhead = 2,
+      ax = -30, ay = -30,
+      font = list(color = "#2E3192", size = 12)
+    )
+  ),
+
   legend = list(
     orientation = "h",
     x = 0.5,
     xanchor = "center",
-    y = 1.1,
-    yanchor = "bottom",
-    font = list(size = 12)
+    y = -0.15,
+    yanchor = "top"
   ),
-  title = list(
-    text = "Bayesian Surprise (Oceanus Folk Influenced Songs/Albums, Music Releases, and New Influenced Artists)",
-    x = 0.5,
-    xanchor = "center"
-  ),
-  xaxis = list(title = "Year", dtick = 5, range = c(1990, max(plot_data$year))),
-  yaxis = list(title = "Surprise Score (KL Divergence)"),
-  margin = list(t = 160, b = 80),
-  
-     # Add annotations
-    annotations = list(
-      list(
-        x = 2024, 
-        y = 100,
-        text = "<b>2024: Sailor Shift's Debut</b>",
-        xref = "x", yref = "y",
-        xanchor = "right",
-        showarrow = TRUE,
-        arrowhead = 2,
-        ax = -30, ay = -40,
-        font = list(color = "#2E3192", size = 12)
-      ),
-      list(
-        x = 2028, 
-        y = 120,
-        text = "<b>2028: Sailor Shift's Breakthrough</b>",
-        xref = "x", yref = "y",
-        xanchor = "right",
-        showarrow = TRUE,
-        arrowhead = 2,
-        ax = -30, ay = -40,
-        font = list(color = "#2E3192", size = 12)
-      )
-    ),
 
-    # Add vertical dashed lines
-    shapes = list(
-      list(
-        type = "line",
-        x0 = 2024, x1 = 2024,
-        y0 = 0, y1 = 100,
-        line = list(dash = "dash", color = "grey")
-      ),
-      list(
-        type = "line",
-        x0 = 2028, x1 = 2028,
-        y0 = 0, y1 = 120,
-        line = list(dash = "dash", color = "grey")
-      )
-    )
-  )
+  margin = list(t = 100, b = 100, l = 80, r = 40)
+)
 ```
+[**Insights for Influenced Songs/ Album**]{.underline}
 
-[**Insights**]{.underline}
+This chart shows the rise of Oceanus Folk music as a source of influence in the music landscape over time since it was introduced in 1992. The blue bars represent the number of influence works each year and the red line shows the cumulative total showing long-term trends.
+
+From the 1990s through early 2000s, Oceanus Folk had very few influenced work. From 2010s onwards, Oceanus Folk music became more influential, followed by several spikes between 2010 and 2022, showing growing influence of the genre before Sailor Shift's debut.
+
+In 2023, there was a sharp increase in both the number of yearly influenced works and the cumulative total. The rising wave of Oceanus Folk influenced music had coincided with Sailor Shift’s rise and the influence continued to accelerate with Sailor's breakthrough until 2031.
+
+After 2031, the influence tapers off, suggesting the genre may have matured or plateaued.
+
+[**Insights for Music Releases**]{.underline}
+
+The chart illustrates the rise of Oceanus Folk music from its origins in 1992 to 2040. The blue bars represent the number of Oceanus Folk songs or albums released each year, highlighting notable spikes especially in the mid-2020s.
+
+The red line shows the cumulative total of Oceanus Folk releases over time, which demonstrates a steady and sustained growth in Oceanus Folk music. This growth before plateauing in 2040, indicating that the genre has matured.
+
+Two key milestones in Sailor Shift’s career - her solo debut in 2024 and breakthrough in 2028 were also mapped in the chart. The significant increases in Oceanus Folk music releases occurred in 2023 and 2026, which were the years immediately before and after her key milestones. This suggests that Sailor Shift’s emergence coincided with a rising wave of Oceanus Folk music, and that her success helped to fuel the genre’s growth in the subsequent years.
+
+[**Insights for New Influenced Artists**]{.underline}
+
+The number of new influenced artists began to rise steadily from 2020s, followed by a sharp surge in 2023, followed by Sailor Shift’s debut shortly.
+
+Thereafter, the next peak occured in 2026 and 2028, aligning with Sailor Shift’s breakthrough. This suggests her success was a powerful catalyst for wider influence of Oceanus Folk, inspiring a wave of emerging new artists .
+
+After 2030, the rate of new influenced artists begins to flatten, suggesting that Oceanus Folk had reached saturation in influence.
+
+[**Bayesian Surprise Insights**]{.underline}
 
 The Bayesian Surprise analysis showed that Oceanus Folk's influence was intermittent rather than a smooth, gradual rise. While cumulative trends in music releases, influenced works and artist numbers may suggest steady growth, Bayesian Surprise uncovers a different insight that there were indeed intermittent surges of activity.
 
@@ -1400,23 +1412,27 @@ sankeyNetwork(
 This analysis examines the contemporary influences on Oceanus Folk by using the genre influence patterns methodology similar to Section 3.2.2.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
+# Step 1: Compute total number of songs for each genre
+genre_total_counts <- creator_and_songs_and_influenced_by_creator %>%
+  distinct(song_to, song_genre) %>%
+  count(song_genre, name = "total_music")
 
-###### Calvin, need your help to update the table fig below. The total music should be 305 for OF, similar to first table, but i cant seem to get the number despite using total_music = n_distinct(song_to). Can help to update it? This table dont need % as the logic is how many genre influence OF.####################
-  
-  
+# Step 2: Compute how many songs/genre where influencing Oceanus Folk
 genre_influenced_by_stats <- creator_and_songs_and_influenced_by_creator %>%
   filter(song_genre == "Oceanus Folk") %>%
   distinct(song_to, influenced_by, influenced_by_genre) %>%
   group_by(influenced_by_genre) %>%
   summarize(
-    total_music = n_distinct(song_to),
     influenced_by = n_distinct(na.omit(influenced_by)),
-    Percentage_oceanus = round(influenced_by / total_music * 100, 1), 
+    .groups = "drop"
+  ) %>%
+  left_join(genre_total_counts, by = c("influenced_by_genre" = "song_genre")) %>%
+  mutate(
+    Percentage_oceanus_influence = round(influenced_by / total_music * 100, 1)
   ) %>%
   arrange(desc(influenced_by))
 
+# Step 3: Reordered columns
 genre_influenced_by_stats %>%
   head(10) %>%
   rename(
@@ -1424,10 +1440,12 @@ genre_influenced_by_stats %>%
     `Total Music` = total_music,
     `Genre influencing Oceanus Folk` = influenced_by
   ) %>%
+  select(`Genre`, `Total Music`, `Genre influencing Oceanus Folk`, Percentage_oceanus_influence) %>%
   kable(caption = "Ranking of Music Genre Influence on Oceanus Folk") %>%
-  kable_styling("striped", full_width = F) %>%
+  kable_styling("striped", full_width = FALSE) %>%
   scroll_box(height = "200px")
 ```
+
 
 Similar to Section 3.2.2, Sankey diagram is plotted but reversed as we are looking at inward influence to Oceanus Folk.
 
