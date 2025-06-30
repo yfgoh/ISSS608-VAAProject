@@ -93,6 +93,8 @@ Graphing Tools
 -   ggiraph - Interactive plots
 -   plotly - Professional visualisations
 -   fsmb - For radar chart
+-   glue - For dynamically inserting variables into titles
+-   broom - For linear regression
 
 ```{r}
 #| code-fold: true
@@ -100,7 +102,8 @@ Graphing Tools
 pacman::p_load(jsonlite, tidyverse, ggtext,
                 knitr, lubridate, patchwork,
                 ggraph, tidygraph, igraph,
-                ggiraph, kableExtra, plotly, fmsb)
+                ggiraph, kableExtra, plotly,
+                fmsb, glue, broom)
 ```
 
 ## 1.6 Importing Data

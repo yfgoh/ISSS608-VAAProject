@@ -3466,13 +3466,17 @@ In order to predict the next Oceanus Folk stars, a grading rubric will be used w
 #| code-fold: true
 #| code-summary: "Show Code"
 
+library(glue)
+
+chosen_genre_1 = "Oceanus Folk"
+
 genre_creators = creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(song_genre == "Oceanus Folk") %>%
+  filter(song_genre == chosen_genre_1) %>%
   pull(creator_from)
 
 # Step 1: Filter to only Oceanus Folk Artists
 oceanus_creator_and_songs_and_influences_and_creators_collaborate <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_from %in% genre_creators, song_genre == "Oceanus Folk")
+  filter(creator_from %in% genre_creators, song_genre == chosen_genre_1)
 
 # Step 2: To highlight songs that the creator influence that is not produced by same creator
 oceanus_creator_influence_lists <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
@@ -3527,10 +3531,155 @@ oceanus_creator_rankings %>%
     `Artist Influ & Colab` = collaboration_influence_creator,
     `Music Influenced` = influence_music
   ) %>%
-  kable(caption = "Oceanus Folk Artists Ranked by Star Factor") %>%
+  kable(caption = glue("{chosen_genre_1} Artists Ranked by Star Factor")) %>%
   kable_styling("striped", full_width = F) %>%
   scroll_box(height = "300px")
 ```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+library(broom)
+
+# First, modify the initial summarization to keep the raw lists
+yearly_stats_with_lists <- oceanus_creator_influence_lists %>%
+  group_by(creator_name, creator_release_date) %>%
+  summarise(
+    total_songs = n_distinct(song_to),
+    notable_hits = sum(notable == TRUE, na.rm = TRUE),
+    collaboration = length(unique(unlist(unique_collaborate))),
+    influence_creators = length(unique(unlist(unique_influence_creators))),
+    collaboration_influence_creator = length(unique(c(unlist(unique_influence_creators), unlist(unique_collaborate)))),
+    influence_music = length(unique(unlist(unique_influence_music))),
+    # Keep the raw lists for cumulative calculations
+    unique_collaborate_list = list(unique(unlist(unique_collaborate))),
+    unique_influence_creators_list = list(unique(unlist(unique_influence_creators))),
+    unique_influence_music_list = list(unique(unlist(unique_influence_music))),
+    .groups = "drop"
+  ) %>%
+  rename(year = creator_release_date)
+
+# Create complete grid
+all_years <- seq(1992, 2040)
+all_artists <- unique(yearly_stats_with_lists$creator_name)
+artist_year_grid <- expand.grid(creator_name = all_artists, year = all_years)
+
+# Join and calculate cumulative unique values
+yearly_complete <- artist_year_grid %>%
+  left_join(yearly_stats_with_lists,
+            by = c("creator_name", "year")) %>%
+  arrange(creator_name, year) %>%
+  mutate(across(c(total_songs, notable_hits, collaboration, influence_creators,
+                  collaboration_influence_creator, influence_music), ~replace_na(., 0))) %>%
+  # Initialize list columns if NA
+  mutate(
+    unique_collaborate_list = map_if(unique_collaborate_list, is.null, ~ character(0)),
+    unique_influence_creators_list = map_if(unique_influence_creators_list, is.null, ~ character(0)),
+    unique_influence_music_list = map_if(unique_influence_music_list, is.null, ~ character(0))
+  ) %>%
+  group_by(creator_name) %>%
+  mutate(
+    cum_total_songs = cumsum(total_songs),
+    cum_notable_hits = cumsum(notable_hits),
+    # Calculate cumulative unique collaborators + influencers
+    running_collab_influ = accumulate(
+      map2(unique_collaborate_list, unique_influence_creators_list, ~ unique(c(.x, .y))),
+      ~ unique(c(.x, .y)),
+      .init = character(0)
+    )[-1],
+    cum_collab_influ_creator = map_int(running_collab_influ, length),
+    # Calculate cumulative unique music influences
+    running_influence_music = accumulate(
+      unique_influence_music_list,
+      ~ unique(c(.x, .y)),
+      .init = character(0)
+    )[-1],
+    cum_influence_music = map_int(running_influence_music, length)
+  ) %>%
+  select(-running_collab_influ, -running_influence_music,
+         -unique_collaborate_list, -unique_influence_creators_list, -unique_influence_music_list) %>%
+  ungroup()
+
+# Compute per-year min, max, and range for all cumulative metrics
+yearly_ranges <- yearly_complete %>%
+  group_by(year) %>%
+  summarise(
+    min_songs = min(cum_total_songs, na.rm = TRUE),
+    max_songs = max(cum_total_songs, na.rm = TRUE),
+    range_songs = max_songs - min_songs,
+    
+    min_notable = min(cum_notable_hits, na.rm = TRUE),
+    max_notable = max(cum_notable_hits, na.rm = TRUE),
+    range_notable = max_notable - min_notable,
+    
+    min_artists = min(cum_collab_influ_creator, na.rm = TRUE),
+    max_artists = max(cum_collab_influ_creator, na.rm = TRUE),
+    range_artists = max_artists - min_artists,
+    
+    min_music = min(cum_influence_music, na.rm = TRUE),
+    max_music = max(cum_influence_music, na.rm = TRUE),
+    range_music = max_music - min_music,
+    
+    .groups = "drop"
+  )
+
+# Join ranges back and compute normalised scores
+scored_yearly <- yearly_complete %>%
+  left_join(yearly_ranges, by = "year") %>%
+  mutate(
+    songs_score = ifelse(range_songs > 0,
+                         (cum_total_songs - min_songs) / range_songs, 0),
+    notable_score = ifelse(range_notable > 0,
+                           (cum_notable_hits - min_notable) / range_notable, 0),
+    artists_score = ifelse(range_artists > 0,
+                           (cum_collab_influ_creator - min_artists) / range_artists, 0),
+    music_score = ifelse(range_music > 0,
+                         (cum_influence_music - min_music) / range_music, 0),
+    
+    composite_score = songs_score + notable_score + artists_score + music_score
+  ) %>%
+  select(-starts_with("min_"), -starts_with("max_"), -starts_with("range_"))
+
+trend_slopes <- scored_yearly %>%
+  filter(year >= 1992, year <= 2040) %>%
+  group_by(creator_name) %>%
+  filter(!is.na(composite_score)) %>%
+  nest() %>%
+  mutate(
+    model = map(data, ~lm(composite_score ~ year, data = .x)),
+    tidied = map(model, tidy),
+    rsq = map_dbl(model, ~summary(.x)$r.squared),
+    slope = map_dbl(tidied, ~.x$estimate[.x$term == "year"])
+  ) %>%
+  select(creator_name, slope) %>%
+  arrange(desc(slope))
+
+latest_scores <- scored_yearly %>%
+  filter(year == 2040) %>%
+  select(creator_name, composite_score) %>%
+  rename(current_score = composite_score)
+
+score_trends <- trend_slopes %>%
+  left_join(latest_scores, by = "creator_name") %>%
+  mutate(projected_in_5yrs = current_score + 5 * slope) %>%
+  arrange(desc(projected_in_5yrs))
+
+score_trends %>%
+  mutate(
+    `Yearly Growth` = round(slope, 3),
+    `Current Star Factor` = round(current_score, 3),
+    `Star Factor in 5 Years` = round(projected_in_5yrs, 3)
+  ) %>%
+  select(creator_name, `Current Star Factor`, `Yearly Growth`, `Star Factor in 5 Years`) %>%
+  rename(
+    `Artist` = creator_name
+  ) %>%
+  kable(caption = glue("{chosen_genre_1} Artists Ranked by Predicted Star Factor in 5 Years")) %>%
+  kable_styling("striped", full_width = F) %>%
+  scroll_box(height = "300px")
+```
+
 
 ### 4.3.2 Visualizing the career of Sailor Shift
 
@@ -6234,116 +6383,6 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 :::
 
 ### 6.3.8 Predicting who the next three Oceanus Folk stars with be over the next five years
-
-```{r}
-# First, modify the initial summarization to keep the raw lists
-yearly_stats_with_lists <- oceanus_creator_influence_lists %>%
-  group_by(creator_name, creator_release_date) %>%
-  summarise(
-    total_songs = n_distinct(song_to),
-    notable_hits = sum(notable == TRUE, na.rm = TRUE),
-    collaboration = length(unique(unlist(unique_collaborate))),
-    influence_creators = length(unique(unlist(unique_influence_creators))),
-    collaboration_influence_creator = length(unique(c(unlist(unique_influence_creators), unlist(unique_collaborate)))),
-    influence_music = length(unique(unlist(unique_influence_music))),
-    # Keep the raw lists for cumulative calculations
-    unique_collaborate_list = list(unique(unlist(unique_collaborate))),
-    unique_influence_creators_list = list(unique(unlist(unique_influence_creators))),
-    unique_influence_music_list = list(unique(unlist(unique_influence_music))),
-    .groups = "drop"
-  ) %>%
-  rename(year = creator_release_date)
-
-# Create complete grid
-all_years <- seq(1992, 2040)
-all_artists <- unique(yearly_stats_with_lists$creator_name)
-artist_year_grid <- expand.grid(creator_name = all_artists, year = all_years)
-
-# Join and calculate cumulative unique values
-yearly_complete <- artist_year_grid %>%
-  left_join(yearly_stats_with_lists %>% 
-              filter(year >= 1990,
-                     year <= 2040),
-            by = c("creator_name", "year")) %>%
-  arrange(creator_name, year) %>%
-  mutate(across(c(total_songs, notable_hits, collaboration, influence_creators,
-                  collaboration_influence_creator, influence_music), ~replace_na(., 0))) %>%
-  # Initialize list columns if NA
-  mutate(
-    unique_collaborate_list = map_if(unique_collaborate_list, is.null, ~ character(0)),
-    unique_influence_creators_list = map_if(unique_influence_creators_list, is.null, ~ character(0)),
-    unique_influence_music_list = map_if(unique_influence_music_list, is.null, ~ character(0))
-  ) %>%
-  group_by(creator_name) %>%
-  mutate(
-    cum_total_songs = cumsum(total_songs),
-    cum_notable_hits = cumsum(notable_hits),
-    # Calculate cumulative unique collaborators + influencers
-    running_collab_influ = accumulate(
-      map2(unique_collaborate_list, unique_influence_creators_list, ~ unique(c(.x, .y))),
-      ~ unique(c(.x, .y)),
-      .init = character(0)
-    )[-1],
-    cum_collab_influ_creator = map_int(running_collab_influ, length),
-    # Calculate cumulative unique music influences
-    running_influence_music = accumulate(
-      unique_influence_music_list,
-      ~ unique(c(.x, .y)),
-      .init = character(0)
-    )[-1],
-    cum_influence_music = map_int(running_influence_music, length)
-  ) %>%
-  select(-running_collab_influ, -running_influence_music,
-         -unique_collaborate_list, -unique_influence_creators_list, -unique_influence_music_list) %>%
-  ungroup()
-
-# Compute per-year min, max, and range for all cumulative metrics
-yearly_ranges <- yearly_complete %>%
-  group_by(year) %>%
-  summarise(
-    min_songs = min(cum_total_songs, na.rm = TRUE),
-    max_songs = max(cum_total_songs, na.rm = TRUE),
-    range_songs = max_songs - min_songs,
-    
-    min_notable = min(cum_notable_hits, na.rm = TRUE),
-    max_notable = max(cum_notable_hits, na.rm = TRUE),
-    range_notable = max_notable - min_notable,
-    
-    min_artists = min(cum_collab_influ_creator, na.rm = TRUE),
-    max_artists = max(cum_collab_influ_creator, na.rm = TRUE),
-    range_artists = max_artists - min_artists,
-    
-    min_music = min(cum_influence_music, na.rm = TRUE),
-    max_music = max(cum_influence_music, na.rm = TRUE),
-    range_music = max_music - min_music,
-    
-    .groups = "drop"
-  )
-
-# Join ranges back and compute normalised scores
-scored_yearly <- yearly_complete %>%
-  left_join(yearly_ranges, by = "year") %>%
-  mutate(
-    songs_score = ifelse(range_songs > 0,
-                         (cum_total_songs - min_songs) / range_songs, 0),
-    notable_score = ifelse(range_notable > 0,
-                           (cum_notable_hits - min_notable) / range_notable, 0),
-    artists_score = ifelse(range_artists > 0,
-                           (cum_collab_influ_creator - min_artists) / range_artists, 0),
-    music_score = ifelse(range_music > 0,
-                         (cum_influence_music - min_music) / range_music, 0),
-    
-    composite_score = songs_score + notable_score + artists_score + music_score
-  ) %>%
-  select(-starts_with("min_"), -starts_with("max_"), -starts_with("range_"))
-
-scored_yearly
-```
-
-```{r}
-scored_yearly %>%
-  filter(creator_name == "Sailor Shift")
-```
 
 ::: callout-tip
 ## Sailor Shift
