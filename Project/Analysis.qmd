@@ -1040,6 +1040,7 @@ plot_data <- plot_data %>%
 ```
 
 The two plots for cumulative values and bayesian surprise are combined as follows:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1089,7 +1090,6 @@ cumulative_plot <- plot_ly(combined_df,
     )
   )
 ```
-
 
 ```{r}
 #| code-fold: true
@@ -1143,7 +1143,6 @@ layout(
   )
 )
 ```
-
 
 ```{r}
 #| code-fold: true
@@ -1200,6 +1199,7 @@ layout(
   margin = list(t = 100, b = 100, l = 80, r = 40)
 )
 ```
+
 [**Insights for Influenced Songs/ Album**]{.underline}
 
 This chart shows the rise of Oceanus Folk music as a source of influence in the music landscape over time since it was introduced in 1992. The blue bars represent the number of influence works each year and the red line shows the cumulative total showing long-term trends.
@@ -1445,7 +1445,6 @@ genre_influenced_by_stats %>%
   kable_styling("striped", full_width = FALSE) %>%
   scroll_box(height = "200px")
 ```
-
 
 Similar to Section 3.2.2, Sankey diagram is plotted but reversed as we are looking at inward influence to Oceanus Folk.
 
@@ -3466,84 +3465,14 @@ In order to predict the next Oceanus Folk stars, a grading rubric will be used w
 #| code-fold: true
 #| code-summary: "Show Code"
 
+library(broom)
 library(glue)
 
 chosen_genre_1 = "Oceanus Folk"
 
-genre_creators = creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(song_genre == chosen_genre_1) %>%
-  pull(creator_from)
-
-# Step 1: Filter to only Oceanus Folk Artists
-oceanus_creator_and_songs_and_influences_and_creators_collaborate <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_from %in% genre_creators, song_genre == chosen_genre_1)
-
-# Step 2: To highlight songs that the creator influence that is not produced by same creator
-oceanus_creator_influence_lists <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
-  group_by(creator_name, creator_node_type, song_to, song_name, creator_release_date, song_genre, notable) %>%
-  distinct () %>%
-  summarize(
-    unique_collaborate = list(unique(na.omit(infuence_music_collaborate[creator_from != influence_creator & `Edge Colour` == "Creator Of"]))),
-    unique_influence_creators = list(unique(na.omit(influence_creator[creator_from != influence_creator & `Edge Colour` == "Influenced By"]))),
-    unique_influence_music = list(unique(na.omit(infuence_music_collaborate[creator_from != influence_creator & !is.na(influence_genre)])))
-  )
-
-# Step 3: Aggregate unique influences per creator
-oceanus_creator_stats <- oceanus_creator_influence_lists %>%
-  group_by(creator_name) %>%
-  summarize(
-    total_songs = n_distinct(song_to),
-    notable_hits = sum(notable == TRUE, na.rm = TRUE),
-    collaboration = length(unique(unlist(unique_collaborate))),
-    influence_creators = length(unique(unlist(unique_influence_creators))),
-    collaboration_influence_creator = length(unique(c(unlist(unique_influence_creators),unlist( unique_collaborate)))),
-    influence_music = length(unique(unlist(unique_influence_music)))
-  )
-
-# Step 4: Create Scoring Rubric
-oceanus_creator_rankings <- oceanus_creator_stats %>%
-  mutate(
-    # Normalize each metric (0-1 scale)
-    songs_score = (total_songs - min(total_songs)) / (max(total_songs) - min(total_songs)),
-    notable_score = (notable_hits - min(notable_hits)) / (max(notable_hits) - min(notable_hits)),
-    artists_score = (collaboration_influence_creator - min(collaboration_influence_creator)) / (max(collaboration_influence_creator) - min(collaboration_influence_creator)),
-    music_score = (influence_music - min(influence_music)) / (max(influence_music) - min(influence_music)),
-    
-    # Calculate composite score (equal weighting)
-    composite_score = songs_score + notable_score + artists_score + music_score
-  ) %>%
-  arrange(desc(composite_score)) %>%
-  select(creator_name, total_songs, notable_hits, collaboration_influence_creator, influence_music, 
-         composite_score)
-
-# Final Ranked Table
-oceanus_creator_rankings %>%
-  mutate(
-    Rank = row_number(),
-    `Star Factor` = round(composite_score, 3)
-  ) %>%
-  select(Rank, creator_name, total_songs, notable_hits, collaboration_influence_creator, 
-         influence_music, `Star Factor`) %>%
-  rename(
-    `Artist` = creator_name,
-    `Total Music` = total_songs,
-    `Notable Hits` = notable_hits,
-    `Artist Influ & Colab` = collaboration_influence_creator,
-    `Music Influenced` = influence_music
-  ) %>%
-  kable(caption = glue("{chosen_genre_1} Artists Ranked by Star Factor")) %>%
-  kable_styling("striped", full_width = F) %>%
-  scroll_box(height = "300px")
-```
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-library(broom)
-
 # First, modify the initial summarization to keep the raw lists
-yearly_stats_with_lists <- oceanus_creator_influence_lists %>%
+yearly_stats_with_lists <- creator_influence_lists %>%
+  filter(song_genre == chosen_genre_1) %>%
   group_by(creator_name, creator_release_date) %>%
   summarise(
     total_songs = n_distinct(song_to),
@@ -3657,7 +3586,7 @@ trend_slopes <- scored_yearly %>%
 
 latest_scores <- scored_yearly %>%
   filter(year == 2040) %>%
-  select(creator_name, composite_score) %>%
+  select(creator_name, cum_total_songs, cum_notable_hits, cum_collab_influ_creator, cum_influence_music, composite_score) %>%
   rename(current_score = composite_score)
 
 score_trends <- trend_slopes %>%
@@ -3671,15 +3600,18 @@ score_trends %>%
     `Current Star Factor` = round(current_score, 3),
     `Star Factor in 5 Years` = round(projected_in_5yrs, 3)
   ) %>%
-  select(creator_name, `Current Star Factor`, `Yearly Growth`, `Star Factor in 5 Years`) %>%
+  select(creator_name, cum_total_songs, cum_notable_hits, cum_collab_influ_creator, cum_influence_music, `Current Star Factor`, `Yearly Growth`, `Star Factor in 5 Years`) %>%
   rename(
-    `Artist` = creator_name
+    `Artist` = creator_name,
+    `Total Music` = cum_total_songs,
+    `Notable Hits` = cum_notable_hits,
+    `Artist Influ & Colab` = cum_collab_influ_creator,
+    `Music Influenced` = cum_influence_music
   ) %>%
   kable(caption = glue("{chosen_genre_1} Artists Ranked by Predicted Star Factor in 5 Years")) %>%
   kable_styling("striped", full_width = F) %>%
   scroll_box(height = "300px")
 ```
-
 
 ### 4.3.2 Visualizing the career of Sailor Shift
 
@@ -3692,31 +3624,31 @@ score_trends %>%
 chosen_creator_1 = "Sailor Shift"
 
 # Step 1: Get the node of the chosen creator
-chosen_node_1 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+chosen_node_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_1) %>%
   pull(creator_from) %>%
   unique()
 
 # Step 2: Get the songs that the top creator produced
-creator_songs_1 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creator_songs_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_1) %>%
   pull(song_to)
 
 # Step 3: Get the songs they have influenced / artists they collaborate with
-creators_songs_collaborate_influence_1 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_collaborate_influence_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_1,
          infuence_music_collaborate != chosen_node_1) %>%
   pull(infuence_music_collaborate)
 
 # Step 4: Get the songs they have influenced
-creators_songs_influence_1 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_1,
          infuence_music_collaborate != chosen_node_1,
          `Edge Colour` == "Influenced By") %>%
   pull(infuence_music_collaborate)
 
 # Step 5: Get the influenced creators of the influenced songs
-creators_songs_influence_creators_1 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_creators_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_1,
          influence_creator != chosen_node_1,
          !is.na(influence_creator),
@@ -3951,7 +3883,7 @@ plot_ly(
 # Data Preparation
 
 # Step 1: Count number of influenced artists by release date
-influence_artists_by_date_1 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+influence_artists_by_date_1 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_from %in% unique(chosen_node_1),
          influence_creator != unique(chosen_node_1)) %>%
   # Get unique artist-date pairs first
@@ -4098,31 +4030,31 @@ plot_ly(
 chosen_creator_2 = "Chao Wu"
 
 # Step 1: Get the node of the chosen creator
-chosen_node_2 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+chosen_node_2 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_2) %>%
   pull(creator_from) %>%
   unique()
 
 # Step 2: Get the songs that the top creator produced
-creator_songs_2 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creator_songs_2 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_2) %>%
   pull(song_to)
 
 # Step 3: Get the songs they have influenced / artists they collaborate with
-creators_songs_collaborate_influence_2 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_collaborate_influence_2 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_2,
          infuence_music_collaborate != chosen_node_2) %>%
   pull(infuence_music_collaborate)
 
 # Step 4: Get the songs they have influenced
-creators_songs_influence_2 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_2 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_2,
          infuence_music_collaborate != chosen_node_2,
          `Edge Colour` == "Influenced By") %>%
   pull(infuence_music_collaborate)
 
 # Step 5: Get the influenced creators of the influenced songs
-creators_songs_influence_creators_2 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_creators_2 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_2,
          influence_creator != chosen_node_2,
          !is.na(influence_creator),
@@ -4357,7 +4289,7 @@ plot_ly(
 # Data Preparation
 
 # Step 1: Count number of influenced artists by release date
-influence_artists_by_date_2 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+influence_artists_by_date_2 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_from %in% unique(chosen_node_2),
          influence_creator != unique(chosen_node_2)) %>%
   # Get unique artist-date pairs first
@@ -4504,31 +4436,31 @@ plot_ly(
 chosen_creator_3 = "Xia Jia"
 
 # Step 1: Get the node of the chosen creator
-chosen_node_3 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+chosen_node_3 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_3) %>%
   pull(creator_from) %>%
   unique()
 
 # Step 2: Get the songs that the top creator produced
-creator_songs_3 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creator_songs_3 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_3) %>%
   pull(song_to)
 
 # Step 3: Get the songs they have influenced / artists they collaborate with
-creators_songs_collaborate_influence_3 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_collaborate_influence_3 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_3,
          infuence_music_collaborate != chosen_node_3) %>%
   pull(infuence_music_collaborate)
 
 # Step 4: Get the songs they have influenced
-creators_songs_influence_3 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_3 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_3,
          infuence_music_collaborate != chosen_node_3,
          `Edge Colour` == "Influenced By") %>%
   pull(infuence_music_collaborate)
 
 # Step 5: Get the influenced creators of the influenced songs
-creators_songs_influence_creators_3 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_creators_3 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_3,
          influence_creator != chosen_node_3,
          !is.na(influence_creator),
@@ -4763,7 +4695,7 @@ plot_ly(
 # Data Preparation
 
 # Step 1: Count number of influenced artists by release date
-influence_artists_by_date_3 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+influence_artists_by_date_3 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_from %in% unique(chosen_node_3),
          influence_creator != unique(chosen_node_3)) %>%
   # Get unique artist-date pairs first
@@ -4910,31 +4842,31 @@ plot_ly(
 chosen_creator_4 = "Donna Caldwell"
 
 # Step 1: Get the node of the chosen creator
-chosen_node_4 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+chosen_node_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_4) %>%
   pull(creator_from) %>%
   unique()
 
 # Step 2: Get the songs that the top creator produced
-creator_songs_4 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creator_songs_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_4) %>%
   pull(song_to)
 
 # Step 3: Get the songs they have influenced / artists they collaborate with
-creators_songs_collaborate_influence_4 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_collaborate_influence_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_4,
          infuence_music_collaborate != chosen_node_4) %>%
   pull(infuence_music_collaborate)
 
 # Step 4: Get the songs they have influenced
-creators_songs_influence_4 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_4,
          infuence_music_collaborate != chosen_node_4,
          `Edge Colour` == "Influenced By") %>%
   pull(infuence_music_collaborate)
 
 # Step 5: Get the influenced creators of the influenced songs
-creators_songs_influence_creators_4 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_creators_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_4,
          influence_creator != chosen_node_4,
          !is.na(influence_creator),
@@ -5169,7 +5101,7 @@ plot_ly(
 # Data Preparation
 
 # Step 1: Count number of influenced artists by release date
-influence_artists_by_date_4 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+influence_artists_by_date_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_from %in% unique(chosen_node_4),
          influence_creator != unique(chosen_node_4)) %>%
   # Get unique artist-date pairs first
@@ -5316,31 +5248,31 @@ plot_ly(
 chosen_creator_5 = "Xiulan Ye"
 
 # Step 1: Get the node of the chosen creator
-chosen_node_5 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+chosen_node_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_5) %>%
   pull(creator_from) %>%
   unique()
 
 # Step 2: Get the songs that the top creator produced
-creator_songs_5 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creator_songs_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_5) %>%
   pull(song_to)
 
 # Step 3: Get the songs they have influenced / artists they collaborate with
-creators_songs_collaborate_influence_5 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_collaborate_influence_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_5,
          infuence_music_collaborate != chosen_node_5) %>%
   pull(infuence_music_collaborate)
 
 # Step 4: Get the songs they have influenced
-creators_songs_influence_5 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_5,
          infuence_music_collaborate != chosen_node_5,
          `Edge Colour` == "Influenced By") %>%
   pull(infuence_music_collaborate)
 
 # Step 5: Get the influenced creators of the influenced songs
-creators_songs_influence_creators_5 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+creators_songs_influence_creators_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_name == chosen_creator_5,
          influence_creator != chosen_node_5,
          !is.na(influence_creator),
@@ -5575,7 +5507,7 @@ plot_ly(
 # Data Preparation
 
 # Step 1: Count number of influenced artists by release date
-influence_artists_by_date_5 <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+influence_artists_by_date_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_from %in% unique(chosen_node_5),
          influence_creator != unique(chosen_node_5)) %>%
   # Get unique artist-date pairs first
@@ -6439,17 +6371,18 @@ These metrics were computed for every Oceanus Folk artist in the dataset.
 ```{r}
 library(purrr)
 
-all_oceanus_creators <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+all_oceanus_creators <- creator_and_songs_and_influences_and_creators_collaborate %>%
+  filter(song_genre == chosen_genre_1) %>%
   pull(creator_name) %>%
   unique()
 
 compute_creator_metrics <- function(creator_name) {
-  creator_node <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+  creator_node <- creator_and_songs_and_influences_and_creators_collaborate %>%
     filter(creator_name == !!creator_name) %>%
     pull(creator_from) %>%
     unique()
   
-  creator_songs <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+  creator_songs <- creator_and_songs_and_influences_and_creators_collaborate %>%
     filter(creator_name == !!creator_name) %>%
     pull(song_to) %>%
     unique()
@@ -6458,13 +6391,13 @@ compute_creator_metrics <- function(creator_name) {
     filter(name %in% creator_songs, notable == TRUE) %>%
     nrow()
   
-  influenced_music <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+  influenced_music <- creator_and_songs_and_influences_and_creators_collaborate %>%
     filter(creator_from %in% creator_node, `Edge Colour` == "Influenced By") %>%
     pull(infuence_music_collaborate) %>%
     unique() %>%
     length()
   
-  influenced_artists <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+  influenced_artists <- creator_and_songs_and_influences_and_creators_collaborate %>%
     filter(creator_from %in% creator_node, influence_creator != creator_node) %>%
     pull(influence_creator) %>%
     unique() %>%
@@ -6512,7 +6445,7 @@ total_music: how many distinct songs they created that year. notable_music: how 
 
 ```{r}
 # Step 1: Build yearly metrics for Oceanus Folk creators (2030–2040)
-artist_yearly_metrics <- oceanus_creator_and_songs_and_influences_and_creators_collaborate %>%
+artist_yearly_metrics <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_release_date >= 2030, creator_release_date <= 2040) %>%
   group_by(creator_name, creator_release_date) %>%
   summarise(
