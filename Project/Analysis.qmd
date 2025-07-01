@@ -71,7 +71,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -98,8 +98,8 @@ g <- sub_graph %>%
   geom_node_text(
     aes(
       label = ifelse(node_name == "Sailor Shift", "Sailor Shift",
-              ifelse(node_name == "Ivy Echos", "Ivy Echos",
-              ifelse(node_name == "Wei Zhao", "Wei Zhao", NA)))
+                     ifelse(node_name == "Ivy Echos", "Ivy Echos",
+                            ifelse(node_name == "Wei Zhao", "Wei Zhao", NA)))
     ),
     fontface = "bold",
     size = 2.5,
@@ -153,7 +153,7 @@ sailor_release_data <- mc1_nodes_clean %>%
 ggplot(sailor_release_data, aes(x = release_date, y = n, fill = genre)) +
   geom_col() +
   geom_vline(xintercept = 2028, linetype = "dashed", color = "red") +
-    annotate("text", 
+  annotate("text", 
            x = 2028, 
            y = max(sailor_release_data$n) + 0.5,
            label = "Viral Breakthrough", 
@@ -179,8 +179,8 @@ ggplot(sailor_release_data, aes(x = release_date, y = n, fill = genre)) +
 -   In total, Sailor Shift released 38 Songs and Albums from 2024 to 2040
 -   Details on the Songs and Albums can be found in the table below
 -   Sailor Shift released 4 Songs in 2028
-    -   Among those, only 1 is a Single
-    -   Therefore, the viral Song that spark her breakthrough is **High Tide Heartbeat**
+-   Among those, only 1 is a Single
+-   Therefore, the viral Song that spark her breakthrough is **High Tide Heartbeat**
 -   Among her Songs and Albums, 36 belong to the Oceanus Folk genre, while there is 1 Americana and 1 Synthwave Album each.
 :::
 
@@ -306,7 +306,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -333,7 +333,7 @@ g <- sub_graph %>%
   geom_node_text(
     aes(
       label = ifelse(node_name == "Sailor Shift", "Sailor Shift",
-              ifelse(node_name == "Wei Zhao", "Wei Zhao", NA))
+                     ifelse(node_name == "Wei Zhao", "Wei Zhao", NA))
     ),
     fontface = "bold",
     size = 2.5,
@@ -379,7 +379,7 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 -   The table below shows all the Person and Musical Group that have influenced Sailor Shift
 -   Through the graph, most of the other Person and Musical Group have only produced a single music that has influenced one of her music.
 -   However, Wei Zhao stands out because they have influenced Sailor Shift more than once.
-    -   Wei Zhao is the producer of **Susurros de Passion** that has influenced the her album **Salty Dreams**. Wei Zhao is also the composer of **Silent Steps in the Forest's Embrance** that has influenced her song **Moon Over the Tide**.
+-   Wei Zhao is the producer of **Susurros de Passion** that has influenced the her album **Salty Dreams**. Wei Zhao is also the composer of **Silent Steps in the Forest's Embrance** that has influenced her song **Moon Over the Tide**.
 -   In conclusion, Ivy Echos and Wei Zhao have been the most influential on Sailor Shift's music career.
 :::
 
@@ -523,7 +523,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -593,9 +593,9 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ## Who has she collaborated with and directly or indirectly influenced?
 
 -   The graph and table shows everyone that she has collaborated with.
-    -   Sailor Shift has collaborated with 48 different artists and information on them can be found in the table below.
+-   Sailor Shift has collaborated with 48 different artists and information on them can be found in the table below.
 -   However, Sailor Shift has not directly or indirectly influenced anyone, since none of her music has influenced others.
-    -   For example, no Songs/Albums has referenced her Songs or Albums.
+-   For example, no Songs/Albums has referenced her Songs or Albums.
 :::
 
 ```{r}
@@ -640,7 +640,7 @@ genre_music = creator_and_songs_and_influences_and_creators_collaborate %>%
   pull(song_to)
 
 genre_all_nodes <- unique(c(genre_creators,
-                    genre_music))
+                            genre_music))
 
 # Create subgraph
 sub_graph <- graph %>%
@@ -672,7 +672,7 @@ filtered_nodes <- distance_df %>%
   pull(name)
 
 filtered_nodes <- unique(c(filtered_nodes,
-                    sailor_node))
+                           sailor_node))
 
 # Create subgraph
 filtered_graph <- sub_graph %>%
@@ -689,7 +689,7 @@ g <- filtered_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -768,7 +768,7 @@ girafe(ggobj = g, width_svg = 9, height_svg = 8)
 
 -   It seems that the Oceanus Folk community places a strong emphasis on collaboration
 -   Rather than simply drawing influence from each other's work, they prefer collaborating directly
-    -   Evidenced by the sporadic 'Influenced By' connections in the network graph
+-   Evidenced by the sporadic 'Influenced By' connections in the network graph
 :::
 
 # 3 Part 2: Influence of Oceanus Folk
@@ -965,11 +965,11 @@ compute_bayesian_surprise <- function(data, year_col, count_col, window = 5) {
     rename(year = {{year_col}}, count = {{count_col}}) %>%
     complete(year = min(year):max(year), fill = list(count = 0)) %>%
     arrange(year)
-
+  
   # Calculate moving average (prior belief)
   data <- data %>%
     mutate(prior_mean = rollmean(count, k = window, align = "right", fill = NA))
-
+  
   # Compute KL Divergence for Poisson distributions
   data <- data %>%
     mutate(
@@ -979,7 +979,7 @@ compute_bayesian_surprise <- function(data, year_col, count_col, window = 5) {
         NA
       )
     )
-
+  
   return(data)
 }
 ```
@@ -1046,16 +1046,16 @@ The two plots for cumulative values and bayesian surprise are combined as follow
 #| code-summary: "Show Code"
 
 cumulative_plot <- plot_ly(combined_df,
-        x = ~year,
-        y = ~value,
-        color = ~series,
-        colors = c("Music Releases" = "#ADD8E6", 
-                   "Influenced Songs/Albums" = "#F08080", 
-                   "New Influenced Artists" = "#C2E0C6"),
-        type = 'scatter',
-        mode = 'lines+markers',
-        hoverinfo = "text",
-        hovertext = ~paste0("Year: ", year, "<br>", series, ": ", value)
+                           x = ~year,
+                           y = ~value,
+                           color = ~series,
+                           colors = c("Music Releases" = "#ADD8E6", 
+                                      "Influenced Songs/Albums" = "#F08080", 
+                                      "New Influenced Artists" = "#C2E0C6"),
+                           type = 'scatter',
+                           mode = 'lines+markers',
+                           hoverinfo = "text",
+                           hovertext = ~paste0("Year: ", year, "<br>", series, ": ", value)
 ) %>%
   layout(
     title = list(text = ""),  # <-- FIXED
@@ -1115,33 +1115,33 @@ surprise_plot <- plot_ly(
   ),
   showlegend = FALSE
 ) %>%
-layout(
-  title = list(text = ""),
-  xaxis = list(title = "", dtick = 5),
-  yaxis = list(title = "Bayesian Surprise Score"),
-  margin = list(t = 30, b = 50),
-
-  shapes = list(
-    list(
-      type = "line",
-      x0 = 2024, x1 = 2024,
-      y0 = 0,
-      y1 = max(plot_data$surprise, na.rm = TRUE) + 100,
-      xref = "x",
-      yref = "y",
-      line = list(dash = "dash", color = "grey")
-    ),
-    list(
-      type = "line",
-      x0 = 2028, x1 = 2028,
-      y0 = 0,
-      y1 = max(plot_data$surprise, na.rm = TRUE) + 100,
-      xref = "x",
-      yref = "y",
-      line = list(dash = "dash", color = "grey")
+  layout(
+    title = list(text = ""),
+    xaxis = list(title = "", dtick = 5),
+    yaxis = list(title = "Bayesian Surprise Score"),
+    margin = list(t = 30, b = 50),
+    
+    shapes = list(
+      list(
+        type = "line",
+        x0 = 2024, x1 = 2024,
+        y0 = 0,
+        y1 = max(plot_data$surprise, na.rm = TRUE) + 100,
+        xref = "x",
+        yref = "y",
+        line = list(dash = "dash", color = "grey")
+      ),
+      list(
+        type = "line",
+        x0 = 2028, x1 = 2028,
+        y0 = 0,
+        y1 = max(plot_data$surprise, na.rm = TRUE) + 100,
+        xref = "x",
+        yref = "y",
+        line = list(dash = "dash", color = "grey")
+      )
     )
   )
-)
 ```
 
 ```{r}
@@ -1157,47 +1157,47 @@ subplot(
   titleY = TRUE,
   heights = c(0.6, 0.4)
 ) %>%
-layout(
-  title = list(
-    text = "Oceanus Folk Influence Over Time & Bayesian Surprise",
-    x = 0.5
-  ),
-  
-  annotations = list(
-    list(
-      x = 2024,
-      y = 0.96,
-      xref = "x",
-      yref = "paper",
-      text = "<b>2024: Sailor Shift's Debut</b>",
-      showarrow = TRUE,
-      arrowhead = 2,
-      ax = -20, ay = -20,
-      font = list(color = "#2E3192", size = 12)
+  layout(
+    title = list(
+      text = "Oceanus Folk Influence Over Time & Bayesian Surprise",
+      x = 0.5
     ),
-    list(
-      x = 2028,
-      y = 1.00,
-      xref = "x",
-      yref = "paper",
-      text = "<b>2028: Sailor Shift's Breakthrough</b>",
-      showarrow = TRUE,
-      arrowhead = 2,
-      ax = -30, ay = -30,
-      font = list(color = "#2E3192", size = 12)
-    )
-  ),
-
-  legend = list(
-    orientation = "h",
-    x = 0.5,
-    xanchor = "center",
-    y = -0.15,
-    yanchor = "top"
-  ),
-
-  margin = list(t = 100, b = 100, l = 80, r = 40)
-)
+    
+    annotations = list(
+      list(
+        x = 2024,
+        y = 0.96,
+        xref = "x",
+        yref = "paper",
+        text = "<b>2024: Sailor Shift's Debut</b>",
+        showarrow = TRUE,
+        arrowhead = 2,
+        ax = -20, ay = -20,
+        font = list(color = "#2E3192", size = 12)
+      ),
+      list(
+        x = 2028,
+        y = 1.00,
+        xref = "x",
+        yref = "paper",
+        text = "<b>2028: Sailor Shift's Breakthrough</b>",
+        showarrow = TRUE,
+        arrowhead = 2,
+        ax = -30, ay = -30,
+        font = list(color = "#2E3192", size = 12)
+      )
+    ),
+    
+    legend = list(
+      orientation = "h",
+      x = 0.5,
+      xanchor = "center",
+      y = -0.15,
+      yanchor = "top"
+    ),
+    
+    margin = list(t = 100, b = 100, l = 80, r = 40)
+  )
 ```
 
 [**Insights for Influenced Songs/ Album**]{.underline}
@@ -1400,9 +1400,9 @@ sankeyNetwork(
 ## Which top artists have been most influenced by Oceanus Folk?
 
 -   The table above show the top 10 artists who was most influenced by Oceanus Folk
-    -   These are artists who have produced Oceanus Folk music or have been influenced by it.
-    -   Top artists are defined by having more than 10 notable hits.
-    -   These artists are rank by the amount that Oceanus Folk has influenced them.
+-   These are artists who have produced Oceanus Folk music or have been influenced by it.
+-   Top artists are defined by having more than 10 notable hits.
+-   These artists are rank by the amount that Oceanus Folk has influenced them.
 -   The top artist is Sailor Shift who has produced 36 Oceanus Folk songs.
 -   The next artist is Min He, who has produced one Oceanus Folk song and has been influenced by 10 other Oceanus Folk songs, bringing the total to 11 songs.
 :::
@@ -1674,7 +1674,7 @@ The Star Factor will aggregate these normalized scores (maximum: 4) to rank the 
 #| code-summary: "Show Code"
 
 # Data Preparation
-  
+
 # Step 1: To highlight songs that the creator influence that is not produced by same creator
 creator_influence_lists <- creator_and_songs_and_influences_and_creators_collaborate %>%
   group_by(creator_name, creator_node_type, song_to, song_name, creator_release_date, song_genre, notable) %>%
@@ -1947,7 +1947,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -2044,8 +2044,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2110,8 +2110,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2188,8 +2188,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", creator_release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2254,8 +2254,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2359,7 +2359,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -2456,8 +2456,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2522,8 +2522,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2600,8 +2600,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", creator_release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2666,8 +2666,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2767,7 +2767,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -2864,8 +2864,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -2930,8 +2930,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -3008,8 +3008,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", creator_release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -3074,8 +3074,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -3138,8 +3138,8 @@ plot_ly(
     "Artist: ", chosen_creator_1,
     "<br>Influence Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     data = music_by_date_2,
     x = ~release_date,
@@ -3215,8 +3215,8 @@ plot_ly(
     "Artist: ", chosen_creator_1,
     "<br>Influence Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     data = notable_music_by_date_2,
     x = ~release_date,
@@ -3292,8 +3292,8 @@ plot_ly(
     "Artist: ", chosen_creator_1,
     "<br>Influence Date: ", creator_release_date,
     "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     data = influence_artists_by_date_2,
     x = ~creator_release_date,
@@ -3375,8 +3375,8 @@ plot_ly(
     "Artist: ", chosen_creator_1,
     "<br>Influence Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     data = influence_song_by_date_2,
     x = ~release_date,
@@ -3441,16 +3441,16 @@ Sailor Shift has no influence on music creation
 ## Visualize the careers of three artists. Compare and contrast their rise in popularity and influence?
 
 -   Among the three artists, Sailor Shift is the most recent entrant to the music industry, having debuted in 2024.
-    -   She maintained consistent music releases through 2040.
-    -   With 38 total releases, she surpassed Jay Walters' record (37 releases) in 2040, establishing herself as the most prolific artist.
-    -   Min Fu has 12 records.
+-   She maintained consistent music releases through 2040.
+-   With 38 total releases, she surpassed Jay Walters' record (37 releases) in 2040, establishing herself as the most prolific artist.
+-   Min Fu has 12 records.
 -   While Sailor Shift has released more music than Jay Walters, Jay Walters is the most popular Artist having released 35 hits that made the top record chart.
-    -   Sailor Shift has 25 hits while Min Fu has 12.
+-   Sailor Shift has 25 hits while Min Fu has 12.
 -   Min Fu is the most influential artist having influenced/collaborated with 598 artists and influenced the creation of 192 music.
-    -   Jay Walters has a much lower influence having influence/collaborated with 51 artists and 50 music.
-    -   Sailor Shift has a similar influence of 48 artists (all collaborations) but 0 influence on the music scene.
+-   Jay Walters has a much lower influence having influence/collaborated with 51 artists and 50 music.
+-   Sailor Shift has a similar influence of 48 artists (all collaborations) but 0 influence on the music scene.
 -   However, Sailor Shift has the most recent influence, with new artist connections as recent as 2040.
-    -   In contrast, Jay Walters' influence period ended earlier (last connection in 2035), while Min Fu's influence dates back to 2030.
+-   In contrast, Jay Walters' influence period ended earlier (last connection in 2035), while Min Fu's influence dates back to 2030.
 :::
 
 ## 4.3 Part 3b) Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.
@@ -3571,7 +3571,7 @@ scored_yearly <- yearly_complete %>%
   select(-starts_with("min_"), -starts_with("max_"), -starts_with("range_"))
 
 trend_slopes <- scored_yearly %>%
-  filter(year >= 1992, year <= 2040) %>%
+  filter(year >= 2020, year <= 2040) %>%
   group_by(creator_name) %>%
   filter(!is.na(composite_score)) %>%
   nest() %>%
@@ -3582,7 +3582,8 @@ trend_slopes <- scored_yearly %>%
     slope = map_dbl(tidied, ~.x$estimate[.x$term == "year"])
   ) %>%
   select(creator_name, slope) %>%
-  arrange(desc(slope))
+  arrange(desc(slope)) %>%
+  ungroup()
 
 latest_scores <- scored_yearly %>%
   filter(year == 2040) %>%
@@ -3611,6 +3612,194 @@ score_trends %>%
   kable(caption = glue("{chosen_genre_1} Artists Ranked by Predicted Star Factor in 5 Years")) %>%
   kable_styling("striped", full_width = F) %>%
   scroll_box(height = "300px")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+chosen_creator_2 = "Chao Wu"
+
+chosen_creator_3 = "Xia Jia"
+
+star_factor_1 <- scored_yearly %>%
+  filter(creator_name == chosen_creator_1,
+         year >= 2020,
+         year <= 2040) %>%
+  select(year, composite_score)
+
+star_factor_2 <- scored_yearly %>%
+  filter(creator_name == chosen_creator_2,
+         year >= 2020,
+         year <= 2040) %>%
+  select(year, composite_score)
+
+star_factor_3 <- scored_yearly %>%
+  filter(creator_name == chosen_creator_3,
+         year >= 2020,
+         year <= 2040) %>%
+  select(year, composite_score)
+
+creator_1_trend <- score_trends %>%
+  filter(creator_name == chosen_creator_1) %>%
+  select(slope, current_score)
+
+creator_1_projection <- tibble(
+  year = 2040:2045,
+  composite_score = creator_1_trend$current_score + 
+    creator_1_trend$slope * (2040:2045 - 2040)
+)
+
+creator_2_trend <- score_trends %>%
+  filter(creator_name == chosen_creator_2) %>%
+  select(slope, current_score)
+
+creator_2_projection <- tibble(
+  year = 2040:2045,
+  composite_score = creator_2_trend$current_score + 
+    creator_2_trend$slope * (2040:2045 - 2040)
+)
+
+creator_3_trend <- score_trends %>%
+  filter(creator_name == chosen_creator_3) %>%
+  select(slope, current_score)
+
+creator_3_projection <- tibble(
+  year = 2040:2045,
+  composite_score = creator_3_trend$current_score + 
+    creator_3_trend$slope * (2040:2045 - 2040)
+)
+
+# Visualisation
+
+plot_ly(
+  data = star_factor_1,
+  x = ~year,
+  y = ~composite_score,
+  type = "scatter",
+  mode = "lines+markers",
+  name = chosen_creator_1,
+  line = list(color = "#2E3192", width = 2),
+  marker = list(color = "red", size = 6),
+  hoverinfo = "text",
+  hovertext = ~paste0(
+    "Artist: ", chosen_creator_1,
+    "<br>Year: ", year,
+    "<br>Star Factor: ", round(composite_score, 3)
+  )
+) %>%
+  add_trace(
+    data = star_factor_2,
+    x = ~year,
+    y = ~composite_score,
+    name = chosen_creator_2,
+    line = list(color = "green", width = 2),
+    marker = list(color = "red", size = 6),
+    hoverinfo = "text",
+    hovertext = ~paste0(
+      "Artist: ", chosen_creator_2,
+      "<br>Year: ", year,
+      "<br>Star Factor: ", round(composite_score, 3)
+    )
+  ) %>%
+  add_trace(
+    data = star_factor_3,
+    x = ~year,
+    y = ~composite_score,
+    name = chosen_creator_3,
+    line = list(color = "purple", width = 2),
+    marker = list(color = "red", size = 6),
+    hoverinfo = "text",
+    hovertext = ~paste0(
+      "Artist: ", chosen_creator_3,
+      "<br>Year: ", year,
+      "<br>Star Factor: ", round(composite_score, 3)
+    )
+  ) %>%
+  add_trace(
+    data = creator_1_projection,
+    x = ~year,
+    y = ~composite_score,
+    name = chosen_creator_1,
+    line = list(color = "#2E3192", width = 2),
+    marker = list(opacity = 0),
+    hoverinfo = "text",
+    hovertext = ~paste0(
+      "Artist: ", chosen_creator_1,
+      "<br>Year: ", year,
+      "<br>Star Factor: ", round(composite_score, 3)
+    ),
+    showlegend = FALSE
+  ) %>%
+  add_trace(
+    data = creator_2_projection,
+    x = ~year,
+    y = ~composite_score,
+    name = chosen_creator_2,
+    line = list(color = "green", width = 2),
+    marker = list(opacity = 0),
+    hoverinfo = "text",
+    hovertext = ~paste0(
+      "Artist: ", chosen_creator_2,
+      "<br>Year: ", year,
+      "<br>Star Factor: ", round(composite_score, 3)
+    ),
+    showlegend = FALSE
+  ) %>%
+  add_trace(
+    data = creator_3_projection,
+    x = ~year,
+    y = ~composite_score,
+    name = chosen_creator_3,
+    line = list(color = "purple", width = 2),
+    marker = list(opacity = 0),
+    hoverinfo = "text",
+    hovertext = ~paste0(
+      "Artist: ", chosen_creator_3,
+      "<br>Year: ", year,
+      "<br>Star Factor: ", round(composite_score, 3)
+    ),
+    showlegend = FALSE
+  )%>%
+  layout(
+    title = "Star Factor Prediction for the Next 5 Years",
+    margin = list(b = 80, t = 80),      
+    xaxis = list(
+      title = NA,  
+      dtick = 5,
+      automargin = TRUE
+    ),
+    yaxis = list(
+      title = "Star Factor",
+      automargin = TRUE
+    ),
+    legend = list(
+      orientation = "h",
+      x = 0.5,
+      xanchor = "center",
+      y = -0.1
+    ),
+    shapes = list(
+      list(
+        type = "line",
+        x0 = 2040, x1 = 2040,
+        y0 = 0, y1 = 4,
+        line = list(dash="dash", color="grey")
+      )
+    ),
+    annotations = list(
+      list(
+        x = 2040, 
+        y = 3.5,
+        text = "Projection",
+        xref = "x", yref = "y",
+        xanchor = "left",
+        showarrow = TRUE, arrowhead = 2,
+        ax = 30, ay = -30,
+        font = list(color="black", size=12)
+      )
+    )
+  )
 ```
 
 ### 4.3.2 Visualizing the career of Sailor Shift
@@ -3675,7 +3864,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -3772,8 +3961,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -3838,8 +4027,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -3916,8 +4105,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", creator_release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -3982,8 +4171,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4081,7 +4270,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -4178,8 +4367,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4244,8 +4433,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4322,8 +4511,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", creator_release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4388,8 +4577,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4487,7 +4676,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -4584,8 +4773,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4650,8 +4839,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4728,8 +4917,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", creator_release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4794,8 +4983,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -4893,7 +5082,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -4990,8 +5179,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -5056,8 +5245,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -5134,8 +5323,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", creator_release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -5200,8 +5389,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -5299,7 +5488,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -5396,8 +5585,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -5462,8 +5651,8 @@ plot_ly(
   hovertext = ~paste0(
     "Released Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -5540,8 +5729,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", creator_release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -5606,8 +5795,8 @@ plot_ly(
   hovertext = ~paste0(
     "Influence Date: ", release_date,
     "<br>Count: ", music_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     y = ~cumulative_count,
     type = "scatter",
@@ -5670,8 +5859,8 @@ plot_ly(
     "Artist: ", chosen_creator_1,
     "<br>Influence Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     data = music_by_date_2,
     x = ~release_date,
@@ -5704,7 +5893,7 @@ plot_ly(
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
-    add_trace(
+  add_trace(
     data = music_by_date_4,
     x = ~release_date,
     y = ~cumulative_count,
@@ -5720,7 +5909,7 @@ plot_ly(
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
-    add_trace(
+  add_trace(
     data = music_by_date_5,
     x = ~release_date,
     y = ~cumulative_count,
@@ -5797,8 +5986,8 @@ plot_ly(
     "Artist: ", chosen_creator_1,
     "<br>Influence Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     data = notable_music_by_date_2,
     x = ~release_date,
@@ -5831,7 +6020,7 @@ plot_ly(
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
-    add_trace(
+  add_trace(
     data = notable_music_by_date_4,
     x = ~release_date,
     y = ~cumulative_count,
@@ -5847,7 +6036,7 @@ plot_ly(
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
-    add_trace(
+  add_trace(
     data = notable_music_by_date_5,
     x = ~release_date,
     y = ~cumulative_count,
@@ -5924,8 +6113,8 @@ plot_ly(
     "Artist: ", chosen_creator_1,
     "<br>Influence Date: ", creator_release_date,
     "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     data = influence_artists_by_date_2,
     x = ~creator_release_date,
@@ -5958,7 +6147,7 @@ plot_ly(
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
-    add_trace(
+  add_trace(
     data = influence_artists_by_date_4,
     x = ~creator_release_date,
     y = ~cumulative_count,
@@ -5974,7 +6163,7 @@ plot_ly(
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
-    add_trace(
+  add_trace(
     data = influence_artists_by_date_5,
     x = ~creator_release_date,
     y = ~cumulative_count,
@@ -6051,8 +6240,8 @@ plot_ly(
     "Artist: ", chosen_creator_1,
     "<br>Influence Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
+  )
+) %>%
   add_trace(
     data = influence_song_by_date_2,
     x = ~release_date,
@@ -6085,7 +6274,7 @@ plot_ly(
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
-    add_trace(
+  add_trace(
     data = influence_song_by_date_4,
     x = ~release_date,
     y = ~cumulative_count,
@@ -6101,7 +6290,7 @@ plot_ly(
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
-    add_trace(
+  add_trace(
     data = influence_song_by_date_5,
     x = ~release_date,
     y = ~cumulative_count,
@@ -6234,7 +6423,7 @@ g <- sub_graph %>%
       edge_colour = `Edge Colour`,
       start_cap = circle(1, 'mm'),
       end_cap = circle(1, 'mm')
-      ),
+    ),
     arrow = arrow(length = unit(1, 'mm')),
     alpha = 0.3
   ) +
@@ -6265,10 +6454,10 @@ g <- sub_graph %>%
   geom_node_text(
     aes(
       label = ifelse(`node_name` == chosen_creator_1, chosen_creator_1,
-              ifelse(`node_name` == chosen_creator_2, chosen_creator_2,
-              ifelse(`node_name` == chosen_creator_3, chosen_creator_3,
-              ifelse(`node_name` == chosen_creator_4, chosen_creator_4,
-              ifelse(`node_name` == chosen_creator_5, chosen_creator_5, NA)))))
+                     ifelse(`node_name` == chosen_creator_2, chosen_creator_2,
+                            ifelse(`node_name` == chosen_creator_3, chosen_creator_3,
+                                   ifelse(`node_name` == chosen_creator_4, chosen_creator_4,
+                                          ifelse(`node_name` == chosen_creator_5, chosen_creator_5, NA)))))
     ),
     fontface = "bold",
     size = 2.5,
@@ -6311,7 +6500,7 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ::: callout-tip
 -   All five artists are solo artists and none of them are part of the same musical group
 -   Chao Wu, Xia Jia, Donna Caldwell and Xiulan Ye have some collaborative works with each other which can explain why some of their graphs overlaps.
-    -   Chao Wu, Xia Jia, Donna Caldwell and Xiulan Ye produced Winds of the Basque Shore and Destiny's Call together.
+-   Chao Wu, Xia Jia, Donna Caldwell and Xiulan Ye produced Winds of the Basque Shore and Destiny's Call together.
 :::
 
 ### 6.3.8 Predicting who the next three Oceanus Folk stars with be over the next five years
@@ -6320,8 +6509,8 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ## Sailor Shift
 
 -   Sailor Shift is ranked 1st in Oceanus Folk star factor.
-    -   Per the VAST Challenge background, she is already one of music's biggest superstars and a dominant figure in the Oceanus Folk community.
-    -   Therefore, she will not be included in these predictions, as she has already achieved superstar status.
+-   Per the VAST Challenge background, she is already one of music's biggest superstars and a dominant figure in the Oceanus Folk community.
+-   Therefore, she will not be included in these predictions, as she has already achieved superstar status.
 -   This analysis will continue to identify the next 3 emerging artists poised to become the next Oceanus Folk stars.
 :::
 
@@ -6329,18 +6518,18 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ## Chao Wu
 
 -   Chao Wu is the second on the Star Factor list and his influence is large having influenced/collaborated with 190 Artists and influenced the creation of 44 Music with his Oceanus Folk music.
-    -   Furthermore, he gained his large following despite having only released 4 music.
-    -   Among his 4 music,3 of them are hits.
-    -   His last Oceanus Folk work was in 2025 but his work is still being referred to in 2038.
+-   Furthermore, he gained his large following despite having only released 4 music.
+-   Among his 4 music,3 of them are hits.
+-   His last Oceanus Folk work was in 2025 but his work is still being referred to in 2038.
 :::
 
 ::: callout-tip
 ## Xia Jia
 
 -   Xia Jia is the next on the Star Factor list and her influence is equally large having influenced 178 Artists and 42 Music with her Oceanus Folk music.
-    -   Furthermore, she has also gained this large following despite having only released 4 music.
-    -   Similarly, 3 of them are hits.
-    -   Her last Oceanus Folk work was in 2028 but her works were last referred to in 2030 which is less recent than Chao Wu.
+-   Furthermore, she has also gained this large following despite having only released 4 music.
+-   Similarly, 3 of them are hits.
+-   Her last Oceanus Folk work was in 2028 but her works were last referred to in 2030 which is less recent than Chao Wu.
 :::
 
 ::: callout-tip
@@ -6427,9 +6616,9 @@ artist_metrics_df <- artist_metrics_df %>%
     
     # Star Factor = Equal weighted average of all four metrics
     star_score = 0.25 * norm_total_music +
-                 0.25 * norm_notable_music +
-                 0.25 * norm_influenced_music +
-                 0.25 * norm_influenced_artists
+      0.25 * norm_notable_music +
+      0.25 * norm_influenced_music +
+      0.25 * norm_influenced_artists
   )
 ```
 
@@ -6505,7 +6694,7 @@ predicted_star_df <- artist_metrics_df %>%
   mutate(
     # Average slope of the 4 metrics
     trend_avg = (trend_music + trend_notable + trend_influenced_music + trend_influenced_artists) / 4,
-
+    
     # Predict star score in 2045 assuming 5 years of continued trend
     predicted_star_score = star_score + 5 * trend_avg
   ) %>%
