@@ -400,9 +400,7 @@ node_data %>%
 
 ## 2.2 Part 1b) Who has Sailor Shift collaborated with and directly or indirectly influenced?
 
-\<\<\<Bel: This part need to simplify further and not reference TOE\>\>\>
-
-The analysis begins with the sailor_music_all dataset from [Section 4.1](https://isss608-ay2024-25t3.netlify.app/take-home_ex/take-home_ex02/take-home_ex02_mc1_main_v5#visualising-sailor-shifts-music), filtering to retain only music with more than two inward edges. This step eliminates works without collaborators or external influences. Two Song/Albums ("The Current & The Chord" and "Salty Dreams") have to be manually removed since their inward edges are from Sailor herself and therefore not needed. Next, all inward neighbours (source nodes) of Sailor's music are identified, representing both influenced works (Songs/Albums) and collaborators (Persons/Musical Groups). After filtering to keep only Songs and Albums, their inward neighbours are examined. This reveals: (1) Persons/Musical Groups who have been influenced by Sailor's music (Persons/Musical Groups), and (2) secondary influenced works (Songs/Albums) that were impacted by the same sources that were influenced by Sailor's compositions.
+The analysis begins with the sailor_music_all dataset , filtering to retain only music with more than two inward edges. This step eliminates works without collaborators or external influences. Two Song/Albums ("The Current & The Chord" and "Salty Dreams") have to be manually removed since their inward edges are from Sailor herself and therefore not needed. Next, all inward neighbours (source nodes) of Sailor's music are identified, representing both influenced works (Songs/Albums) and collaborators (Persons/Musical Groups). After filtering to keep only Songs and Albums, their inward neighbours are examined. This reveals: (1) Persons/Musical Groups who have been influenced by Sailor's music (Persons/Musical Groups), and (2) secondary influenced works (Songs/Albums) that were impacted by the same sources that were influenced by Sailor's compositions.
 
 ```{r}
 #| code-fold: true
@@ -1412,6 +1410,9 @@ sankeyNetwork(
 This analysis examines the contemporary influences on Oceanus Folk by using the genre influence patterns methodology similar to Section 3.2.2.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+#| 
 # Step 1: Compute total number of songs for each genre
 genre_total_counts <- creator_and_songs_and_influenced_by_creator %>%
   distinct(song_to, song_genre) %>%
@@ -1502,7 +1503,6 @@ onRender(p, '
   }
 ')
 ```
-
 ::: callout-tip
 ## From which genres does Oceanus Folk draw most of its contemporary inspiration?
 
@@ -1510,6 +1510,118 @@ onRender(p, '
 -   Approximately a fifth of Oceanus Folk compositions appear to be original works without direct influences from existing pieces.
 -   Indie Folk emerges as the second most influential genre, accounting for roughly 21% of all Oceanus Folk musical references.
 :::
+
+We combine the inward and outward influence of Oceanus Folk genre in the plot below:
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+# Define genre color palette
+genre_palette <- c(
+  "Oceanus Folk"           = "#1f77b4",  # blue
+  "Indie Folk"             = "#ff7f0e",  # orange
+  "Synthwave"              = "#2ca02c",  # green
+  "Dream Pop"              = "#d62728",  # red
+  "Doom Metal"             = "#9467bd",  # purple
+  "Psychedelic Rock"       = "#8c564b",  # brown
+  "Alternative Rock"       = "#e377c2",  # pink
+  "Indie Rock"             = "#7f7f7f",  # gray
+  "Desert Rock"            = "#bcbd22",  # yellow-green
+  "Americana"              = "#17becf",  # cyan
+  "Space Rock"             = "#ff9896",  # coral
+  "Synthpop"               = "#98df8a",  # mint green
+  "Blues Rock"             = "#aec7e8",  # light blue
+  "Symphonic Metal"        = "#c5b0d5",  # lavender
+  "Avant-Garde Folk"       = "#f7b6d2",  # rose
+  "Post-Apocalyptic Folk"  = "#c49c94",  # warm gray
+  "Celtic Folk"            = "#dbdb8d",  # olive
+  "Emo/Pop Punk"           = "#9edae5",  # pale cyan
+  "Indie Pop"              = "#ffbb78",  # soft orange
+  "Jazz Surf Rock"         = "#c7c7c7",  # light gray
+  "Lo-Fi Electronica"      = "#bc80bd"   # dusty violet
+)
+
+# CLEAN AND PREP DATA
+
+# Remove 0-count flows to avoid clutter
+genre_influenced_by_stats <- genre_influenced_by_stats %>% filter(influenced_by > 0)
+genre_influence_stats     <- genre_influence_stats     %>% filter(oceanus_influences > 0)
+
+# Inward links: Genre → Oceanus Folk
+inward_links <- genre_influenced_by_stats %>%
+  transmute(
+    source = paste0(influenced_by_genre, " [In] (", influenced_by, ")"),
+    target = "Oceanus Folk",
+    value = influenced_by,
+    genre  = influenced_by_genre
+  )
+
+# Outward links: Oceanus Folk → Genre
+outward_links <- genre_influence_stats %>%
+  transmute(
+    source = "Oceanus Folk",
+    target = paste0(song_genre, " [Out] (", oceanus_influences, ")"),
+    value = oceanus_influences,
+    genre  = song_genre
+  )
+
+# Combine both flows
+combined_links <- bind_rows(inward_links, outward_links)
+
+# NODE SETUP 
+
+# Get unique node names
+nodes_df <- data.frame(name = unique(c(combined_links$source, combined_links$target)))
+
+# Assign node group (genre name only, no [In]/[Out])
+get_genre <- function(label) gsub(" \\[.*$", "", label)  # strip [In] or [Out] and count
+nodes_df$group <- sapply(nodes_df$name, get_genre)
+
+# INDEXING AND COLOURS
+
+# Match source/target to index values
+links_df <- combined_links %>%
+  mutate(
+    source = match(source, nodes_df$name) - 1,
+    target = match(target, nodes_df$name) - 1
+  )
+
+# Create D3 color scale
+genre_names <- unique(nodes_df$group)
+genre_colors <- genre_palette[genre_names]
+colour_scale <- sprintf(
+  'd3.scaleOrdinal().domain(%s).range(%s)',
+  toJSON(names(genre_colors), auto_unbox = TRUE),
+  toJSON(unname(genre_colors), auto_unbox = TRUE)
+)
+
+# RENDER SANKEY 
+
+p <- sankeyNetwork(
+  Links = links_df,
+  Nodes = nodes_df,
+  Source = "source",
+  Target = "target",
+  Value = "value",
+  NodeID = "name",
+  NodeGroup = "group",
+  fontSize = 13,
+  nodeWidth = 30,
+  sinksRight = TRUE,
+  colourScale = JS(colour_scale)
+)
+
+# Add hover tooltips
+onRender(p, '
+  function(el, x) {
+    d3.select(el).selectAll(".link")
+      .append("title")
+      .text(function(d) {
+        return d.source.name + " → " + d.target.name + ": " + d.value;
+      });
+  }
+')
+```
+
 
 ## 3.4 Part 2d) On the converse, how has Oceanus Folk changed with the rise of Sailor Shift?
 
