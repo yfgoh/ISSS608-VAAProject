@@ -1369,7 +1369,21 @@ sankey_df <- creator_influenced_by_stats %>%
   head(10)
 
 # Step 4: Nodes (no need for group column)
-nodes <- data.frame(name = unique(c(sankey_df$source, sankey_df$target)))
+nodes <- data.frame(
+  name = unique(c(sankey_df$source, sankey_df$target))
+) %>%
+  mutate(
+    group = ifelse(name == "Oceanus Folk", "Oceanus Folk", name)
+  )
+
+# Get all unique target names (excluding the source)
+target_names <- nodes$name[nodes$name != "Oceanus Folk"]
+
+colour_scale <- JS(paste0(
+  'd3.scaleOrdinal()
+     .domain(["Oceanus Folk", "', paste(target_names, collapse = '", "'), '"])
+     .range(["#2E3192"].concat(d3.schemeCategory10))'
+))
 
 # Step 5: Convert names to indices
 links <- sankey_df %>%
@@ -1386,9 +1400,11 @@ sankeyNetwork(
   Target = "target",
   Value = "value",
   NodeID = "name",
+  NodeGroup = "group",
   fontSize = 13,
   nodeWidth = 30,
   sinksRight = TRUE,
+  colourScale = colour_scale,
   height = 600,
   width = 1000
 )
@@ -1503,6 +1519,7 @@ onRender(p, '
   }
 ')
 ```
+
 ::: callout-tip
 ## From which genres does Oceanus Folk draw most of its contemporary inspiration?
 
@@ -1512,12 +1529,13 @@ onRender(p, '
 :::
 
 We combine the inward and outward influence of Oceanus Folk genre in the plot below:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
 # Define genre color palette
 genre_palette <- c(
-  "Oceanus Folk"           = "#1f77b4",  # blue
+  "Oceanus Folk"           = "#2E3192",  # blue
   "Indie Folk"             = "#ff7f0e",  # orange
   "Synthwave"              = "#2ca02c",  # green
   "Dream Pop"              = "#d62728",  # red
@@ -1621,7 +1639,6 @@ onRender(p, '
   }
 ')
 ```
-
 
 ## 3.4 Part 2d) On the converse, how has Oceanus Folk changed with the rise of Sailor Shift?
 
