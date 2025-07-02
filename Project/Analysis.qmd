@@ -2042,7 +2042,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -2055,7 +2055,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -2108,7 +2108,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -2121,7 +2121,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -2454,7 +2454,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -2467,7 +2467,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -2520,7 +2520,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -2533,7 +2533,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -2862,7 +2862,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -2875,7 +2875,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -2928,7 +2928,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -2941,7 +2941,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -3136,7 +3136,7 @@ plot_ly(
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
-    "<br>Influence Date: ", release_date,
+    "<br>Release Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
   )
 ) %>%
@@ -3152,7 +3152,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -3168,7 +3168,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -3213,7 +3213,7 @@ plot_ly(
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
-    "<br>Influence Date: ", release_date,
+    "<br>Release Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
   )
 ) %>%
@@ -3229,7 +3229,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -3245,7 +3245,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -3959,7 +3959,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -3972,7 +3972,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -4025,7 +4025,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -4038,7 +4038,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -4365,7 +4365,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -4378,7 +4378,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -4431,7 +4431,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -4444,7 +4444,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -4771,7 +4771,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -4784,7 +4784,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -4837,7 +4837,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -4850,7 +4850,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5177,7 +5177,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -5190,7 +5190,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5243,7 +5243,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -5256,7 +5256,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5583,7 +5583,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -5596,7 +5596,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5649,7 +5649,7 @@ plot_ly(
   marker = list(color = "#2E3192"),
   hoverinfo = "text",
   hovertext = ~paste0(
-    "Released Date: ", release_date,
+    "Release Date: ", release_date,
     "<br>Count: ", music_count
   )
 ) %>%
@@ -5662,7 +5662,7 @@ plot_ly(
     marker = list(color = "red", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
-      "Released Date: ", release_date,
+      "Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5857,7 +5857,7 @@ plot_ly(
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
-    "<br>Influence Date: ", release_date,
+    "<br>Release Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
   )
 ) %>%
@@ -5873,7 +5873,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5889,7 +5889,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5905,7 +5905,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_4,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5921,7 +5921,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_5,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -5984,7 +5984,7 @@ plot_ly(
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
-    "<br>Influence Date: ", release_date,
+    "<br>Release Date: ", release_date,
     "<br>Cumulative Count: ", cumulative_count
   )
 ) %>%
@@ -6000,7 +6000,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -6016,7 +6016,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -6032,7 +6032,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_4,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
@@ -6048,7 +6048,7 @@ plot_ly(
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_5,
-      "<br>Influence Date: ", release_date,
+      "<br>Release Date: ", release_date,
       "<br>Cumulative Count: ", cumulative_count
     )
   ) %>%
