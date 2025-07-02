@@ -1366,47 +1366,54 @@ sankey_df <- creator_influenced_by_stats %>%
   ) %>%
   select(source, target, value) %>%
   arrange(desc(value)) %>%
-  head(10)
+  head(15)
 
-# Step 4: Nodes (no need for group column)
-nodes <- data.frame(
-  name = unique(c(sankey_df$source, sankey_df$target))
-) %>%
-  mutate(
-    group = ifelse(name == "Oceanus Folk", "Oceanus Folk", name)
-  )
+  # Step 4: Nodes (no need for group column)
+  nodes <- data.frame(
+    name = unique(c(sankey_df$source, sankey_df$target))
+  ) %>%
+    mutate(
+      group = ifelse(name == "Oceanus Folk", "Oceanus Folk", name)
+    )
 
-# Get all unique target names (excluding the source)
-target_names <- nodes$name[nodes$name != "Oceanus Folk"]
+  # Generate up to N distinct target colours
+  target_names <- nodes$name[nodes$name != "Oceanus Folk"]
+  n_targets <- length(target_names)
+  
+  target_colours <- viridisLite::turbo(n = n_targets, begin = 0, end = 1)
+  
+  # Combine with fixed Oceanus Folk colour
+  all_colours <- c("#2E3192", target_colours)
+  
+  # Create D3-compatible colour scale
+  colour_scale <- JS(sprintf(
+    'd3.scaleOrdinal().domain(%s).range(%s)',
+    jsonlite::toJSON(c("Oceanus Folk", target_names), auto_unbox = TRUE),
+    jsonlite::toJSON(all_colours, auto_unbox = TRUE)
+  ))
 
-colour_scale <- JS(paste0(
-  'd3.scaleOrdinal()
-     .domain(["Oceanus Folk", "', paste(target_names, collapse = '", "'), '"])
-     .range(["#2E3192"].concat(d3.schemeCategory10))'
-))
-
-# Step 5: Convert names to indices
-links <- sankey_df %>%
-  mutate(
-    source = match(source, nodes$name) - 1,
-    target = match(target, nodes$name) - 1
-  )
-
-# Step 6: Plot Sankey (same as before)
-sankeyNetwork(
-  Links = links,
-  Nodes = nodes,
-  Source = "source",
-  Target = "target",
-  Value = "value",
-  NodeID = "name",
-  NodeGroup = "group",
-  fontSize = 13,
-  nodeWidth = 30,
-  sinksRight = TRUE,
-  colourScale = colour_scale,
-  height = 600,
-  width = 1000
+  # Step 5: Convert names to indices
+  links <- sankey_df %>%
+    mutate(
+      source = match(source, nodes$name) - 1,
+      target = match(target, nodes$name) - 1
+    )
+  
+  # Step 6: Plot Sankey (same as before)
+  sankeyNetwork(
+    Links = links,
+    Nodes = nodes,
+    Source = "source",
+    Target = "target",
+    Value = "value",
+    NodeID = "name",
+    NodeGroup = "group",
+    fontSize = 13,
+    nodeWidth = 30,
+    sinksRight = TRUE,
+    colourScale = colour_scale,
+    height = 600,
+    width = 1000
 )
 ```
 
