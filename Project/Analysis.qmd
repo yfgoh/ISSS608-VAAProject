@@ -1443,7 +1443,7 @@ genre_total_counts <- creator_and_songs_and_influenced_by_creator %>%
 
 # Step 2: Compute how many songs/genre where influencing Oceanus Folk
 genre_influenced_by_stats <- creator_and_songs_and_influenced_by_creator %>%
-  filter(song_genre == "Oceanus Folk") %>%
+  filter(song_genre == "Oceanus Folk", !is.na(influenced_by_genre)) %>%
   distinct(song_to, influenced_by, influenced_by_genre) %>%
   group_by(influenced_by_genre) %>%
   summarize(
