@@ -1256,7 +1256,8 @@ genre_influence_stats <- creator_and_songs_and_influences_and_creators_collabora
     oceanus_influences = n_distinct(na.omit(infuence_music_collaborate[influence_genre == "Oceanus Folk"])),
     percentage_oceanus = round(oceanus_influences / total_music * 100, 1),
   ) %>%
-  arrange(desc(oceanus_influences))
+  arrange(desc(oceanus_influences)) %>%
+  filter(oceanus_influences > 0)
 
 genre_influence_stats %>%
   kable(caption = "Genre Ranked by Oceanus Influence") %>%
