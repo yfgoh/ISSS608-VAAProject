@@ -50,7 +50,7 @@ sailor_out_node_names <- sailor_out_edges$to
 
 # Step 4: Identify songs/albums
 sailor_music_all <- mc1_nodes_clean %>%
-  filter(name %in% sailor_out_node_names, `Node Type` %in% c("Song", "Album")) %>%
+  filter(name %in% sailor_out_node_names) %>%
   pull(name)
 
 # Step 5: Build subgraph using names
@@ -82,7 +82,7 @@ g <- sub_graph %>%
       data_id = name,
       colour = `Node Colour`,
       shape = `Node Type`,
-      size = ifelse(node_name %in% c("Sailor Shift", "Ivy Echos", "Wei Zhao"), 3, 1),
+      size = ifelse(node_name %in% c("Sailor Shift", "Ivy Echos"), 3, 1),
       tooltip = case_when(
         `Node Type` == "Album" ~ sprintf(
           "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
@@ -98,8 +98,7 @@ g <- sub_graph %>%
   geom_node_text(
     aes(
       label = ifelse(node_name == "Sailor Shift", "Sailor Shift",
-                     ifelse(node_name == "Ivy Echos", "Ivy Echos",
-                            ifelse(node_name == "Wei Zhao", "Wei Zhao", NA)))
+                     ifelse(node_name == "Ivy Echos", "Ivy Echos", NA))
     ),
     fontface = "bold",
     size = 2.5,
