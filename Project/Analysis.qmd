@@ -1327,7 +1327,7 @@ sankeyNetwork(
 -   The Oceanus Folk genre has been the most influenced by itself with about 40% of all music (Songs/Albums) drawing inspiration from Oceanus Folk music.
 :::
 
-## 3.2.2 From which genres does Oceanus Folk draw most of its contemporary inspiration?
+### 3.2.2 From which genres does Oceanus Folk draw most of its contemporary inspiration?
 
 This analysis examines the contemporary influences on Oceanus Folk by using the genre influence patterns methodology similar to Section 3.2.1.
 
@@ -1625,7 +1625,7 @@ combined %>%
   scroll_box(width = "100%", height = "400px")
 ```
 
-### 3.3 Which top artists have been most influenced by Oceanus Folk?
+## 3.3 Which top artists have been most influenced by Oceanus Folk?
 
 To identify the top artists most influenced by Oceanus Folk, all artists (persons or musical groups) who either (a) created Oceanus Folk music (songs/albums) or (b) were influenced by the genre were identified. Then, all music produced by these artists, along with the musical works that influenced their creations, was counted to reveal those who were most influenced.
 
@@ -5239,7 +5239,7 @@ plot_ly(
 :::
 
 
-### 6.3.8 Predicting who the next three Oceanus Folk stars with be over the next five years
+### 4.3.5 Predicting who the next three Oceanus Folk stars with be over the next five years
 
 ::: callout-tip
 ## Sailor Shift
