@@ -199,7 +199,7 @@ mc1_nodes_clean %>%
 
 # 2 Profile of Sailor Shift's Career
 
-## 2.1 Part 1a) Who has Sailor Shift been most influenced by over time?
+## 2.1 Who has Sailor Shift been most influenced by over time?
 
 This section builds on the analysis of Sailor Shift’s outgoing edges. After identifying her Songs and Albums, it expands to include associated Persons and Musical Groups she directly influenced. Among these, only the Songs and Albums with further outgoing influence are retained. The next step traces the music that Sailor's works influenced, and identifies the creators (i.e. Persons and Musical Groups) behind the influencing works.
 
@@ -398,7 +398,7 @@ node_data %>%
   scroll_box(height = "200px")
 ```
 
-## 2.2 Part 1b) Who has Sailor Shift collaborated with and directly or indirectly influenced?
+## 2.2 Who has Sailor Shift collaborated with and directly or indirectly influenced?
 
 The analysis begins with the sailor_music_all dataset , filtering to retain only music with more than two inward edges. This step eliminates works without collaborators or external influences. Two Song/Albums ("The Current & The Chord" and "Salty Dreams") have to be manually removed since their inward edges are from Sailor herself and therefore not needed. Next, all inward neighbours (source nodes) of Sailor's music are identified, representing both influenced works (Songs/Albums) and collaborators (Persons/Musical Groups). After filtering to keep only Songs and Albums, their inward neighbours are examined. This reveals: (1) Persons/Musical Groups who have been influenced by Sailor's music (Persons/Musical Groups), and (2) secondary influenced works (Songs/Albums) that were impacted by the same sources that were influenced by Sailor's compositions.
 
@@ -621,7 +621,7 @@ mc1_nodes_clean %>%
   scroll_box(height = "200px")
 ```
 
-## 2.3 Part 1c) How has she influenced collaborators of the broader Oceanus Folk community?
+## 2.3 How has she influenced collaborators of the broader Oceanus Folk community?
 
 This part is tackled by first identifying all Songs and Albums belonging to the **Oceanus Folk** *Genre* and retriving their associated artists (Persons/Musical Groups). Then Sailor Shift's is identified and her degree of separation is calculated to examine her impact on the broader Oceanus Folk community.
 
@@ -769,11 +769,11 @@ girafe(ggobj = g, width_svg = 9, height_svg = 8)
 -   Evidenced by the sporadic 'Influenced By' connections in the network graph
 :::
 
-# 3 Part 2: Influence of Oceanus Folk
+# 3 Influence of Oceanus Folk
 
 We will develop visualizations that illustrate how the influence of Oceanus Folk has spread through the musical world.
 
-## 3.1 Part 2a) Was this influence intermittent or did it have a gradual rise?
+## 3.1 Was this influence intermittent or did it have a gradual rise?
 
 We will explore these three areas to understand the influence of Oceanus Folk over time:
 
@@ -1236,7 +1236,7 @@ Music releases (green line) generally showed lower surprise, which confirms that
 
 Thus, while the overall trend shows long-term growth, Bayesian Surprise confirms that Oceanus Folk’s rise was intermittent. Such bursts also maintained the momentum of the influence for an interval of time.
 
-## 3.2 Part 2b) What genres and top artists have been most influenced by Oceanus Folk?
+## 3.2 What genres and top artists have been most influenced by Oceanus Folk?
 
 ### 3.2.1 What genres have been most influenced by Oceanus Folk?
 
@@ -1429,7 +1429,7 @@ sankey_df <- creator_influenced_by_stats %>%
 -   The next artist is Min He, who has produced one Oceanus Folk song and has been influenced by 10 other Oceanus Folk songs, bringing the total to 11 songs.
 :::
 
-## 3.3 Part 2c) From which genres does Oceanus Folk draw most of its contemporary inspiration?
+## 3.3 From which genres does Oceanus Folk draw most of its contemporary inspiration?
 
 This analysis examines the contemporary influences on Oceanus Folk by using the genre influence patterns methodology similar to Section 3.2.2.
 
@@ -1648,7 +1648,7 @@ onRender(p, '
 ')
 ```
 
-## 3.4 Part 2d) On the converse, how has Oceanus Folk changed with the rise of Sailor Shift?
+## 3.4 On the converse, how has Oceanus Folk changed with the rise of Sailor Shift?
 
 We will examine the diversity of musical genres that has influenced and been influenced by Oceanus Folk over time. This can be measured by Genre Entropy, which comes from information theory where higher entropy means more variety and unpredictability, while lower entropy means concentration in fewer genres, as explained by Ferwerda and Schedl (2016) in their research paper.
 
@@ -1775,7 +1775,7 @@ Incoming entropy began to decline, suggesting that Oceanus Folk was no longer ab
 
 In contrast, outgoing entropy peaked and remained elevated, reflecting that other genres increasingly drew inspiration from Oceanus Folk. This sustained high outgoing influence signals that Oceanus Folk had become a genre of reference across many genres.
 
-# 4 Part 3 Oceanus Folks's Rising Stars
+# 4 Oceanus Folks's Rising Stars
 
 We will use visualizations to develop a profile of what it means to be a rising star in the music industry.
 
@@ -1869,7 +1869,7 @@ creator_rankings %>%
   scroll_box(height = "300px")
 ```
 
-## 4.2 Part 3a) Visualize the careers of three artists. Compare and contrast their rise in popularity and influence?
+## 4.2 Visualize the careers of three artists. Compare and contrast their rise in popularity and influence?
 
 Based on the results of the analysis above, the top artists in each category will be selected.
 
@@ -2283,7 +2283,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -2695,7 +2695,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -3103,7 +3103,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -3407,7 +3407,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -3590,7 +3590,7 @@ Sailor Shift has no influence on music creation
 -   In contrast, Jay Walters' influence period ended earlier (last connection in 2035), while Min Fu's influence dates back to 2030.
 :::
 
-## 4.3 Part 3b) Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.
+## 4.3 Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.
 
 This will be a continuation of Part 3a where only Oceanus Folk artists and the Oceanus Folk songs that they have produced are analysed.
 
@@ -4200,7 +4200,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -4606,7 +4606,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -5012,7 +5012,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -5418,7 +5418,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -5824,7 +5824,7 @@ plot_ly(
   )
 ```
 
-## Artist Influ & Colab
+## Artist Influence & Collaboration
 
 ```{r}
 #| code-fold: true
@@ -6228,8 +6228,7 @@ plot_ly(
 Donna Caldwell and Xiulan Ye are at 2017 with a count of 1.
 :::
 
-## Artist Influ & Colab
-
+## Artist Influence & Collaboration
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -6695,6 +6694,8 @@ Influenced Artists: The number of distinct artists who were directly or indirect
 These metrics were computed for every Oceanus Folk artist in the dataset.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 library(purrr)
 
 all_oceanus_creators <- creator_and_songs_and_influences_and_creators_collaborate %>%
@@ -6739,9 +6740,11 @@ compute_creator_metrics <- function(creator_name) {
 }
 ```
 
-# Normalize all 4 columns to 0–1 scale
+We normalize all 4 columns to 0–1 scale using the codes below: 
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 artist_metrics_df <- map_dfr(all_oceanus_creators, compute_creator_metrics)
 
 artist_metrics_df <- artist_metrics_df %>%
@@ -6770,6 +6773,8 @@ For each (artist, year) combination, computes:
 total_music: how many distinct songs they created that year. notable_music: how many were marked as notable. influenced_music: how many unique music works they influenced. influenced_artists: how many unique artists they influenced.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 # Step 1: Build yearly metrics for Oceanus Folk creators (2030–2040)
 artist_yearly_metrics <- creator_and_songs_and_influences_and_creators_collaborate %>%
   filter(creator_release_date >= 2030, creator_release_date <= 2040) %>%
@@ -6792,6 +6797,8 @@ For each artist:
 It calculates the annual trend (i.e., slope) of each metric from 2030 to 2040. If an artist has no data for some years, NA is filled with 0.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 library(purrr)
 
 compute_trend_slope <- function(df, metric) {
@@ -6825,6 +6832,8 @@ Calculates an average trend across the 4 metrics.
 Projects the star score 5 years into the future (2045) using "predicted_star_score = star_score (in 2040) + 5 × average trend per year"
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 # Merge current score (2040) with trend data
 predicted_star_df <- artist_metrics_df %>%
   left_join(trend_df, by = "creator_name") %>%
@@ -6839,6 +6848,8 @@ predicted_star_df <- artist_metrics_df %>%
 ```
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 predicted_star_df %>%
   select(creator_name, star_score, trend_avg, predicted_star_score) %>%
   head(10) %>%
