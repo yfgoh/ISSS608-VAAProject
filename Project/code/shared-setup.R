@@ -1,7 +1,7 @@
 pacman::p_load(jsonlite, tidyverse, ggtext,
                knitr, lubridate, patchwork,
                ggraph, tidygraph, igraph,
-               ggiraph, kableExtra, plotly, fmsb)
+               ggiraph, kableExtra, plotly, fmsb, glue, broom)
 
 mc1_data <- fromJSON("data/MC1_graph.json")
 

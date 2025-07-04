@@ -1017,6 +1017,7 @@ surprise_contributors <- compute_bayesian_surprise(
 
 [**Bayesian Surprise Across Oceanus Folk Influenced Works, Music Releases, and New Influenced Artists**]{.underline}
 
+We create the bayesian surprise plot as follows:
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1037,8 +1038,9 @@ plot_data <- plot_data %>%
   ))
 ```
 
-The two plots for cumulative values and bayesian surprise are combined as follows:
+The two plots for cumulative values and bayesian surprise are combined.
 
+Codes for Cumulative Plot:
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1089,6 +1091,7 @@ cumulative_plot <- plot_ly(combined_df,
   )
 ```
 
+Codes for Surprise Plot:
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1142,6 +1145,7 @@ surprise_plot <- plot_ly(
   )
 ```
 
+Both plots are combined as follows:
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1242,6 +1246,7 @@ Thus, while the overall trend shows long-term growth, Bayesian Surprise confirms
 
 To determine which genres have been most influenced by Oceanus Folk, all songs and albums were identified. Then, the music (Songs/Albums) that influenced them were obtained to calculate the frequency and percentage of Oceanus Folk's influence across different musical genre. This analysis reveals the genres that show the strongest impact from Oceanus Folk's musical style.
 
+The table summarises the outward influence:
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1264,7 +1269,7 @@ genre_influence_stats %>%
   kable_styling("striped", full_width = F) %>%
   scroll_box(height = "300px")
 ```
-
+The Sankey for outward influence is created:
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1315,123 +1320,10 @@ sankeyNetwork(
 -   The Oceanus Folk genre has been the most influenced by itself with about 40% of all music (Songs/Albums) drawing inspiration from Oceanus Folk music.
 :::
 
-### 3.2.2 Which top artists have been most influenced by Oceanus Folk?
 
-To identify the top artists most influenced by Oceanus Folk, all artists (persons or musical groups) who either (a) created Oceanus Folk music (songs/albums) or (b) were influenced by the genre were identified. Then, all music produced by these artists, along with the musical works that influenced their creations, was counted to reveal those who were most influenced.
+## 3.2.2 From which genres does Oceanus Folk draw most of its contemporary inspiration?
 
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-creator_influenced_by_stats <- creator_and_songs_and_influenced_by_creator %>%
-  distinct(creator_name, creator_node_type, song_to, song_genre, influenced_by, influenced_by_genre, influenced_by_creator, notable) %>%
-  group_by(creator_name, creator_node_type) %>%
-  summarize(
-    total_music = n_distinct(song_to),
-    notable_hits = n_distinct(song_to[notable == TRUE]),
-    oceanus_music = n_distinct(song_to[song_genre == "Oceanus Folk"]),
-    oceanus_influenced_by = n_distinct(na.omit(influenced_by[influenced_by_genre == "Oceanus Folk" & creator_name != influenced_by_creator])),
-    total_oceanus_influence = oceanus_music + oceanus_influenced_by, 
-    Percentage_oceanus = round(total_oceanus_influence / total_music * 100, 1), 
-  )%>%
-  arrange(desc(total_oceanus_influence)) %>%
-  filter(creator_node_type == "Person", notable_hits > 10) %>%
-  select(-creator_node_type)
-
-creator_influenced_by_stats %>%
-  head(10) %>%
-  rename(
-    `Artist` = creator_name,
-    `Total Music` = total_music,
-    `Notable Hits` = notable_hits,
-    `No. of Oceanus Folk Music` = oceanus_music,
-    `Oceanus Folk Influence` = oceanus_influenced_by,
-    `Oceanus Folk Music & Influence` = total_oceanus_influence
-  ) %>%
-  kable(caption = "Ranking of Oceanus Folk Influence on Artists") %>%
-  kable_styling("striped", full_width = F) %>%
-  scroll_box(height = "200px")
-```
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Step 1: Prepare data — treat Oceanus Folk as source and include self-influence
-sankey_df <- creator_influenced_by_stats %>%
-  mutate(
-    source = "Oceanus Folk",
-    raw_target = creator_name,
-    value = total_oceanus_influence,
-    target = paste0(raw_target, " (", value, ")")  # ← append the number
-  ) %>%
-  select(source, target, value) %>%
-  arrange(desc(value)) %>%
-  head(15)
-
-  # Step 4: Nodes (no need for group column)
-  nodes <- data.frame(
-    name = unique(c(sankey_df$source, sankey_df$target))
-  ) %>%
-    mutate(
-      group = ifelse(name == "Oceanus Folk", "Oceanus Folk", name)
-    )
-
-  # Generate up to N distinct target colours
-  target_names <- nodes$name[nodes$name != "Oceanus Folk"]
-  n_targets <- length(target_names)
-  
-  target_colours <- viridisLite::turbo(n = n_targets, begin = 0, end = 1)
-  
-  # Combine with fixed Oceanus Folk colour
-  all_colours <- c("#2E3192", target_colours)
-  
-  # Create D3-compatible colour scale
-  colour_scale <- JS(sprintf(
-    'd3.scaleOrdinal().domain(%s).range(%s)',
-    jsonlite::toJSON(c("Oceanus Folk", target_names), auto_unbox = TRUE),
-    jsonlite::toJSON(all_colours, auto_unbox = TRUE)
-  ))
-
-  # Step 5: Convert names to indices
-  links <- sankey_df %>%
-    mutate(
-      source = match(source, nodes$name) - 1,
-      target = match(target, nodes$name) - 1
-    )
-  
-  # Step 6: Plot Sankey (same as before)
-  sankeyNetwork(
-    Links = links,
-    Nodes = nodes,
-    Source = "source",
-    Target = "target",
-    Value = "value",
-    NodeID = "name",
-    NodeGroup = "group",
-    fontSize = 13,
-    nodeWidth = 30,
-    sinksRight = TRUE,
-    colourScale = colour_scale,
-    height = 600,
-    width = 1000
-)
-```
-
-::: callout-tip
-## Which top artists have been most influenced by Oceanus Folk?
-
--   The table above show the top 10 artists who was most influenced by Oceanus Folk
--   These are artists who have produced Oceanus Folk music or have been influenced by it.
--   Top artists are defined by having more than 10 notable hits.
--   These artists are rank by the amount that Oceanus Folk has influenced them.
--   The top artist is Sailor Shift who has produced 36 Oceanus Folk songs.
--   The next artist is Min He, who has produced one Oceanus Folk song and has been influenced by 10 other Oceanus Folk songs, bringing the total to 11 songs.
-:::
-
-## 3.3 From which genres does Oceanus Folk draw most of its contemporary inspiration?
-
-This analysis examines the contemporary influences on Oceanus Folk by using the genre influence patterns methodology similar to Section 3.2.2.
+This analysis examines the contemporary influences on Oceanus Folk by using the genre influence patterns methodology similar to Section 3.2.1.
 
 ```{r}
 #| code-fold: true
@@ -1471,7 +1363,8 @@ genre_influenced_by_stats %>%
   scroll_box(height = "200px")
 ```
 
-Similar to Section 3.2.2, Sankey diagram is plotted but reversed as we are looking at inward influence to Oceanus Folk.
+
+Similar to Section 3.2.1, Sankey diagram is plotted but reversed as we are looking at inward influence to Oceanus Folk.
 
 ```{r}
 #| code-fold: true
@@ -1536,7 +1429,7 @@ onRender(p, '
 -   Indie Folk emerges as the second most influential genre, accounting for roughly 21% of all Oceanus Folk musical references.
 :::
 
-We combine the inward and outward influence of Oceanus Folk genre in the plot below:
+Given that both plots are similar, we can combine the inward and outward influence of Oceanus Folk genre in the plot below:
 
 ```{r}
 #| code-fold: true
@@ -1647,6 +1540,195 @@ onRender(p, '
   }
 ')
 ```
+
+The table can also be combined as follows:
+```{r}
+# Set fixed genre
+selected_genre <- "Oceanus Folk"
+
+# Outward influence
+genre_influence_stats <- creator_and_songs_and_influences_and_creators_collaborate %>%
+  filter(infuence_music_collaborate != song_to) %>%
+  distinct(song_to, song_genre, infuence_music_collaborate, influence_genre, `Edge Colour`) %>%
+  group_by(song_genre) %>%
+  summarize(
+    total_music = n_distinct(song_to),
+    total_influences = n_distinct(na.omit(infuence_music_collaborate[!is.na(influence_genre)])),
+    oceanus_influences = n_distinct(na.omit(infuence_music_collaborate[influence_genre == selected_genre])),
+    other_influences = total_influences - oceanus_influences,
+    perc_oceanus = round(oceanus_influences / total_influences * 100, 1),
+    no_influences = sum(is.na(influence_genre)),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(perc_oceanus)) %>%
+  filter(oceanus_influences > 0)
+
+outward <- genre_influence_stats %>%
+  rename(
+    Genre = song_genre,
+    Oceanus_Influence = oceanus_influences,
+    Perc_Oceanus = perc_oceanus
+  )
+
+# Inward influence
+genre_influenced_by_stats <- creator_and_songs_and_influenced_by_creator %>%
+  filter(song_genre == selected_genre, !is.na(influenced_by_genre)) %>%
+  distinct(song_to, influenced_by, influenced_by_genre) %>%
+  group_by(influenced_by_genre) %>%
+  summarize(
+    influenced_by = n_distinct(na.omit(influenced_by)),
+    .groups = "drop"
+  ) %>%
+  left_join(genre_total_counts, by = c("influenced_by_genre" = "song_genre")) %>%
+  mutate(
+    Percentage_oceanus_influence = round(influenced_by / total_music * 100, 1)
+  )
+
+inward <- genre_influenced_by_stats %>%
+  rename(
+    Genre = influenced_by_genre,
+    Total_Music = total_music,
+    Genre_Influencing_Oceanus = influenced_by,
+    Perc_Oceanus_In = Percentage_oceanus_influence
+  )
+
+# Combine
+combined <- full_join(inward, outward, by = "Genre") %>%
+  select(
+    Genre,
+    Total_Music,
+    Genre_Influencing_Oceanus,
+    Perc_Oceanus_In,
+    Oceanus_Influence,
+    Perc_Oceanus
+  )
+
+# Create static table
+combined %>%
+  rename(
+    `Total Music` = Total_Music,
+    `Influencing Oceanus` = Genre_Influencing_Oceanus,
+    `% Oceanus (Inward)` = Perc_Oceanus_In,
+    `Oceanus Influenced` = Oceanus_Influence,
+    `% Oceanus (Outward)` = Perc_Oceanus
+  ) %>%
+  kable("html", caption = glue("Influence Table for {selected_genre}"), digits = 1, align = "c") %>%
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+### 3.3 Which top artists have been most influenced by Oceanus Folk?
+
+To identify the top artists most influenced by Oceanus Folk, all artists (persons or musical groups) who either (a) created Oceanus Folk music (songs/albums) or (b) were influenced by the genre were identified. Then, all music produced by these artists, along with the musical works that influenced their creations, was counted to reveal those who were most influenced.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+creator_influenced_by_stats <- creator_and_songs_and_influenced_by_creator %>%
+  distinct(creator_name, creator_node_type, song_to, song_genre, influenced_by, influenced_by_genre, influenced_by_creator, notable) %>%
+  group_by(creator_name, creator_node_type) %>%
+  summarize(
+    total_music = n_distinct(song_to),
+    notable_hits = n_distinct(song_to[notable == TRUE]),
+    oceanus_music = n_distinct(song_to[song_genre == "Oceanus Folk"]),
+    oceanus_influenced_by = n_distinct(na.omit(influenced_by[influenced_by_genre == "Oceanus Folk" & creator_name != influenced_by_creator])),
+    total_oceanus_influence = oceanus_music + oceanus_influenced_by, 
+    Percentage_oceanus = round(total_oceanus_influence / total_music * 100, 1), 
+  )%>%
+  arrange(desc(total_oceanus_influence)) %>%
+  filter(creator_node_type == "Person", notable_hits > 10) %>%
+  select(-creator_node_type)
+
+creator_influenced_by_stats %>%
+  head(10) %>%
+  rename(
+    `Artist` = creator_name,
+    `Total Music` = total_music,
+    `Notable Hits` = notable_hits,
+    `No. of Oceanus Folk Music` = oceanus_music,
+    `Oceanus Folk Influence` = oceanus_influenced_by,
+    `Oceanus Folk Music & Influence` = total_oceanus_influence
+  ) %>%
+  kable(caption = "Ranking of Oceanus Folk Influence on Artists") %>%
+  kable_styling("striped", full_width = F) %>%
+  scroll_box(height = "200px")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
+
+# Step 1: Prepare data — treat Oceanus Folk as source and include self-influence
+sankey_df <- creator_influenced_by_stats %>%
+  mutate(
+    source = "Oceanus Folk",
+    raw_target = creator_name,
+    value = total_oceanus_influence,
+    target = paste0(raw_target, " (", value, ")")  # ← append the number
+  ) %>%
+  select(source, target, value) %>%
+  arrange(desc(value)) %>%
+  head(15)
+
+  # Step 4: Nodes (no need for group column)
+  nodes <- data.frame(
+    name = unique(c(sankey_df$source, sankey_df$target))
+  ) %>%
+    mutate(
+      group = ifelse(name == "Oceanus Folk", "Oceanus Folk", name)
+    )
+
+  # Generate up to N distinct target colours
+  target_names <- nodes$name[nodes$name != "Oceanus Folk"]
+  n_targets <- length(target_names)
+  
+  target_colours <- rep("#B0B0B0", n_targets)
+  
+  # Combine with fixed Oceanus Folk colour
+  all_colours <- c("#2E3192", target_colours)
+  
+  # Create D3-compatible colour scale
+  colour_scale <- JS(sprintf(
+    'd3.scaleOrdinal().domain(%s).range(%s)',
+    jsonlite::toJSON(c("Oceanus Folk", target_names), auto_unbox = TRUE),
+    jsonlite::toJSON(all_colours, auto_unbox = TRUE)
+  ))
+
+  # Step 5: Convert names to indices
+  links <- sankey_df %>%
+    mutate(
+      source = match(source, nodes$name) - 1,
+      target = match(target, nodes$name) - 1
+    )
+  
+  # Step 6: Plot Sankey (same as before)
+  sankeyNetwork(
+    Links = links,
+    Nodes = nodes,
+    Source = "source",
+    Target = "target",
+    Value = "value",
+    NodeID = "name",
+    NodeGroup = "group",
+    fontSize = 13,
+    nodeWidth = 30,
+    sinksRight = TRUE,
+    colourScale = colour_scale,
+    height = 600,
+    width = 1000
+)
+```
+
+::: callout-tip
+## Which top artists have been most influenced by Oceanus Folk?
+
+-   The table above show the top 10 artists who was most influenced by Oceanus Folk
+-   These are artists who have produced Oceanus Folk music or have been influenced by it.
+-   Top artists are defined by having more than 10 notable hits.
+-   These artists are rank by the amount that Oceanus Folk has influenced them.
+-   The top artist is Sailor Shift who has produced 36 Oceanus Folk songs.
+-   The next artist is Min He, who has produced one Oceanus Folk song and has been influenced by 10 other Oceanus Folk songs, bringing the total to 11 songs.
+:::
 
 ## 3.4 On the converse, how has Oceanus Folk changed with the rise of Sailor Shift?
 
@@ -1801,7 +1883,7 @@ library(latex2exp)
 plot(1, 1, type = "n", ann = FALSE, axes = FALSE)
 text(1, 1, 
      latex2exp::TeX("$\\frac{Artist's\\ Score - min((Score))}{max((Score)) - min((Score))}$"), 
-     cex = 2)
+     cex = 1)
 ```
 
 The Star Factor will aggregate these normalized scores (maximum: 4) to rank the artists.
