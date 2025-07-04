@@ -858,7 +858,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 2 variables: id &lt;int&gt;, n &lt;int&gt;</code></pre>
 </div>
 </div>
-<p>The following code chunk shows a total of 4,953 records with duplicated names in <em>mc1_nodes_raw</em>.</p>
+<p>The following code chunk shows records with duplicated names in <em>mc1_nodes_raw</em>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show Code</summary>
@@ -900,6 +900,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </div>
+</div>
+<p>There are a total of 4,953 records:</p>
+<div class="cell">
 <details class="code-fold">
 <summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total number of duplicated name:"</span>, <span class="fu">sum</span>(duplicated_name<span class="sc">$</span>n), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -75743,7 +75746,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="check-nodes-and-edges-range" class="level2">
 <h2 class="anchored" data-anchor-id="check-nodes-and-edges-range">2.6 Check Nodes and Edges range</h2>
-<p>The <em>source</em> and <em>target</em> columns seems to refer to the <em>id</em> column in nodes. The code below is used to confirm this assumption since they have the same range.</p>
+<p>The <em>source</em> and <em>target</em> columns seems to refer to the <em>id</em> column in nodes. The code below is used to confirm this assumption since they have the same range:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show Code</summary>
@@ -76433,6 +76436,7 @@ Total song/album influence relationships checked: 7340 </code></pre>
 </section>
 <section id="check-for-orphan-nodes" class="level2">
 <h2 class="anchored" data-anchor-id="check-for-orphan-nodes">2.12 Check for orphan nodes</h2>
+<p>There are no orphan nodes:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show Code</summary>
@@ -76508,6 +76512,7 @@ Total song/album influence relationships checked: 7340 </code></pre>
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>The data pre-processing steps are completed and we will move on to the findings and analysis.</p>
 
 
 </section>
