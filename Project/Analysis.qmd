@@ -1018,6 +1018,7 @@ surprise_contributors <- compute_bayesian_surprise(
 [**Bayesian Surprise Across Oceanus Folk Influenced Works, Music Releases, and New Influenced Artists**]{.underline}
 
 We create the bayesian surprise plot as follows:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1041,6 +1042,7 @@ plot_data <- plot_data %>%
 The two plots for cumulative values and bayesian surprise are combined.
 
 Codes for Cumulative Plot:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1092,6 +1094,7 @@ cumulative_plot <- plot_ly(combined_df,
 ```
 
 Codes for Surprise Plot:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1146,6 +1149,7 @@ surprise_plot <- plot_ly(
 ```
 
 Both plots are combined as follows:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1247,6 +1251,7 @@ Thus, while the overall trend shows long-term growth, Bayesian Surprise confirms
 To determine which genres have been most influenced by Oceanus Folk, all songs and albums were identified. Then, the music (Songs/Albums) that influenced them were obtained to calculate the frequency and percentage of Oceanus Folk's influence across different musical genre. This analysis reveals the genres that show the strongest impact from Oceanus Folk's musical style.
 
 The table summarises the outward influence:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1269,7 +1274,9 @@ genre_influence_stats %>%
   kable_styling("striped", full_width = F) %>%
   scroll_box(height = "300px")
 ```
+
 The Sankey for outward influence is created:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -1320,7 +1327,6 @@ sankeyNetwork(
 -   The Oceanus Folk genre has been the most influenced by itself with about 40% of all music (Songs/Albums) drawing inspiration from Oceanus Folk music.
 :::
 
-
 ## 3.2.2 From which genres does Oceanus Folk draw most of its contemporary inspiration?
 
 This analysis examines the contemporary influences on Oceanus Folk by using the genre influence patterns methodology similar to Section 3.2.1.
@@ -1362,7 +1368,6 @@ genre_influenced_by_stats %>%
   kable_styling("striped", full_width = FALSE) %>%
   scroll_box(height = "200px")
 ```
-
 
 Similar to Section 3.2.1, Sankey diagram is plotted but reversed as we are looking at inward influence to Oceanus Folk.
 
@@ -1542,7 +1547,10 @@ onRender(p, '
 ```
 
 The table can also be combined as follows:
+
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 # Set fixed genre
 selected_genre <- "Oceanus Folk"
 
@@ -1613,7 +1621,8 @@ combined %>%
     `% Oceanus (Outward)` = Perc_Oceanus
   ) %>%
   kable("html", caption = glue("Influence Table for {selected_genre}"), digits = 1, align = "c") %>%
-  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover", "condensed"))
+  kable_styling(full_width = TRUE, bootstrap_options = c("striped", "hover", "condensed")) %>%
+  scroll_box(width = "100%", height = "400px")
 ```
 
 ### 3.3 Which top artists have been most influenced by Oceanus Folk?
@@ -1874,17 +1883,7 @@ A grading rubric is added to assess artists based on four equally weighted categ
 
 Each category's score will be normalised using the formula:
 
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-
-library(latex2exp)
-plot(1, 1, type = "n", ann = FALSE, axes = FALSE)
-text(1, 1, 
-     latex2exp::TeX("$\\frac{Artist's\\ Score - min((Score))}{max((Score)) - min((Score))}$"), 
-     cex = 1)
-```
+![](images/clipboard-1316413798.png)
 
 The Star Factor will aggregate these normalized scores (maximum: 4) to rank the artists.
 
@@ -3351,7 +3350,7 @@ plot_ly(
   mode = "lines+markers",
   name = chosen_creator_1,
   line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
+  marker = list(color = "#2E3192", size = 6),
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
@@ -3367,7 +3366,7 @@ plot_ly(
     mode = "lines+markers",
     name = chosen_creator_2,
     line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "green", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
@@ -3383,7 +3382,7 @@ plot_ly(
     mode = "lines+markers",
     name = chosen_creator_3,
     line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "purple", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
@@ -3428,7 +3427,7 @@ plot_ly(
   mode = "lines+markers",
   name = chosen_creator_1,
   line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
+  marker = list(color = "#2E3192", size = 6),
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
@@ -3444,7 +3443,7 @@ plot_ly(
     mode = "lines+markers",
     name = chosen_creator_2,
     line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "green", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
@@ -3460,7 +3459,7 @@ plot_ly(
     mode = "lines+markers",
     name = chosen_creator_3,
     line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "purple", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
@@ -3505,7 +3504,7 @@ plot_ly(
   mode = "lines+markers",
   name = chosen_creator_1,
   line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
+  marker = list(color = "#2E3192", size = 6),
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
@@ -3521,7 +3520,7 @@ plot_ly(
     mode = "lines+markers",
     name = chosen_creator_2,
     line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "green", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
@@ -3537,7 +3536,7 @@ plot_ly(
     mode = "lines+markers",
     name = chosen_creator_3,
     line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "purple", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
@@ -3588,7 +3587,7 @@ plot_ly(
   mode = "lines+markers",
   name = chosen_creator_1,
   line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
+  marker = list(color = "#2E3192", size = 6),
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
@@ -3604,7 +3603,7 @@ plot_ly(
     mode = "lines+markers",
     name = chosen_creator_2,
     line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "green", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
@@ -3620,7 +3619,7 @@ plot_ly(
     mode = "lines+markers",
     name = chosen_creator_3,
     line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "purple", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
@@ -3899,7 +3898,7 @@ plot_ly(
   mode = "lines+markers",
   name = chosen_creator_1,
   line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
+  marker = list(color = "#2E3192", size = 6),
   hoverinfo = "text",
   hovertext = ~paste0(
     "Artist: ", chosen_creator_1,
@@ -3913,7 +3912,7 @@ plot_ly(
     y = ~composite_score,
     name = chosen_creator_2,
     line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "green", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_2,
@@ -3927,7 +3926,7 @@ plot_ly(
     y = ~composite_score,
     name = chosen_creator_3,
     line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
+    marker = list(color = "purple", size = 6),
     hoverinfo = "text",
     hovertext = ~paste0(
       "Artist: ", chosen_creator_3,
@@ -5239,1487 +5238,6 @@ plot_ly(
 ```
 :::
 
-### 4.3.5 Visualizing the career of Donna Caldwell
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-chosen_creator_4 = "Donna Caldwell"
-
-# Step 1: Get the node of the chosen creator
-chosen_node_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_4) %>%
-  pull(creator_from) %>%
-  unique()
-
-# Step 2: Get the songs that the top creator produced
-creator_songs_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_4) %>%
-  pull(song_to)
-
-# Step 3: Get the songs they have influenced / artists they collaborate with
-creators_songs_collaborate_influence_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_4,
-         infuence_music_collaborate != chosen_node_4) %>%
-  pull(infuence_music_collaborate)
-
-# Step 4: Get the songs they have influenced
-creators_songs_influence_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_4,
-         infuence_music_collaborate != chosen_node_4,
-         `Edge Colour` == "Influenced By") %>%
-  pull(infuence_music_collaborate)
-
-# Step 5: Get the influenced creators of the influenced songs
-creators_songs_influence_creators_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_4,
-         influence_creator != chosen_node_4,
-         !is.na(influence_creator),
-         infuence_music_collaborate %in% creators_songs_influence_4) %>%
-  pull(influence_creator)
-
-all_nodes <- unique(c(chosen_node_4, 
-                      creator_songs_4, 
-                      creators_songs_collaborate_influence_4,
-                      creators_songs_influence_creators_4))
-
-# Create subgraph
-sub_graph <- graph %>%
-  filter(name %in% all_nodes)
-
-
-
-# Visualisation
-
-g <- sub_graph %>%
-  ggraph(layout = "fr") + 
-  geom_edge_fan(
-    aes(
-      edge_colour = `Edge Colour`,
-      start_cap = circle(1, 'mm'),
-      end_cap = circle(1, 'mm')
-    ),
-    arrow = arrow(length = unit(1, 'mm')),
-    alpha = 0.3
-  ) +
-  geom_point_interactive(
-    aes(
-      x = x,
-      y = y,
-      data_id = name,
-      colour = `Node Colour`,
-      shape = `Node Type`,
-      size = ifelse(node_name == chosen_creator_4, 3, 1),
-      tooltip = case_when(
-        `Node Type` == "Album" ~ sprintf(
-          "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
-        ),
-        `Node Type` == "Song" ~ sprintf(
-          "%s<br/>%s<br/>Notable: %s<br/>(%s)<br/>Single: %s", node_name, genre, notable, release_date, single
-        ),
-        TRUE ~ sprintf("%s", node_name)
-      )
-    ),
-    show.legend = c(size = FALSE)
-  )+ 
-  geom_node_text(
-    aes(
-      label = ifelse(node_name == chosen_creator_4, chosen_creator_4, NA)
-    ),
-    fontface = "bold",
-    size = 2.5,
-    colour = 'red',
-    show.legend = FALSE
-  ) +
-  scale_shape_manual(
-    name = "Node Type",
-    values = c(
-      "Album" = 16,
-      "MusicalGroup" = 15,
-      "Person" = 17,
-      "Song" = 10
-    )
-  ) +
-  scale_edge_colour_manual(
-    name = "Edge Colour",
-    values = c(
-      `Creator Of` = "#47D45A",
-      `Influenced By` = "#FF5757",
-      `Member Of` = "#CF57FF"
-    )
-  ) +
-  scale_colour_manual(
-    name = "Node Colour",
-    values = c(
-      "Musician" = "grey50",
-      "Oceanus Folk" = "#0027EA",
-      "Other Genre" = "#A45200"
-    )
-  ) +
-  theme_graph() +
-  theme(legend.text = element_text(size = 6),
-        legend.title = element_text(size = 9)) +
-  scale_size_identity()
-
-girafe(ggobj = g, width_svg = 7, height_svg = 6)
-```
-
-::: panel-tabset
-## Music Releases
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Count number of music by release date
-music_by_date_4 <- mc1_nodes_clean %>%
-  filter(name %in% unique(creator_songs_4)) %>%
-  count(release_date, name = "music_count") %>%
-  arrange(release_date) %>%  # Ensure dates are in chronological order
-  mutate(cumulative_count = cumsum(music_count))
-
-
-
-# Visualisation
-
-plot_ly(
-  data = music_by_date_4,
-  x = ~release_date,
-  y = ~music_count,
-  type = "bar",
-  name = "Number of Music Releases",
-  marker = list(color = "#2E3192"),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Release Date: ", release_date,
-    "<br>Count: ", music_count
-  )
-) %>%
-  add_trace(
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Cumulative Count",
-    line = list(color = "black", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Music (Song/Album) Releases",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    )
-  )
-```
-
-## Notable Music Releases
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Count number of notable music by release date
-notable_music_by_date_4 <- mc1_nodes_clean %>%
-  filter(name %in% unique(creator_songs_4), notable == TRUE) %>%
-  count(release_date, name = "music_count") %>%
-  arrange(release_date) %>%  # Ensure dates are in chronological order
-  mutate(cumulative_count = cumsum(music_count))
-
-
-
-# Visualisation
-
-plot_ly(
-  data = notable_music_by_date_4,
-  x = ~release_date,
-  y = ~music_count,
-  type = "bar",
-  name = "Number of Notable Music Releases",
-  marker = list(color = "#2E3192"),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Release Date: ", release_date,
-    "<br>Count: ", music_count
-  )
-) %>%
-  add_trace(
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Cumulative Count",
-    line = list(color = "black", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Notable Music (Song/Album) Releases",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    )
-  )
-```
-
-## Artist Influence & Collaboration
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Count number of influenced artists by release date
-influence_artists_by_date_4 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_from %in% unique(chosen_node_4),
-         influence_creator != unique(chosen_node_4)) %>%
-  # Get unique artist-date pairs first
-  distinct(influence_creator, influence_release_date) %>%
-  # Find first influence date for each artist
-  group_by(influence_creator) %>%
-  summarize(
-    first_influence_date = if(n() > 0) min(influence_release_date) else NA_real_,
-    .groups = "drop"
-  ) %>%
-  # Count new artists by first influence date
-  count(first_influence_date, name = "music_count") %>%
-  arrange(first_influence_date) %>%
-  rename(creator_release_date = first_influence_date) %>%
-  # Calculate cumulative unique artists
-  mutate(cumulative_count = cumsum(music_count))
-
-
-
-# Visualisation
-
-plot_ly(
-  data = influence_artists_by_date_4,
-  x = ~creator_release_date,
-  y = ~music_count,
-  type = "bar",
-  name = "Number of Influenced Artists",
-  marker = list(color = "#2E3192"),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Influence Date: ", creator_release_date,
-    "<br>Count: ", music_count
-  )
-) %>%
-  add_trace(
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Cumulative Count",
-    line = list(color = "black", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Influence Date: ", creator_release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Annual Count of New Artist Influences & Collaborations",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    )
-  )
-```
-
-## Influenced Music
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Count number of influenced music by release date
-influence_song_by_date_4 <- mc1_nodes_clean %>%
-  filter(name %in% unique(creators_songs_influence_4)) %>%
-  count(release_date, name = "music_count") %>%
-  arrange(release_date) %>%  # Ensure dates are in chronological order
-  mutate(cumulative_count = cumsum(music_count))
-
-
-
-# Visualisation
-
-plot_ly(
-  data = influence_song_by_date_4,
-  x = ~release_date,
-  y = ~music_count,
-  type = "bar",
-  name = "Number of Influenced Music",
-  marker = list(color = "#2E3192"),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Influence Date: ", release_date,
-    "<br>Count: ", music_count
-  )
-) %>%
-  add_trace(
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Cumulative Count",
-    line = list(color = "black", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Influence Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Music (Song/Album) Influence",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    )
-  )
-```
-:::
-
-### 4.3.6 Visualizing the career of Xiulan Ye
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-chosen_creator_5 = "Xiulan Ye"
-
-# Step 1: Get the node of the chosen creator
-chosen_node_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_5) %>%
-  pull(creator_from) %>%
-  unique()
-
-# Step 2: Get the songs that the top creator produced
-creator_songs_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_5) %>%
-  pull(song_to)
-
-# Step 3: Get the songs they have influenced / artists they collaborate with
-creators_songs_collaborate_influence_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_5,
-         infuence_music_collaborate != chosen_node_5) %>%
-  pull(infuence_music_collaborate)
-
-# Step 4: Get the songs they have influenced
-creators_songs_influence_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_5,
-         infuence_music_collaborate != chosen_node_5,
-         `Edge Colour` == "Influenced By") %>%
-  pull(infuence_music_collaborate)
-
-# Step 5: Get the influenced creators of the influenced songs
-creators_songs_influence_creators_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_name == chosen_creator_5,
-         influence_creator != chosen_node_5,
-         !is.na(influence_creator),
-         infuence_music_collaborate %in% creators_songs_influence_5) %>%
-  pull(influence_creator)
-
-all_nodes <- unique(c(chosen_node_5, 
-                      creator_songs_5, 
-                      creators_songs_collaborate_influence_5,
-                      creators_songs_influence_creators_5))
-
-# Create subgraph
-sub_graph <- graph %>%
-  filter(name %in% all_nodes)
-
-
-
-# Visualisation
-
-g <- sub_graph %>%
-  ggraph(layout = "fr") + 
-  geom_edge_fan(
-    aes(
-      edge_colour = `Edge Colour`,
-      start_cap = circle(1, 'mm'),
-      end_cap = circle(1, 'mm')
-    ),
-    arrow = arrow(length = unit(1, 'mm')),
-    alpha = 0.3
-  ) +
-  geom_point_interactive(
-    aes(
-      x = x,
-      y = y,
-      data_id = name,
-      colour = `Node Colour`,
-      shape = `Node Type`,
-      size = ifelse(node_name == chosen_creator_5, 3, 1),
-      tooltip = case_when(
-        `Node Type` == "Album" ~ sprintf(
-          "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
-        ),
-        `Node Type` == "Song" ~ sprintf(
-          "%s<br/>%s<br/>Notable: %s<br/>(%s)<br/>Single: %s", node_name, genre, notable, release_date, single
-        ),
-        TRUE ~ sprintf("%s", node_name)
-      )
-    ),
-    show.legend = c(size = FALSE)
-  )+ 
-  geom_node_text(
-    aes(
-      label = ifelse(node_name == chosen_creator_5, chosen_creator_5, NA)
-    ),
-    fontface = "bold",
-    size = 2.5,
-    colour = 'red',
-    show.legend = FALSE
-  ) +
-  scale_shape_manual(
-    name = "Node Type",
-    values = c(
-      "Album" = 16,
-      "MusicalGroup" = 15,
-      "Person" = 17,
-      "Song" = 10
-    )
-  ) +
-  scale_edge_colour_manual(
-    name = "Edge Colour",
-    values = c(
-      `Creator Of` = "#47D45A",
-      `Influenced By` = "#FF5757",
-      `Member Of` = "#CF57FF"
-    )
-  ) +
-  scale_colour_manual(
-    name = "Node Colour",
-    values = c(
-      "Musician" = "grey50",
-      "Oceanus Folk" = "#0027EA",
-      "Other Genre" = "#A45200"
-    )
-  ) +
-  theme_graph() +
-  theme(legend.text = element_text(size = 6),
-        legend.title = element_text(size = 9)) +
-  scale_size_identity()
-
-girafe(ggobj = g, width_svg = 7, height_svg = 6)
-```
-
-::: panel-tabset
-## Music Releases
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Count number of music by release date
-music_by_date_5 <- mc1_nodes_clean %>%
-  filter(name %in% unique(creator_songs_5)) %>%
-  count(release_date, name = "music_count") %>%
-  arrange(release_date) %>%  # Ensure dates are in chronological order
-  mutate(cumulative_count = cumsum(music_count))
-
-
-
-# Visualisation
-
-plot_ly(
-  data = music_by_date_5,
-  x = ~release_date,
-  y = ~music_count,
-  type = "bar",
-  name = "Number of Music Releases",
-  marker = list(color = "#2E3192"),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Release Date: ", release_date,
-    "<br>Count: ", music_count
-  )
-) %>%
-  add_trace(
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Cumulative Count",
-    line = list(color = "black", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Music (Song/Album) Releases",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    )
-  )
-```
-
-## Notable Music Releases
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Count number of notable music by release date
-notable_music_by_date_5 <- mc1_nodes_clean %>%
-  filter(name %in% unique(creator_songs_5), notable == TRUE) %>%
-  count(release_date, name = "music_count") %>%
-  arrange(release_date) %>%  # Ensure dates are in chronological order
-  mutate(cumulative_count = cumsum(music_count))
-
-
-
-# Visualisation
-
-plot_ly(
-  data = notable_music_by_date_5,
-  x = ~release_date,
-  y = ~music_count,
-  type = "bar",
-  name = "Number of Notable Music Releases",
-  marker = list(color = "#2E3192"),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Release Date: ", release_date,
-    "<br>Count: ", music_count
-  )
-) %>%
-  add_trace(
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Cumulative Count",
-    line = list(color = "black", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Notable Music (Song/Album) Releases",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    )
-  )
-```
-
-## Artist Influence & Collaboration
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Count number of influenced artists by release date
-influence_artists_by_date_5 <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_from %in% unique(chosen_node_5),
-         influence_creator != unique(chosen_node_5)) %>%
-  # Get unique artist-date pairs first
-  distinct(influence_creator, influence_release_date) %>%
-  # Find first influence date for each artist
-  group_by(influence_creator) %>%
-  summarize(
-    first_influence_date = if(n() > 0) min(influence_release_date) else NA_real_,
-    .groups = "drop"
-  ) %>%
-  # Count new artists by first influence date
-  count(first_influence_date, name = "music_count") %>%
-  arrange(first_influence_date) %>%
-  rename(creator_release_date = first_influence_date) %>%
-  # Calculate cumulative unique artists
-  mutate(cumulative_count = cumsum(music_count))
-
-
-
-# Visualisation
-
-plot_ly(
-  data = influence_artists_by_date_5,
-  x = ~creator_release_date,
-  y = ~music_count,
-  type = "bar",
-  name = "Number of Influenced Artists",
-  marker = list(color = "#2E3192"),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Influence Date: ", creator_release_date,
-    "<br>Count: ", music_count
-  )
-) %>%
-  add_trace(
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Cumulative Count",
-    line = list(color = "black", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Influence Date: ", creator_release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Annual Count of New Artist Influences & Collaborations",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    )
-  )
-```
-
-## Influenced Music
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Count number of influenced music by release date
-influence_song_by_date_5 <- mc1_nodes_clean %>%
-  filter(name %in% unique(creators_songs_influence_5)) %>%
-  count(release_date, name = "music_count") %>%
-  arrange(release_date) %>%  # Ensure dates are in chronological order
-  mutate(cumulative_count = cumsum(music_count))
-
-
-
-# Visualisation
-
-plot_ly(
-  data = influence_song_by_date_5,
-  x = ~release_date,
-  y = ~music_count,
-  type = "bar",
-  name = "Number of Influenced Music",
-  marker = list(color = "#2E3192"),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Influence Date: ", release_date,
-    "<br>Count: ", music_count
-  )
-) %>%
-  add_trace(
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = "Cumulative Count",
-    line = list(color = "black", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Influence Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Music (Song/Album) Influence",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    )
-  )
-```
-:::
-
-### 4.3.7 Compare and contrast the five artists' rise in popularity and influence
-
-The cumulative graphs of the 5 artists (Sailor Shift, Chao Wu, Xia Jia, Donna Caldwell, and Xiulan Ye) will be overlaid for comparison of their musical careers.
-
-::::::: panel-tabset
-## Music Releases
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Visualisation
-
-plot_ly(
-  data = music_by_date_1,
-  x = ~release_date,
-  y = ~cumulative_count,
-  type = "scatter",
-  mode = "lines+markers",
-  name = chosen_creator_1,
-  line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Artist: ", chosen_creator_1,
-    "<br>Release Date: ", release_date,
-    "<br>Cumulative Count: ", cumulative_count
-  )
-) %>%
-  add_trace(
-    data = music_by_date_2,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_2,
-    line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_2,
-      "<br>Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = music_by_date_3,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_3,
-    line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_3,
-      "<br>Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = music_by_date_4,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_4,
-    line = list(color = "orange", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_4,
-      "<br>Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = music_by_date_5,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_5,
-    line = list(color = "skyblue", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_5,
-      "<br>Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Music (Song/Album) Releases",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    ),
-    annotations = list(
-      list(
-        x = 2017, 
-        y = 2,
-        text = "<b>2017:<br>Donna Caldwell <br>& Xiulan Ye</b>",
-        xref = "x", yref = "y",
-        xanchor = "right",
-        showarrow = TRUE, arrowhead = 2,
-        ax = -30, ay = -15,
-        font = list(color="black", size=12)
-      )
-    )
-  )
-```
-
-::: callout-warning
-## Note
-
-Donna Caldwell and Xiulan Ye are at 2017 with a count of 2.
-:::
-
-## Notable Music Releases
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Visualisation
-
-plot_ly(
-  data = notable_music_by_date_1,
-  x = ~release_date,
-  y = ~cumulative_count,
-  type = "scatter",
-  mode = "lines+markers",
-  name = chosen_creator_1,
-  line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Artist: ", chosen_creator_1,
-    "<br>Release Date: ", release_date,
-    "<br>Cumulative Count: ", cumulative_count
-  )
-) %>%
-  add_trace(
-    data = notable_music_by_date_2,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_2,
-    line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_2,
-      "<br>Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = notable_music_by_date_3,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_3,
-    line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_3,
-      "<br>Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = notable_music_by_date_4,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_4,
-    line = list(color = "orange", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_4,
-      "<br>Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = notable_music_by_date_5,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_5,
-    line = list(color = "skyblue", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_5,
-      "<br>Release Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Notable Music (Song/Album) Releases",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    ),
-    annotations = list(
-      list(
-        x = 2017, 
-        y = 1,
-        text = "<b>2017:<br>Donna Caldwell <br>& Xiulan Ye</b>",
-        xref = "x", yref = "y",
-        xanchor = "right",
-        showarrow = TRUE, arrowhead = 2,
-        ax = -30, ay = -15,
-        font = list(color="black", size=12)
-      )
-    )
-  )
-```
-
-::: callout-warning
-## Note
-
-Donna Caldwell and Xiulan Ye are at 2017 with a count of 1.
-:::
-
-## Artist Influence & Collaboration
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Visualisation
-
-plot_ly(
-  data = influence_artists_by_date_1,
-  x = ~creator_release_date,
-  y = ~cumulative_count,
-  type = "scatter",
-  mode = "lines+markers",
-  name = chosen_creator_1,
-  line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Artist: ", chosen_creator_1,
-    "<br>Influence Date: ", creator_release_date,
-    "<br>Cumulative Count: ", cumulative_count
-  )
-) %>%
-  add_trace(
-    data = influence_artists_by_date_2,
-    x = ~creator_release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_2,
-    line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_2,
-      "<br>Influence Date: ", creator_release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = influence_artists_by_date_3,
-    x = ~creator_release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_3,
-    line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_3,
-      "<br>Influence Date: ", creator_release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = influence_artists_by_date_4,
-    x = ~creator_release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_4,
-    line = list(color = "orange", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_4,
-      "<br>Influence Date: ", creator_release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = influence_artists_by_date_5,
-    x = ~creator_release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_5,
-    line = list(color = "skyblue", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_5,
-      "<br>Influence Date: ", creator_release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Annual Count of New Artist Influences & Collaborations",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    ),
-    annotations = list(
-      list(
-        x = 2029, 
-        y = 159,
-        text = "<b>Donna Caldwell</b>",
-        xref = "x", yref = "y",
-        xanchor = "left",
-        showarrow = TRUE, arrowhead = 2,
-        ax = 30, ay = 30,
-        font = list(color="black", size=12)
-      )
-    )
-  )
-```
-
-::: callout-warning
-## Note
-
-Donna Caldwell overlaps with Xiulan Ye
-:::
-
-## Influenced Music
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Visualisation
-
-plot_ly(
-  data = influence_song_by_date_1,
-  x = ~release_date,
-  y = ~cumulative_count,
-  type = "scatter",
-  mode = "lines+markers",
-  name = chosen_creator_1,
-  line = list(color = "#2E3192", width = 2),
-  marker = list(color = "red", size = 6),
-  hoverinfo = "text",
-  hovertext = ~paste0(
-    "Artist: ", chosen_creator_1,
-    "<br>Influence Date: ", release_date,
-    "<br>Cumulative Count: ", cumulative_count
-  )
-) %>%
-  add_trace(
-    data = influence_song_by_date_2,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_2,
-    line = list(color = "green", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_2,
-      "<br>Influence Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = influence_song_by_date_3,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_3,
-    line = list(color = "purple", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_3,
-      "<br>Influence Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = influence_song_by_date_4,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_4,
-    line = list(color = "orange", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_4,
-      "<br>Influence Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  add_trace(
-    data = influence_song_by_date_5,
-    x = ~release_date,
-    y = ~cumulative_count,
-    type = "scatter",
-    mode = "lines+markers",
-    name = chosen_creator_5,
-    line = list(color = "skyblue", width = 2),
-    marker = list(color = "red", size = 6),
-    hoverinfo = "text",
-    hovertext = ~paste0(
-      "Artist: ", chosen_creator_5,
-      "<br>Influence Date: ", release_date,
-      "<br>Cumulative Count: ", cumulative_count
-    )
-  ) %>%
-  layout(
-    title = "Yearly Music (Song/Album) Influence",
-    margin = list(b = 80, t = 80),      
-    xaxis = list(
-      title = NA,  
-      dtick = 5,
-      automargin = TRUE
-    ),
-    yaxis = list(
-      title = "Count",
-      automargin = TRUE
-    ),
-    legend = list(
-      orientation = "h",
-      x = 0.5,
-      xanchor = "center",
-      y = -0.1
-    ),
-    annotations = list(
-      list(
-        x = 2024, 
-        y = 16,
-        text = "<b>Donna Caldwell</b>",
-        xref = "x", yref = "y",
-        xanchor = "right",
-        showarrow = TRUE, arrowhead = 2,
-        ax = -30, ay = -20,
-        font = list(color="black", size=12)
-      )
-    )
-  )
-```
-
-::: callout-warning
-## Note
-
--   Donna Caldwell overlaps with Xiulan Ye
--   Sailor Shift has no influence
-:::
-:::::::
-
-### 6.3.8 Analysing the relationships between these five artists
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-
-# Data Preparation
-
-# Step 1: Find outgoing edges from Chao Wu
-out_edges_1 <- mc1_edges_clean %>%
-  filter(from == unique(chosen_node_1))
-
-# Step 2: Identify neighbour node names
-out_node_names_1 <- out_edges_1$to
-
-
-
-# Step 1: Find outgoing edges from Chao Wu
-out_edges_2 <- mc1_edges_clean %>%
-  filter(from == unique(chosen_node_2))
-
-# Step 2: Identify neighbour node names
-out_node_names_2 <- out_edges_2$to
-
-
-
-# Step 1: Find outgoing edges from Chao Wu
-out_edges_3 <- mc1_edges_clean %>%
-  filter(from == unique(chosen_node_3))
-
-# Step 2: Identify neighbour node names
-out_node_names_3 <- out_edges_3$to
-
-
-
-# Step 1: Find outgoing edges from Chao Wu
-out_edges_4 <- mc1_edges_clean %>%
-  filter(from == unique(chosen_node_4))
-
-# Step 2: Identify neighbour node names
-out_node_names_4 <- out_edges_4$to
-
-
-
-# Step 1: Find outgoing edges from Chao Wu
-out_edges_5 <- mc1_edges_clean %>%
-  filter(from == unique(chosen_node_5))
-
-# Step 2: Identify neighbour node names
-out_node_names_5 <- out_edges_5$to
-
-
-
-# Build subgraph using names
-sub_nodes <- unique(c(chosen_node_1,
-                      chosen_node_2,
-                      chosen_node_3,
-                      chosen_node_4,
-                      chosen_node_5,
-                      out_node_names_1,
-                      out_node_names_2,
-                      out_node_names_3,
-                      out_node_names_4,
-                      out_node_names_5))
-
-sub_graph <- graph %>%
-  activate(nodes) %>%
-  filter(name %in% sub_nodes)
-
-g <- sub_graph %>%
-  ggraph(layout = "fr") + 
-  geom_edge_fan(
-    aes(
-      edge_colour = `Edge Colour`,
-      start_cap = circle(1, 'mm'),
-      end_cap = circle(1, 'mm')
-    ),
-    arrow = arrow(length = unit(1, 'mm')),
-    alpha = 0.3
-  ) +
-  geom_point_interactive(
-    aes(
-      x = x,
-      y = y,
-      data_id = name,
-      colour = `Node Colour`,
-      shape = `Node Type`,
-      size = ifelse(`node_name` %in% c(chosen_node_1, 
-                                       chosen_node_2, 
-                                       chosen_node_3, 
-                                       chosen_node_4, 
-                                       chosen_node_5), 3, 1),
-      tooltip = case_when(
-        `Node Type` == "Album" ~ sprintf(
-          "%s<br/>%s<br/>Notable: %s<br/>(%s)", node_name, genre, notable, release_date
-        ),
-        `Node Type` == "Song" ~ sprintf(
-          "%s<br/>%s<br/>Notable: %s<br/>(%s)<br/>Single: %s", node_name, genre, notable, release_date, single
-        ),
-        TRUE ~ sprintf("%s", node_name)
-      )
-    ),
-    show.legend = c(size = FALSE)
-  )+ 
-  geom_node_text(
-    aes(
-      label = ifelse(`node_name` == chosen_creator_1, chosen_creator_1,
-                     ifelse(`node_name` == chosen_creator_2, chosen_creator_2,
-                            ifelse(`node_name` == chosen_creator_3, chosen_creator_3,
-                                   ifelse(`node_name` == chosen_creator_4, chosen_creator_4,
-                                          ifelse(`node_name` == chosen_creator_5, chosen_creator_5, NA)))))
-    ),
-    fontface = "bold",
-    size = 2.5,
-    colour = 'red',
-    show.legend = FALSE
-  ) +
-  scale_shape_manual(
-    name = "Node Type",
-    values = c(
-      "Album" = 16,
-      "MusicalGroup" = 15,
-      "Person" = 17,
-      "Song" = 10
-    )
-  ) +
-  scale_edge_colour_manual(
-    name = "Edge Colour",
-    values = c(
-      `Creator Of` = "#47D45A",
-      `Influenced By` = "#FF5757",
-      `Member Of` = "#CF57FF"
-    )
-  ) +
-  scale_colour_manual(
-    name = "Node Colour",
-    values = c(
-      "Musician" = "grey50",
-      "Oceanus Folk" = "#0027EA",
-      "Other Genre" = "#A45200"
-    )
-  ) +
-  theme_graph() +
-  theme(legend.text = element_text(size = 6),
-        legend.title = element_text(size = 9)) +
-  scale_size_identity()
-
-girafe(ggobj = g, width_svg = 7, height_svg = 6)
-```
-
-::: callout-tip
--   All five artists are solo artists and none of them are part of the same musical group
--   Chao Wu, Xia Jia, Donna Caldwell and Xiulan Ye have some collaborative works with each other which can explain why some of their graphs overlaps.
--   Chao Wu, Xia Jia, Donna Caldwell and Xiulan Ye produced Winds of the Basque Shore and Destiny's Call together.
-:::
 
 ### 6.3.8 Predicting who the next three Oceanus Folk stars with be over the next five years
 
@@ -6749,195 +5267,6 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 -   Similarly, 3 of them are hits.
 -   Her last Oceanus Folk work was in 2028 but her works were last referred to in 2030 which is less recent than Chao Wu.
 :::
-
-::: callout-tip
-## Xiulan Ye
-
--   Both Xiulan Ye and Donna Caldwell have produced the 2 influential songs Basque Shore and Destiny's Call together.
--   Their last Oceanus Folk work was in 2017 and was last referred to in 2030.
--   However, Xiulan Ye is slightly more established in the music scene having also produced Unbound from the Doom Metal genre.
--   Therefore, the third predicted star will be Xiulan Ye but Donna Caldwell has very good potential as well.
-:::
-
-Prediction
-
-In this part of our analysis, we set out to give three predictions of who the next Oceanus Folk stars with be over the next five years.
-
-To do this, we designed a data-driven **Star Factor score**— a predictive measure using key metrics of an artist's popularity and influence that capture what it means to be a rising star in the Oceanus Folk music scene:
-
-Total Music Releases: How many works (songs/albums) the artist has produced.
-
-Notable Music Releases: How many of those works are considered hits or critically notable.
-
-Influenced Music Works: The number of downstream works (songs/albums) influenced by this artist’s creations.
-
-Influenced Artists: The number of distinct artists who were directly or indirectly influenced by this artist.
-
-These metrics were computed for every Oceanus Folk artist in the dataset.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-library(purrr)
-
-all_oceanus_creators <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(song_genre == chosen_genre_1) %>%
-  pull(creator_name) %>%
-  unique()
-
-compute_creator_metrics <- function(creator_name) {
-  creator_node <- creator_and_songs_and_influences_and_creators_collaborate %>%
-    filter(creator_name == !!creator_name) %>%
-    pull(creator_from) %>%
-    unique()
-  
-  creator_songs <- creator_and_songs_and_influences_and_creators_collaborate %>%
-    filter(creator_name == !!creator_name) %>%
-    pull(song_to) %>%
-    unique()
-  
-  notable_count <- mc1_nodes_clean %>%
-    filter(name %in% creator_songs, notable == TRUE) %>%
-    nrow()
-  
-  influenced_music <- creator_and_songs_and_influences_and_creators_collaborate %>%
-    filter(creator_from %in% creator_node, `Edge Colour` == "Influenced By") %>%
-    pull(infuence_music_collaborate) %>%
-    unique() %>%
-    length()
-  
-  influenced_artists <- creator_and_songs_and_influences_and_creators_collaborate %>%
-    filter(creator_from %in% creator_node, influence_creator != creator_node) %>%
-    pull(influence_creator) %>%
-    unique() %>%
-    length()
-  
-  tibble(
-    creator_name = creator_name,
-    total_music = length(creator_songs),
-    notable_music = notable_count,
-    influenced_music = influenced_music,
-    influenced_artists = influenced_artists
-  )
-}
-```
-
-We normalize all 4 columns to 0–1 scale using the codes below: 
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-artist_metrics_df <- map_dfr(all_oceanus_creators, compute_creator_metrics)
-
-artist_metrics_df <- artist_metrics_df %>%
-  mutate(
-    norm_total_music = (total_music - min(total_music)) / (max(total_music) - min(total_music)),
-    norm_notable_music = (notable_music - min(notable_music)) / (max(notable_music) - min(notable_music)),
-    norm_influenced_music = (influenced_music - min(influenced_music)) / (max(influenced_music) - min(influenced_music)),
-    norm_influenced_artists = (influenced_artists - min(influenced_artists)) / (max(influenced_artists) - min(influenced_artists)),
-    
-    # Star Factor = Equal weighted average of all four metrics
-    star_score = 0.25 * norm_total_music +
-      0.25 * norm_notable_music +
-      0.25 * norm_influenced_music +
-      0.25 * norm_influenced_artists
-  )
-```
-
-------------------------------------------------------------------------
-
-Filters the data to include only years 2030–2040.
-
-Groups by artist and year.
-
-For each (artist, year) combination, computes:
-
-total_music: how many distinct songs they created that year. notable_music: how many were marked as notable. influenced_music: how many unique music works they influenced. influenced_artists: how many unique artists they influenced.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-# Step 1: Build yearly metrics for Oceanus Folk creators (2030–2040)
-artist_yearly_metrics <- creator_and_songs_and_influences_and_creators_collaborate %>%
-  filter(creator_release_date >= 2030, creator_release_date <= 2040) %>%
-  group_by(creator_name, creator_release_date) %>%
-  summarise(
-    total_music = n_distinct(song_to),
-    notable_music = sum(notable == TRUE, na.rm = TRUE),
-    influenced_music = n_distinct(infuence_music_collaborate[`Edge Colour` == "Influenced By"], na.rm = TRUE),
-    influenced_artists = n_distinct(influence_creator[!is.na(influence_creator)], na.rm = TRUE),
-    .groups = "drop"
-  )
-```
-
-Compute the trend slope of each metric over time per artist
-
-Fit a linear regression model for each metric across years (y \~ year). Extract the slope (rate of change per year).
-
-For each artist:
-
-It calculates the annual trend (i.e., slope) of each metric from 2030 to 2040. If an artist has no data for some years, NA is filled with 0.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-library(purrr)
-
-compute_trend_slope <- function(df, metric) {
-  if (nrow(df) < 2) return(NA)  # Not enough years of data
-  model <- lm(reformulate("creator_release_date", metric), data = df)
-  coef(model)[["creator_release_date"]]
-}
-
-# Compute slope of trend over time for each artist
-trend_df <- artist_yearly_metrics %>%
-  group_by(creator_name) %>%
-  summarise(
-    trend_music = compute_trend_slope(pick(everything()), "total_music"),
-    trend_notable = compute_trend_slope(pick(everything()), "notable_music"),
-    trend_influenced_music = compute_trend_slope(pick(everything()), "influenced_music"),
-    trend_influenced_artists = compute_trend_slope(pick(everything()), "influenced_artists"),
-    .groups = "drop"
-  ) %>%
-  replace_na(list(
-    trend_music = 0,
-    trend_notable = 0,
-    trend_influenced_music = 0,
-    trend_influenced_artists = 0
-  ))
-```
-
-Joins the trend slopes to the base dataset artist_metrics_df, which already contains each artist’s cumulative star_score (as of 2040).
-
-Calculates an average trend across the 4 metrics.
-
-Projects the star score 5 years into the future (2045) using "predicted_star_score = star_score (in 2040) + 5 × average trend per year"
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-# Merge current score (2040) with trend data
-predicted_star_df <- artist_metrics_df %>%
-  left_join(trend_df, by = "creator_name") %>%
-  mutate(
-    # Average slope of the 4 metrics
-    trend_avg = (trend_music + trend_notable + trend_influenced_music + trend_influenced_artists) / 4,
-    
-    # Predict star score in 2045 assuming 5 years of continued trend
-    predicted_star_score = star_score + 5 * trend_avg
-  ) %>%
-  arrange(desc(predicted_star_score))
-```
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show Code"
-predicted_star_df %>%
-  select(creator_name, star_score, trend_avg, predicted_star_score) %>%
-  head(10) %>%
-  kable(format = "html", digits = 2, caption = "Top 10 Predicted Oceanus Folk Stars in 2045") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
-```
 
 [**Reference**]{.underline}
 
