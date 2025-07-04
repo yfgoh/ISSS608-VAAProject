@@ -194,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1 Overview</a>
   <ul class="collapse">
   <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">1.1 Background</a></li>
-  <li><a href="#tasks-and-questions" id="toc-tasks-and-questions" class="nav-link" data-scroll-target="#tasks-and-questions">1.2 Tasks and Questions</a></li>
+  <li><a href="#project-objective" id="toc-project-objective" class="nav-link" data-scroll-target="#project-objective">1.2 Project Objective</a></li>
   <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">1.3 Data Source</a></li>
   <li><a href="#data-description" id="toc-data-description" class="nav-link" data-scroll-target="#data-description">1.4 Data Description</a></li>
   <li><a href="#install-and-load-the-required-libraries" id="toc-install-and-load-the-required-libraries" class="nav-link" data-scroll-target="#install-and-load-the-required-libraries">1.5 Install and Load the Required Libraries</a></li>
@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">July 2, 2025</p>
+      <p class="date-modified">July 4, 2025</p>
     </div>
   </div>
     
@@ -270,8 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level1">
 <h1>1 Overview</h1>
-<p>This exercise will target to answer one of the three challenges from <a href="https://vast-challenge.github.io/2025/index.html">VAST 2025</a> which features a fictitious island nation, Oceanus, famous for fishing and quiet seaside communities.</p>
-<p>The chosen challenge is <a href="https://vast-challenge.github.io/2025/MC1.html">Mini-Challenge 1</a>.</p>
+<p>There are three challenges from <a href="https://vast-challenge.github.io/2025/index.html">VAST 2025</a> which features a fictitious island nation, Oceanus, famous for fishing and quiet seaside communities. Our group has chosen <a href="https://vast-challenge.github.io/2025/MC1.html">Mini-Challenge 1</a>.</p>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">1.1 Background</h2>
 <p>One of music’s biggest superstars is Oceanus native Sailor Shift. From humble beginnings, Sailor has grown in popularity and now enjoys fans around the world. Sailor started her career on the island nation of Oceanus which can be clearly seen in her early work, she started in the genre of “Oceanus Folk”. While Sailor has moved away from the traditional Oceanus style, the Oceanus Folk has made a name for itself in the musical world. The popularity of this music is one of the factors driving an increase in tourism to a quiet island nation that used to be known for fishing.</p>
@@ -281,27 +280,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Additionally, because of Sailor’s success, more attention began to be paid over the years to her previous bandmates. All 4 have continued in the music industry—Maya as an independent vocalist, Lilly and Jade as instrumentalists in other bands, and Sophie as a music producer for a major record label. In various ways, all of them have contributed to the increased influence of Oceanus folk, resulting in a new generation of up-and-coming Oceanus Folk artists seeking to make a name for themselves in the music industry.</p>
 <p>Now, as Sailor returns to Oceanus in 2040, a local journalist – Silas Reed – is writing a piece titled Oceanus Folk: Then-and-Now that aims to trace the rise of Sailor and the influence of Oceanus Folk on the rest of the music world. He has collected a large dataset of musical artists, producers, albums, songs, and influences and organized it into a knowledge graph. Your task is to help Silas create beautiful and informative visualizations of this data and uncover new and interesting information about Sailor’s past, her rise to stardom, and her influence.</p>
 </section>
-<section id="tasks-and-questions" class="level2">
-<h2 class="anchored" data-anchor-id="tasks-and-questions">1.2 Tasks and Questions</h2>
-<ol type="1">
-<li><p>Design and develop visualizations and visual analytic tools that will allow Silas to explore and understand the profile of Sailor Shift’s career</p>
-<ul>
-<li>Who has she been most influenced by over time?</li>
-<li>Who has she collaborated with and directly or indirectly influenced?</li>
-<li>How has she influenced collaborators of the broader Oceanus Folk community?</li>
-</ul></li>
-<li><p>Develop visualizations that illustrate how the influence of Oceanus Folk has spread through the musical world.</p>
-<ul>
-<li>Was this influence intermittent or did it have a gradual rise?</li>
-<li>What genres and top artists have been most influenced by Oceanus Folk?</li>
-<li>On the converse, how has Oceanus Folk changed with the rise of Sailor Shift? From which genres does it draw most of its contemporary inspiration?</li>
-</ul></li>
-<li><p>Use your visualizations to develop a profile of what it means to be a rising star in the music industry.</p>
-<ul>
-<li>Visualize the careers of three artists. Compare and contrast their rise in popularity and influence.</li>
-<li>Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.</li>
-</ul></li>
-</ol>
+<section id="project-objective" class="level2">
+<h2 class="anchored" data-anchor-id="project-objective">1.2 Project Objective</h2>
+<p>The project aims to explore three key focus areas to better understand (a) understand the profile of Sailor Shift’s career, (b) examine the spread and evolution of Oceanus Folk and (c) develop a profile of a rising star in the music industry. Further details are found in <a href="https://isss608-vaaproject.netlify.app/project/proposal">Overview</a>.</p>
 </section>
 <section id="data-source" class="level2">
 <h2 class="anchored" data-anchor-id="data-source">1.3 Data Source</h2>
@@ -76254,6 +76235,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="temporal-validation">2.11 Temporal Validation</h2>
 <p>The following code chunk is used to ensure any influenced songs/albums are not released before the songs/albums that influenced them. If there are any of such cases, it will be flagged out.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define which edge types represent influence relationships between songs/albums</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>influence_edge_types <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"InStyleOf"</span>, <span class="st">"InterpolatesFrom"</span>, <span class="st">"CoverOf"</span>, </span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"LyricalReferenceTo"</span>, <span class="st">"DirectlySamples"</span>)</span>
@@ -76288,6 +76271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">Edge Type</span><span class="st">`</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(violation_summary))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -76321,8 +76305,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p>These are the invalid cases where the target works (e.g.&nbsp;songs) influencing the source works were released after the source works.</p>
+<p>These are the invalid cases where the target works (e.g.&nbsp;songs) influencing the source works were released after the source works:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show examples of violations with node names</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>violation_examples <span class="ot">&lt;-</span> temporal_check <span class="sc">%&gt;%</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(temporal_violation) <span class="sc">%&gt;%</span></span>
@@ -76335,6 +76321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(violation_examples,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <colgroup>
@@ -76393,16 +76380,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p>A check was done on the influenced works and their release dates.</p>
+<p>A check was done on the influenced works and their release dates:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>total_violations <span class="ot">&lt;-</span> <span class="fu">sum</span>(temporal_check<span class="sc">$</span>temporal_violation, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>total_checked <span class="ot">&lt;-</span> <span class="fu">nrow</span>(temporal_check)</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Total song/album influence relationships checked:"</span>, total_checked, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Total song/album influence relationships checked: 7340 </code></pre>
 </div>
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total temporal violations found:"</span>, total_violations, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total temporal violations found: 84 </code></pre>
 </div>
@@ -76411,6 +76404,8 @@ Total song/album influence relationships checked: 7340 </code></pre>
 <h3 class="anchored" data-anchor-id="removing-all-edges-that-have-temporal-issues">2.11.1 Removing all edges that have temporal issues</h3>
 <p>The following code chunk will remove all edges which was highlighted in Section 3.8 that has violated the temporal influence.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all edges that are not influence relationships (keep as-is)</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>non_influence_edges <span class="ot">&lt;-</span> mc1_edges_clean <span class="sc">%&gt;%</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(<span class="st">`</span><span class="at">Edge Type</span><span class="st">`</span> <span class="sc">%in%</span> influence_edge_types))</span>
@@ -76422,10 +76417,14 @@ Total song/album influence relationships checked: 7340 </code></pre>
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all valid edges</span></span>
 <span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>mc1_edges_clean <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(non_influence_edges, consistent_influence_edges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>total_cleaned_influences <span class="ot">&lt;-</span> consistent_influence_edges <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total song/album influence relationships after cleaning:"</span>, total_cleaned_influences, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total song/album influence relationships after cleaning: 7256 </code></pre>
 </div>
@@ -76435,6 +76434,8 @@ Total song/album influence relationships checked: 7340 </code></pre>
 <section id="check-for-orphan-nodes" class="level2">
 <h2 class="anchored" data-anchor-id="check-for-orphan-nodes">2.12 Check for orphan nodes</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all node IDs that appear in edges (either as source or target)</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>nodes_with_edges <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">c</span>(mc1_edges_clean<span class="sc">$</span>from, mc1_edges_clean<span class="sc">$</span>to))</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -76444,14 +76445,21 @@ Total song/album influence relationships checked: 7340 </code></pre>
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of orphan nodes</span></span>
 <span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Total nodes:"</span>, <span class="fu">nrow</span>(mc1_nodes_clean), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Total nodes: 14077 </code></pre>
 </div>
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nodes with edges:"</span>, <span class="fu">length</span>(nodes_with_edges), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Nodes with edges: 14077 </code></pre>
 </div>
+<details class="code-fold">
+<summary>Show Code</summary>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Orphan nodes (no edges):"</span>, <span class="fu">nrow</span>(orphan_nodes), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Orphan nodes (no edges): 0 </code></pre>
 </div>

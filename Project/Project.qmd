@@ -13,9 +13,7 @@ execute:
 
 # 1 Overview
 
-This exercise will target to answer one of the three challenges from [VAST 2025](https://vast-challenge.github.io/2025/index.html) which features a fictitious island nation, Oceanus, famous for fishing and quiet seaside communities.
-
-The chosen challenge is [Mini-Challenge 1](https://vast-challenge.github.io/2025/MC1.html).
+There are three challenges from [VAST 2025](https://vast-challenge.github.io/2025/index.html) which features a fictitious island nation, Oceanus, famous for fishing and quiet seaside communities. Our group has chosen [Mini-Challenge 1](https://vast-challenge.github.io/2025/MC1.html).
 
 ## 1.1 Background
 
@@ -31,24 +29,9 @@ Additionally, because of Sailor’s success, more attention began to be paid ove
 
 Now, as Sailor returns to Oceanus in 2040, a local journalist – Silas Reed – is writing a piece titled Oceanus Folk: Then-and-Now that aims to trace the rise of Sailor and the influence of Oceanus Folk on the rest of the music world. He has collected a large dataset of musical artists, producers, albums, songs, and influences and organized it into a knowledge graph. Your task is to help Silas create beautiful and informative visualizations of this data and uncover new and interesting information about Sailor’s past, her rise to stardom, and her influence.
 
-## 1.2 Tasks and Questions
+## 1.2 Project Objective
 
-1.  Design and develop visualizations and visual analytic tools that will allow Silas to explore and understand the profile of Sailor Shift’s career
-
-    -   Who has she been most influenced by over time?
-    -   Who has she collaborated with and directly or indirectly influenced?
-    -   How has she influenced collaborators of the broader Oceanus Folk community?
-
-2.  Develop visualizations that illustrate how the influence of Oceanus Folk has spread through the musical world.
-
-    -   Was this influence intermittent or did it have a gradual rise?
-    -   What genres and top artists have been most influenced by Oceanus Folk?
-    -   On the converse, how has Oceanus Folk changed with the rise of Sailor Shift? From which genres does it draw most of its contemporary inspiration?
-
-3.  Use your visualizations to develop a profile of what it means to be a rising star in the music industry.
-
-    -   Visualize the careers of three artists. Compare and contrast their rise in popularity and influence.
-    -   Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.
+The project aims to explore three key focus areas to better understand (a) understand the profile of Sailor Shift’s career, (b) examine the spread and evolution of Oceanus Folk and (c) develop a profile of a rising star in the music industry. Further details are found in [Overview](https://isss608-vaaproject.netlify.app/project/proposal).
 
 ## 1.3 Data Source
 
@@ -252,7 +235,7 @@ mc1_nodes_raw %>%
   filter(n > 1)
 ```
 
-The following code chunk shows a total of 4,953 records with duplicated names in *mc1_nodes_raw*.
+The following code chunk shows records with duplicated names in *mc1_nodes_raw*.
 
 ```{r}
 #| code-fold: true
@@ -262,7 +245,12 @@ duplicated_name <- mc1_nodes_raw %>%
   filter(n > 1)
 
 kable(head(duplicated_name,5))
+```
 
+There are a total of 4,953 records:
+```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 cat("Total number of duplicated name:", sum(duplicated_name$n), "\n")
 ```
 
@@ -278,6 +266,7 @@ mc1_nodes_raw %>%
   kable_styling("striped", full_width = F) %>% 
   scroll_box(height = "200px")
 ```
+
 
 The following code chunk will tag each row with a unique key (*group_key*) based on its respective column values. This helps to identify unique records.
 
@@ -350,7 +339,7 @@ mc1_edges_raw %>%
 
 ## 2.6 Check Nodes and Edges range
 
-The *source* and *target* columns seems to refer to the *id* column in nodes. The code below is used to confirm this assumption since they have the same range.
+The *source* and *target* columns seems to refer to the *id* column in nodes. The code below is used to confirm this assumption since they have the same range:
 
 ```{r}
 #| code-fold: true
@@ -405,6 +394,7 @@ id_remap <- mc1_nodes_tagged %>%
 
 kable(head(id_remap,5))
 ```
+
 
 This step adds the *kept_id* column to the edge data.
 
@@ -554,7 +544,8 @@ mc1_edges_clean <- mc1_edges_clean %>%
 The following code chunk is used to ensure any influenced songs/albums are not released before the songs/albums that influenced them. If there are any of such cases, it will be flagged out.
 
 ```{r}
-
+#| code-fold: true
+#| code-summary: "Show Code"
 # Define which edge types represent influence relationships between songs/albums
 influence_edge_types <- c("InStyleOf", "InterpolatesFrom", "CoverOf", 
                          "LyricalReferenceTo", "DirectlySamples")
@@ -591,9 +582,11 @@ violation_summary <- temporal_check %>%
 kable(head(violation_summary))
 ```
 
-These are the invalid cases where the target works (e.g. songs) influencing the source works were released after the source works.
+These are the invalid cases where the target works (e.g. songs) influencing the source works were released after the source works:
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 # Show examples of violations with node names
 violation_examples <- temporal_check %>%
   filter(temporal_violation) %>%
@@ -608,9 +601,11 @@ violation_examples <- temporal_check %>%
 kable(head(violation_examples,5))
 ```
 
-A check was done on the influenced works and their release dates.
+A check was done on the influenced works and their release dates:
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 total_violations <- sum(temporal_check$temporal_violation, na.rm = TRUE)
 total_checked <- nrow(temporal_check)
 cat("\nTotal song/album influence relationships checked:", total_checked, "\n")
@@ -622,6 +617,8 @@ cat("Total temporal violations found:", total_violations, "\n")
 The following code chunk will remove all edges which was highlighted in Section 3.8 that has violated the temporal influence.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 # Get all edges that are not influence relationships (keep as-is)
 non_influence_edges <- mc1_edges_clean %>%
   filter(!(`Edge Type` %in% influence_edge_types))
@@ -637,13 +634,18 @@ mc1_edges_clean <- bind_rows(non_influence_edges, consistent_influence_edges)
 ```
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 total_cleaned_influences <- consistent_influence_edges %>% nrow()
 cat("Total song/album influence relationships after cleaning:", total_cleaned_influences, "\n")
 ```
 
 ## 2.12 Check for orphan nodes
 
+There are no orphan nodes:
 ```{r}
+#| code-fold: true
+#| code-summary: "Show Code"
 # Get all node IDs that appear in edges (either as source or target)
 nodes_with_edges <- unique(c(mc1_edges_clean$from, mc1_edges_clean$to))
 
@@ -701,3 +703,5 @@ Since several of the ggraph layouts involve randomisation, this code sets the se
 #| code-summary: "Show Code"
 set.seed(1234)
 ```
+
+The data pre-processing steps are completed and we will move on to the findings and analysis. 
