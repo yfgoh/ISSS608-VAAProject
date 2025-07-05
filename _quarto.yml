@@ -20,7 +20,7 @@ website:
         - text: "Shiny App"
           href: "https://calvintansh.shinyapps.io/ISSS608-ProjectShiny/"
         - text: "User Guide"
-          href: "Project/User_Guide.html"
+          href: "Project/User_Guide.pdf"
     - text: "Poster"
       href: "Project/Poster.jpg"
     right:
