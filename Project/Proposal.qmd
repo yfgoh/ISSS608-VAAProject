@@ -443,6 +443,8 @@ shinyApp(ui, server)
 -   **`lubridate`**: Easy handling of dates and times.
 -   **`jsonlite`**: Read and write JSON data.
 -   **`knitr`**: Generates documents that uses both R code and markdown.
+-   **`glue`**: - For dynamically inserting variables into titles
+-   **`kableExtra`**: - For tabular properties
 
 ### Data Visualization
 
@@ -451,6 +453,10 @@ shinyApp(ui, server)
 -   **`patchwork`**: Combine multiple ggplots in grid layouts.
 -   **`ggnewscale`**: Enables multiple `fill` or `colour` scales in the same plot.
 -   **`scales`**: Control axis breaks, labels (e.g. percentages, currency).
+-   **`fsmb`**: - For radar chart
+-   **`glue`**: - For dynamically inserting variables into titles
+-   **`broom`**: - For linear regression
+-   **`plotly`**: - Professional visualisations
 
 ### Interactive and Web
 
