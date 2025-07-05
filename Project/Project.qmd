@@ -248,6 +248,7 @@ kable(head(duplicated_name,5))
 ```
 
 There are a total of 4,953 records:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -266,7 +267,6 @@ mc1_nodes_raw %>%
   kable_styling("striped", full_width = F) %>% 
   scroll_box(height = "200px")
 ```
-
 
 The following code chunk will tag each row with a unique key (*group_key*) based on its respective column values. This helps to identify unique records.
 
@@ -394,7 +394,6 @@ id_remap <- mc1_nodes_tagged %>%
 
 kable(head(id_remap,5))
 ```
-
 
 This step adds the *kept_id* column to the edge data.
 
@@ -643,6 +642,7 @@ cat("Total song/album influence relationships after cleaning:", total_cleaned_in
 ## 2.12 Check for orphan nodes
 
 There are no orphan nodes:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show Code"
@@ -704,4 +704,4 @@ Since several of the ggraph layouts involve randomisation, this code sets the se
 set.seed(1234)
 ```
 
-The data pre-processing steps are completed and we will move on to the findings and analysis. 
+The data pre-processing steps are completed and we will move on to the findings and analysis.

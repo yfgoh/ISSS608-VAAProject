@@ -18,14 +18,14 @@ website:
     - text: "Shiny App"
       menu:
         - text: "Shiny App"
-          href: "Project/XXX.html"
+          href: "https://calvintansh.shinyapps.io/ISSS608-ProjectShiny/"
         - text: "User Guide"
-          href: "Project/XXX.html"
+          href: "Project/User_Guide.html"
     - text: "Poster"
-      href: "Project/XXX.html"
+      href: "Project/Poster.jpg"
     right:
       - text: Our Team
-        href: "Project/XXX.html"
+        href: "Project/about.html"
 
 format:
   html:
