@@ -1545,6 +1545,10 @@ onRender(p, '
 ')
 ```
 
+::: callout-note
+Interestingly, the Sankey diagram highlights a striking similarity in Oceanus Folk's incoming and outgoing influence patterns where the top three incoming influences (Oceanus Folk, Indie Folk, and Sythnwave) are also tge top three outgoing influences, in the same order. This suggests a mutually reinforcing exchange of stylistic elements, indicating that Oceanus Folk both shapes and is shaped by a handful of genres.
+:::
+
 The table can also be combined as follows:
 
 ```{r}
@@ -3657,17 +3661,13 @@ Sailor Shift has no influence on music creation
 ::: callout-tip
 ## Visualize the careers of three artists. Compare and contrast their rise in popularity and influence?
 
--   Among the three artists, Sailor Shift is the most recent entrant to the music industry, having debuted in 2024.
--   She maintained consistent music releases through 2040.
--   With 38 total releases, she surpassed Jay Walters' record (37 releases) in 2040, establishing herself as the most prolific artist.
--   Min Fu has 12 records.
--   While Sailor Shift has released more music than Jay Walters, Jay Walters is the most popular Artist having released 35 hits that made the top record chart.
--   Sailor Shift has 25 hits while Min Fu has 12.
--   Min Fu is the most influential artist having influenced/collaborated with 598 artists and influenced the creation of 192 music.
--   Jay Walters has a much lower influence having influence/collaborated with 51 artists and 50 music.
--   Sailor Shift has a similar influence of 48 artists (all collaborations) but 0 influence on the music scene.
--   However, Sailor Shift has the most recent influence, with new artist connections as recent as 2040.
--   In contrast, Jay Walters' influence period ended earlier (last connection in 2035), while Min Fu's influence dates back to 2030.
+Among the three artists, Sailor Shift is the most recent entrant to the music industry, debuting in 2024. She maintained a steady release schedule through 2040, ultimately producing 38 releases, surpassing Jay Walters' 37 releases in 2040. This establishes her to be the most prolific artist. By comparison, Min Fu has only released 12 records.
+
+While Sailor Shift released more music, Jay Walters stands out as the most popular artist, with 35 hits that made the top record charts. Sailor Shift follows with 25 chart topping hits. However, it is worth noting that despite Min Fu's limited releases, all 12 of his releases made the charts.
+
+In terms of influence, Min Fu emerges as the most impactful artist. He influenced/collaborated with 598 artists and influenced the creation of 192 musical works. Jay Walters has a much lower influence having influenced/collaborated with 51 artists and 50 music. Sailor Shift, despite her status as a superstar, has collaborated with 48 artists but has not shown any measureable influence on the broader music scene in terms of influencing musical works.
+
+However, Sailor Shift's influence is the most recent, with new artist connections as recent as 2040. In comparison, Jay Walters' period of influence concluded earlier, with his last known connection in 2035, while Min Fu's last recorded influence dates back even further in 2030.
 :::
 
 ## 4.3 Using this characterization, give three predictions of who the next Oceanus Folk stars with be over the next five years.
@@ -5237,7 +5237,6 @@ plot_ly(
 ```
 :::
 
-
 ### 4.3.5 Predicting who the next three Oceanus Folk stars with be over the next five years
 
 ::: callout-tip
@@ -5261,7 +5260,7 @@ plot_ly(
 ::: callout-tip
 ## Xia Jia
 
--   Xia Jia is the next on the Star Factor list and her influence is equally large having influenced 178 Artists and 42 Music with her Oceanus Folk music.
+-   Xia Jia follows closely behind on the Star Factor list and her influence is equally large having influenced 178 Artists and 42 Music with her Oceanus Folk music.
 -   Furthermore, she has also gained this large following despite having only released 4 music.
 -   Similarly, 3 of them are hits.
 -   Her last Oceanus Folk work was in 2028 but her works were last referred to in 2030 which is less recent than Chao Wu.
