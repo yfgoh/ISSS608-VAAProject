@@ -16,10 +16,11 @@ source("code/shared-setup.R")
 library(ggiraph)
 library(systemfonts)
 
-register_font(
-  name = "Arial Narrow",
-  plain = "C:/Windows/Fonts/arialn.ttf"
-)
+#register_font(
+#  name = "Arial Narrow",
+#  plain = "C:/Windows/Fonts/arialn.ttf"
+#)
+
 ```
 
 # 1 Exploratory Data Analysis (EDA) on Sailor Shift's career
