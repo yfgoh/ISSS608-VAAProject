@@ -181,12 +181,11 @@ ggplot(sailor_release_data, aes(x = release_date, y = n, fill = genre)) +
 ::: callout-tip
 ## Sailor Shift's Music Insights
 
--   In total, Sailor Shift released 38 Songs and Albums from 2024 to 2040
--   Details on the Songs and Albums can be found in the table below
--   Sailor Shift released 4 Songs in 2028
--   Among those, only 1 is a Single
--   Therefore, the viral Song that spark her breakthrough is **High Tide Heartbeat**
--   Among her Songs and Albums, 36 belong to the Oceanus Folk genre, while there is 1 Americana and 1 Synthwave Album each.
+From 2024 to 2040, Sailor Shift released an impressive 38 songs and albums, establishing herself as a prolific artist. A pivotal moment in her career happened in 2028, when she released four songs, including one single called ***High Tide Heartbeat***, which went viral and marked her breakthrough into worldwide recognition.
+
+The vast majority of her work (36 out of 38 releases) is rooted in the Oceanus Folk genre, reflecting the strong and consistent artistic identity for which she is known. However, she also demonstrated a willingness to experiment, with one album each in the Americana and Synthwave genres, showcasing her creative range that extends beyond her signature Oceanus Folk style.
+
+Detailed information can be found in the table below.
 :::
 
 ```{r}
@@ -381,11 +380,11 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ::: callout-tip
 ## Who has Sailor Shift been most influenced by over time?
 
--   The table below shows all the Person and Musical Group that have influenced Sailor Shift
--   Through the graph, most of the other Person and Musical Group have only produced a single music that has influenced one of her music.
--   However, Wei Zhao stands out because they have influenced Sailor Shift more than once.
--   Wei Zhao is the producer of **Susurros de Passion** that has influenced the her album **Salty Dreams**. Wei Zhao is also the composer of **Silent Steps in the Forest's Embrance** that has influenced her song **Moon Over the Tide**.
--   In conclusion, Ivy Echos and Wei Zhao have been the most influential on Sailor Shift's music career.
+The network graph above shows all persons and musical groups that has influenced Sailor Shift. Alternatively, this information is also available in the table below.
+
+Although many individuals and musical groups have influenced Sailor Shift's work, most have done so only once, influencing one of her songs or albums.
+
+One figure who stands out is **Wei Zhao**. whose influence appears more than once throughout her career. Wei Zhao produced *Susurros de Passion*, which inspired Sailor Shift's album *Salty Dreams*, and also composed *Silent Steps in the Forest's Embrace*, which influenced her song *Moon Over the Tide*. Other than Wei Zhao, Ivy Echos, which Sailor Shift is a member of, has also played a signifcant role in shaping her musical style. Together, they stand out as the most influential forces in her music journey.
 :::
 
 ```{r}
@@ -595,10 +594,9 @@ girafe(ggobj = g, width_svg = 7, height_svg = 6)
 ::: callout-tip
 ## Who has she collaborated with and directly or indirectly influenced?
 
--   The graph and table shows everyone that she has collaborated with.
--   Sailor Shift has collaborated with 48 different artists and information on them can be found in the table below.
--   However, Sailor Shift has not directly or indirectly influenced anyone, since none of her music has influenced others.
--   For example, no Songs/Albums has referenced her Songs or Albums.
+The network graph and accompanying table shows all artists Sailor Shift has collaborated with. In total, she has collaborated with 48 different artists, with detailed information available in the table below.
+
+However, despite her extensive collaboration network and status as a superstar, it is worth noting that Sailor Shift has not directly or indirectly influenced other artists. None of her songs or albums have been referenced or cited as inspiration in subequent works, indicating that her music, while widely recognised by the public, has yet to leave a documented influence on her peers within the industry.
 :::
 
 ```{r}
@@ -761,17 +759,19 @@ girafe(ggobj = g, width_svg = 9, height_svg = 8)
 ::: callout-tip
 ## How has she influenced collaborators of the broader Oceanus Folk community?
 
--   This graph is displays a network overview of all People/Musical Groups who have produced Oceanus Folk Songs/Albums.
--   While Sailor Shift is connected to a portion of the Oceanus Folk community, most artists in this genre remain outside her influence network - either as distant connections (3rd to 13th degree) or completely unconnected.
--   In conclusion, Sailor Shift has a moderate influence on the broader Oceanus Folk community since her impact is discernible but not widespread.
+The network graph displays all person/musical groups who have produced Oceanus Folk songs and albums.
+
+While Sailor Shift is clearly embedded within the genre, she is connected to only a portion of the Oceanus Folk community. Most artists remain outside her influence network, appearing as distant connections (3rd to 13th degree) or entirely disconnected.
+
+Thus, Sailor Shift's influence on the broader Oceanus Folk network can be considered moderate. She plays a visible role within a specific circle, but her impact does not span the full extent of the genre's creative ecosystem.
 :::
 
 ::: callout-warning
 ## Other Insights
 
--   It seems that the Oceanus Folk community places a strong emphasis on collaboration
--   Rather than simply drawing influence from each other's work, they prefer collaborating directly
--   Evidenced by the sporadic 'Influenced By' connections in the network graph
+The Oceanus Folk community demonstrates a focus on collaboration rather than passive influence. Instead of simply drawing inspiration from another artist's existing works, artists actively work together to produce songs or albums.
+
+This collaborative spirit is clearly reflected in the network graph, where 'Influenced By' connections are sparse, underscoring that creative partnerships, rather than indirect influence, drives the community's artistic growth.
 :::
 
 # 3 Influence of Oceanus Folk
@@ -1552,7 +1552,7 @@ onRender(p, '
 ```
 
 ::: callout-note
-Interestingly, the Sankey diagram highlights a striking similarity in Oceanus Folk's incoming and outgoing influence patterns where the top three incoming influences (Oceanus Folk, Indie Folk, and Sythnwave) are also tge top three outgoing influences, in the same order. This suggests a mutually reinforcing exchange of stylistic elements, indicating that Oceanus Folk both shapes and is shaped by a handful of genres.
+Interestingly, the Sankey diagram highlights a striking similarity in Oceanus Folk's incoming and outgoing influence patterns where the top three incoming influences (Oceanus Folk, Indie Folk, and Sythnwave) are also the top three outgoing influences, in the same order. This suggests a mutually reinforcing exchange of stylistic elements, indicating that Oceanus Folk both shapes and is shaped by a handful of genres.
 :::
 
 The table can also be combined as follows:
